@@ -140,7 +140,7 @@ namespace I048_data_items
             }
 
             //Track Number
-            if (fspecAnalayzedByte == 2 && fspecAnalyzedBit == 4)
+            if (fspecAnalayzedByte == 1 && fspecAnalyzedBit == 3)
             {
                 string data_item = "I048/161";
                 string data_item_description = "Track Number";
@@ -168,7 +168,7 @@ namespace I048_data_items
             }
 
             //Track Status
-            if (fspecAnalayzedByte == 2 && fspecAnalyzedBit == 7)
+            if (fspecAnalayzedByte == 1 && fspecAnalyzedBit == 6)
             {
                 string data_item = "I048/170";
                 string data_item_description = "Track Status";
@@ -374,7 +374,7 @@ namespace I048_data_items
         }
         public static DataTable TargetReportDescriptor(byte[] data, int octetanalyzed, int length_octets)
         {
-            octetanalyzed = Convert.ToInt32(data[octetanalyzed], 2);
+            //octetanalyzed = Convert.ToInt32(data[octetanalyzed], 2);
             string TYP = "";
             string SIM = "";
             string RDP = "";
@@ -832,7 +832,7 @@ namespace I048_data_items
             dt.Columns.Add("Flight Level", typeof(int));
 
             dt.Columns.Add("Mode3A", typeof(int));
-            dt.Rows.Add(AircraftAddress);
+            //dt.Rows.Add(AircraftAddress);
 
             return dt;
         }
@@ -928,9 +928,13 @@ namespace I048_data_items
         //    }
         public static DataTable TrackNumber(byte byte1, byte byte2)
         {
-            string TrackNumberString = Convert.ToString(((byte1 << 8) | byte2));
+            string octet1bits = Convert.ToString(byte1, 2).PadLeft(8, '0');
+            string octet2bits = Convert.ToString(byte2, 2).PadLeft(8, '0');
 
-            int TrackNumber = Convert.ToInt32(TrackNumberString.Substring(4, 12));
+            string TrackNumberString = octet1bits+octet2bits;
+            TrackNumberString = TrackNumberString.Substring(4, 12);
+
+            int TrackNumber = Convert.ToInt32(TrackNumberString,2);
             
             DataTable dt = new DataTable();
 
