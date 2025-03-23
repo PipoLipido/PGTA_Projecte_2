@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,9 @@ namespace ASTdecoder
         public int fspeclength { get; set; }
         public int DSI { get; set; }
         public int lenght { get; set; }
-
+            
         //1048/010  Data Source Identifier
-
+        
         public string SAC { get; set; }
         public string SIC { get; set; }
 
@@ -147,6 +148,7 @@ namespace ASTdecoder
                 {
                     indexByte++;
                     continue;
+                    
                 }
 
                 CAT record = new CAT();
@@ -156,7 +158,7 @@ namespace ASTdecoder
                 record.lenght = data[indexByte + 1] | data[indexByte + 2]; //Longitud total en octets de 1 avió
 
                 // while per mirar quants octets ocupa fspec, per poder separar fspec de la resta i mirar quines categories estan incloses
-                int lastFspecByte = 0;
+                int lastFspecByte = 0; 
                 bool indexfound = false;
                 List<string> fspec = new List<string>();
 
@@ -191,6 +193,7 @@ namespace ASTdecoder
                         {
                             var resultDataItem = I048_data_items.data_items.GetDataItem(fspecAnalyzedBit, fspecAnalyzedByte, data, record.fspeclength, octetanalyzed); // (index de l'octet, octet de l'fspec que toca,  
                             octetanalyzed = octetanalyzed + resultDataItem.Item3;
+
                             //lector taula
                         }
                         fspecAnalyzedBit++;

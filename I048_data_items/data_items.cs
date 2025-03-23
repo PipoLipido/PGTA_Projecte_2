@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Data;
 using System.IO;
 using System.Reflection;
+using System.IO.Ports;
+using System.Collections;
 
 
 namespace I048_data_items
@@ -56,13 +58,13 @@ namespace I048_data_items
                     {
                         break;
                     }
-                    byteIndex++;
+                        byteIndex++;
                 }
 
                 DataTable Time_of_Day = TargetReportDescriptor(data, octetanalyzed, length_octets);
 
-
-
+      
+    
                 return (data_item, data_item_description, length_octets, dt);
             }
 
@@ -170,10 +172,10 @@ namespace I048_data_items
             {
                 string data_item = "I048/170";
                 string data_item_description = "Track Status";
-
+                
                 int length_octets = 1;
                 int bit = (data[octetanalyzed + 1] >> 7) & 1;
-
+                
 
                 if (bit == 1)
                 {
@@ -372,6 +374,7 @@ namespace I048_data_items
         }
         public static DataTable TargetReportDescriptor(byte[] data, int octetanalyzed, int length_octets)
         {
+            octetanalyzed = Convert.ToInt32(data[octetanalyzed], 2);
             string TYP = "";
             string SIM = "";
             string RDP = "";
@@ -771,6 +774,7 @@ namespace I048_data_items
             dt.Columns.Add("G", typeof(string));
             dt.Columns.Add("Flight Level", typeof(double));
 
+            dt.Columns.Add("Mode3A", typeof(int));
             dt.Rows.Add(V, G, FL);
 
             return dt;
@@ -927,7 +931,7 @@ namespace I048_data_items
             string TrackNumberString = Convert.ToString(((byte1 << 8) | byte2));
 
             int TrackNumber = Convert.ToInt32(TrackNumberString.Substring(4, 12));
-
+            
             DataTable dt = new DataTable();
 
             dt.Columns.Add("TrackNumber", typeof(int));
