@@ -177,6 +177,7 @@ namespace I048_data_items
                 string data_item = "I048/042";
                 string data_item_description = "Calculated Position in Cartesian Coordinates";
                 int length_octets = 4;
+                DataTable calculatedPositionCartCoord = CalculatedPositionCartCoord(data[octetanalyzed], data[octetanalyzed + 1], data[octetanalyzed + 2], data[octetanalyzed + 3]);
                 return (data_item, data_item_description, length_octets, dt);
             }
 
@@ -708,6 +709,22 @@ namespace I048_data_items
             dt.Columns.Add("Rho (Nautical Miles)", typeof(double));
             dt.Columns.Add("Theta (degrees)", typeof(double));
             dt.Rows.Add(RHO, THETA);
+
+            return dt;
+        }
+        public static DataTable CalculatedPositionCartCoord(byte byte1, byte byte2, byte byte3, byte byte4)
+        {
+            string xComponent = Convert.ToString(((byte1 << 8) | byte2), 2);
+            double X_Coord = Convert.ToInt32(xComponent, 2) / 128;
+
+            string yComponent = Convert.ToString(((byte3 << 8) | byte4), 2);
+            double Y_Coord = Convert.ToInt32(yComponent, 2) / 128;
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add("X coordinate", typeof(int));
+            dt.Columns.Add("Y coordinate", typeof(int));
+            dt.Rows.Add(X_Coord, Y_Coord);
 
             return dt;
         }
@@ -1407,6 +1424,8 @@ namespace I048_data_items
 
             return dt;
         }
+
+        
     }
 
 }
