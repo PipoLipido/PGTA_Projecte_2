@@ -404,17 +404,17 @@ namespace I048_data_items
         }
         public static DataTable TargetReportDescriptor(byte[] data, int octetanalyzed, int length_octets)
         {
-            string TYP = "";
-            string SIM = "";
-            string RDP = "";
-            string SPI = "";
-            string RAB = "";
-            string TST = "";
-            string ERR = "";
-            string XPP = "";
-            string ME = "";
-            string MI = "";
-            string FOE_FRI = "";
+            string TYP = "N/A";
+            string SIM = "N/A";
+            string RDP = "N/A";
+            string SPI = "N/A";
+            string RAB = "N/A";
+            string TST = "N/A";
+            string ERR = "N/A";
+            string XPP = "N/A";
+            string ME = "N/A";
+            string MI = "N/A";
+            string FOE_FRI = "N/A";
 
 
             int byteIndex = 0;
@@ -954,20 +954,20 @@ namespace I048_data_items
             string BaroSetting_Status = "0";
             double BaroSetting = 0;
             string MCP_FCU_MODE_BITS_Status = "0";
-            string VNAV = "";
-            string AltHoldMode = "";
-            string ApprMode = "";
-            string TargetAltitudeSource_Status = "";
-            string TargetAltitudeSource = "";
+            string VNAV = "N/A";
+            string AltHoldMode = "N/A";
+            string ApprMode = "N/A";
+            string TargetAltitudeSource_Status = "N/A";
+            string TargetAltitudeSource = "N/A";
 
 
 
-            string RollAngle_Status = "";
-            string TrueTrackAngle_Status = "";
-            string GS_Status = "";
-            string TrackAngleRate_Status = "";
-            string TAS_Status = "";
-            string LWingD = "";
+            string RollAngle_Status = "N/A";
+            string TrueTrackAngle_Status = "N/A";
+            string GS_Status = "N/A";
+            string TrackAngleRate_Status = "N/A";
+            string TAS_Status = "N/A";
+            string LWingD = "N/A";
             double RollAngle = 0;
             double West = 0;
             double TrueTrackAngle = 0;
@@ -976,16 +976,16 @@ namespace I048_data_items
             double TAS = 0;
 
 
-            string MagneticHeading_Status = "";
-            string IndicatedAirspeed_Status = "";
-            string Mach_Status = "";
-            string BaromAltRate_Status = "";
-            string InertialVertVel_Status = "";
+            string MagneticHeading_Status = "N/A";
+            string IndicatedAirspeed_Status = "N/A";
+            string Mach_Status = "N/A";
+            string BaromAltRate_Status = "N/A";
+            string InertialVertVel_Status = "N/A";
             double MagneticHeading = 0;
             double IndicatedAirspeed = 0;
             double Mach = 0;
             double BaromAltRate = 0;
-            string Below = "";
+            string Below = "N/A";
             double InertialVertVel = 0;
 
             int index = 0;
@@ -1127,7 +1127,7 @@ namespace I048_data_items
 
             string HeadingString = Convert.ToString(((byte3 << 8) | byte4), 2);
             double Heading = Convert.ToInt32(HeadingString, 2);
-            Heading = Heading * 0.0055;
+            Heading = Heading * 360/(Math.Pow(2,16));
 
             DataTable dt = new DataTable();
 
@@ -1280,19 +1280,19 @@ namespace I048_data_items
 
             //bit 12 NO ELS ENTENC
             int bit12 = Convert.ToInt32(bits.Substring(11, 1), 2);
-            string B1A = "";
+            string B1A = "N/A";
             if (bit12 == 0)
             {
-                B1A = "";
+                B1A = "N/A";
             }
             else if (bit12 == 1)
             {
-                B1A = "";
+                B1A = "N/A";
             }
 
             //bits 13-16
             int bit13to16 = Convert.ToInt32(bits.Substring(12, 3), 2);
-            string B1B = "";
+            string B1B = "N/A";
 
 
             DataTable dt = new DataTable();
@@ -1386,10 +1386,10 @@ namespace I048_data_items
             else if (CDM == "10") { CDM = "Descending"; }
             else if (CDM == "11") { CDM = "Unknown"; }
 
-            string TRE = "";
-            string GHO = "";
-            string SUP = "";
-            string TCC = "";
+            string TRE = "N/A";
+            string GHO = "N/A";
+            string SUP = "N/A";
+            string TCC = "N/A";
 
             string FX = octet1bits.Substring(7, 1);
             if (FX == "1")
