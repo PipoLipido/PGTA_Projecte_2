@@ -391,13 +391,15 @@ namespace I048_data_items
         }
         public static DataTable TimeofDay(byte byte1, byte byte2, byte byte3)
         {
-            // 1. Concatenem els bytes en un enter de 16 bits (MSB + LSB)
-            int TimeOfDay = (byte1 << 16) | (byte2 << 8) | byte3;
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Time of day (seconds)", typeof(int));
-            dt.Rows.Add(TimeOfDay);
+            string TimeOfDayString = Convert.ToString((byte1 << 16) | (byte2 << 8) | byte3,2);
+            double TimeOfDay = Convert.ToInt32(TimeOfDayString, 2);
+            TimeOfDay = TimeOfDay / 128;
+            TimeSpan time = TimeSpan.FromSeconds(TimeOfDay);
+            string TODstr = time.ToString(@"hh\:mm\:ss\:fff");
 
-            // 2. Retornem el nombre de segons des de mitjanit en UTC
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Time of day (seconds)", typeof(string));
+            dt.Rows.Add(TODstr);
             return dt;
         }
         public static DataTable TargetReportDescriptor(byte[] data, int octetanalyzed, int length_octets)
