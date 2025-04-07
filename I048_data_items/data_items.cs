@@ -156,7 +156,7 @@ namespace I048_data_items
                 string data_item = "I048/250";
                 string data_item_description = "Mode S MB Data";
                 byte DFRepetition = data[octetanalyzed];
-                int length_octets = DFRepetition * 8;
+                int length_octets = DFRepetition * 8 + 1;
                 DataTable modeS = ModeS(data, octetanalyzed, length_octets);
                 return (data_item, data_item_description, length_octets, modeS);
             }
@@ -167,7 +167,8 @@ namespace I048_data_items
                 string data_item = "I048/161";
                 string data_item_description = "Track Number";
                 int length_octets = 2;
-                return (data_item, data_item_description, length_octets, dt);
+                DataTable trackNumber = TrackNumber(data[octetanalyzed], data[octetanalyzed + 1]);
+                return (data_item, data_item_description, length_octets, trackNumber);
             }
 
             //Calculed Position in Cartesian Coordinates
@@ -194,8 +195,19 @@ namespace I048_data_items
             {
                 string data_item = "I048/170";
                 string data_item_description = "Track Status";
-                //int length_octets = 1+;//un altre que no entenc :0
-                //return (data_item, data_item_description, length_octets, dt);
+
+                int length_octets = 1;
+                int bit = (data[octetanalyzed + 1] >> 7) & 1;
+
+
+                if (bit == 1)
+                {
+                    length_octets = 2;
+                }
+
+                DataTable trackStatus = TrackStatus(data, octetanalyzed);
+
+                return (data_item, data_item_description, length_octets, trackStatus);
             }
 
             //fi segon octet
@@ -1306,6 +1318,94 @@ namespace I048_data_items
                 return result;
             }
 
+        }
+        public static DataTable TrackNumber(byte byte1, byte byte2)
+        {
+            string octet1bits = Convert.ToString(byte1, 2).PadLeft(8, '0');
+            string octet2bits = Convert.ToString(byte2, 2).PadLeft(8, '0');
+
+            string TrackNumberString = octet1bits + octet2bits;
+            TrackNumberString = TrackNumberString.Substring(4, 12);
+
+            int TrackNumber = Convert.ToInt32(TrackNumberString, 2);
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add("TrackNumber", typeof(int));
+            dt.Rows.Add(TrackNumber);
+
+            return dt;
+        }
+        public static DataTable TrackStatus(byte[] data, int octetanalyzed)
+        {
+            string octet1bits = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0');
+
+            string CNF = octet1bits.Substring(0, 1);
+            if (CNF == "0") { CNF = "Confirmed Track"; }
+            else { CNF = "Tentative Track"; }
+
+            string RAD = octet1bits.Substring(1, 2);
+            if (RAD == "00") { RAD = "Combined Track"; }
+            else if (RAD == "01") { RAD = "PSR Track"; }
+            else if (RAD == "10") { RAD = "SSR/Mode S Track"; }
+            else if (RAD == "11") { RAD = "Invalid"; }
+
+            string DOU = octet1bits.Substring(3, 1);
+            if (DOU == "0") { DOU = "Normal confidence"; }
+            else { DOU = "Low confidence in plot to track association"; }
+
+            string MAH = octet1bits.Substring(4, 1);
+            if (MAH == "0") { MAH = "No horizontal man.sensed"; }
+            else { MAH = "Horizontal man. sensed"; }
+
+            string CDM = octet1bits.Substring(5, 2);
+            if (CDM == "00") { CDM = "Maintaining"; }
+            else if (CDM == "01") { CDM = "Climbing"; }
+            else if (CDM == "10") { CDM = "Descending"; }
+            else if (CDM == "11") { CDM = "Unknown"; }
+
+            string TRE = "";
+            string GHO = "";
+            string SUP = "";
+            string TCC = "";
+
+            string FX = octet1bits.Substring(7, 1);
+            if (FX == "1")
+            {
+                string octet2bits = Convert.ToString(data[octetanalyzed + 1], 2).PadLeft(8, '0');
+
+                TRE = octet2bits.Substring(0, 1);
+                if (TRE == "0") { TRE = "Confirmed Track"; }
+                else { TRE = "Tentative Track"; }
+                GHO = octet2bits.Substring(1, 1); ;
+                if (GHO == "0") { GHO = "Confirmed Track"; }
+                else { GHO = "Tentative Track"; }
+                SUP = octet2bits.Substring(2, 1); ;
+                if (SUP == "0") { SUP = "Confirmed Track"; }
+                else { SUP = "Tentative Track"; }
+                TCC = octet2bits.Substring(3, 1); ;
+                if (TCC == "0") { TCC = "Confirmed Track"; }
+                else { TCC = "Tentative Track"; }
+
+            }
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add("CNF", typeof(string));
+            dt.Columns.Add("RAD", typeof(string));
+            dt.Columns.Add("DOU", typeof(string));
+            dt.Columns.Add("MAH", typeof(string));
+            dt.Columns.Add("CDM", typeof(string));
+            dt.Columns.Add("TRE", typeof(string));
+            dt.Columns.Add("GHO", typeof(string));
+            dt.Columns.Add("SUP", typeof(string));
+            dt.Columns.Add("TCC", typeof(string));
+
+            dt.Rows.Add(CNF, RAD, DOU, MAH, CDM, TRE, GHO, SUP, TCC);
+
+            
+
+            return dt;
         }
     }
 
