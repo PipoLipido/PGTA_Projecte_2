@@ -1121,16 +1121,19 @@ namespace I048_data_items
         }
         public static DataTable TrackVelPolarCoord(byte byte1, byte byte2, byte byte3, byte byte4)
         {
-            int factconversiov = Convert.ToInt32(Math.Pow(2, -14));
-            int factconversioh = 360 / (Convert.ToInt32(Math.Pow(2, 4)));
-            int velocity = ((byte1 << 8) | byte2) * factconversiov;
-            int heading = ((byte3 << 8) | byte4) * factconversioh;
+            string GSsting = Convert.ToString(((byte1 << 8) | byte2), 2);
+            double GroundSpeed = Convert.ToInt32(GSsting, 2);
+            GroundSpeed = GroundSpeed * 0.22;
+
+            string HeadingString = Convert.ToString(((byte3 << 8) | byte4), 2);
+            double Heading = Convert.ToInt32(HeadingString, 2);
+            Heading = Heading * 0.0055;
 
             DataTable dt = new DataTable();
 
-            dt.Columns.Add("Velocity", typeof(int));
-            dt.Columns.Add("Heading", typeof(int));
-            dt.Rows.Add(velocity, heading);
+            dt.Columns.Add("Velocity", typeof(double));
+            dt.Columns.Add("Heading", typeof(double));
+            dt.Rows.Add(GroundSpeed, Heading);
 
             return dt;
         }
