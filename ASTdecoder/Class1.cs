@@ -130,9 +130,101 @@ namespace ASTdecoder
         {
             List<CAT> results = new List<CAT>();
 
-            DataTable dtMain = new DataTable();
-
-
+            DataTable TaulaMain = new DataTable();
+            TaulaMain.Columns.Add("SAC", typeof(int));
+            TaulaMain.Columns.Add("SIC", typeof(int));
+            TaulaMain.Columns.Add("Time of day (seconds)", typeof(string));
+            TaulaMain.Columns.Add("TYP", typeof(string));
+            TaulaMain.Columns.Add("SIM", typeof(string));
+            TaulaMain.Columns.Add("RDP", typeof(string));
+            TaulaMain.Columns.Add("SPI", typeof(string));
+            TaulaMain.Columns.Add("RAB", typeof(string));
+            TaulaMain.Columns.Add("TST", typeof(string));
+            TaulaMain.Columns.Add("ERR", typeof(string));
+            TaulaMain.Columns.Add("XPP", typeof(string));
+            TaulaMain.Columns.Add("ME", typeof(string));
+            TaulaMain.Columns.Add("MI", typeof(string));
+            TaulaMain.Columns.Add("FOE_FRI", typeof(string));
+            TaulaMain.Columns.Add("ADSB_EP", typeof(string));
+            TaulaMain.Columns.Add("ADSB_VAL", typeof(string));
+            TaulaMain.Columns.Add("SCN_EP", typeof(string));
+            TaulaMain.Columns.Add("SCN_VAL", typeof(string));
+            TaulaMain.Columns.Add("PAI_EP", typeof(string));
+            TaulaMain.Columns.Add("PAI_VAL", typeof(string));
+            TaulaMain.Columns.Add("Rho (Nautical Miles)", typeof(double));
+            TaulaMain.Columns.Add("Theta (degrees)", typeof(double));
+            TaulaMain.Columns.Add("X coordinate", typeof(int));
+            TaulaMain.Columns.Add("Y coordinate", typeof(int));
+            TaulaMain.Columns.Add("V", typeof(string));
+            TaulaMain.Columns.Add("G", typeof(string));
+            TaulaMain.Columns.Add("L", typeof(string));
+            TaulaMain.Columns.Add("Mode3A", typeof(string));
+            TaulaMain.Columns.Add("V_fl", typeof(string));
+            TaulaMain.Columns.Add("G_fl", typeof(string));
+            TaulaMain.Columns.Add("Flight Level", typeof(double));
+            TaulaMain.Columns.Add("SRL", typeof(double));
+            TaulaMain.Columns.Add("SRR", typeof(int));
+            TaulaMain.Columns.Add("SAM", typeof(double));
+            TaulaMain.Columns.Add("PRL", typeof(double));
+            TaulaMain.Columns.Add("PAM", typeof(double));
+            TaulaMain.Columns.Add("RPD", typeof(double));
+            TaulaMain.Columns.Add("APD", typeof(double));
+            TaulaMain.Columns.Add("Aircraft_ID", typeof(string));
+            TaulaMain.Columns.Add("SelectedAltitude_Status", typeof(string));
+            TaulaMain.Columns.Add("SelectedAltitude", typeof(int));
+            TaulaMain.Columns.Add("FMSAltitude_Status", typeof(string));
+            TaulaMain.Columns.Add("FMSAltitude", typeof(int));
+            TaulaMain.Columns.Add("BaroSetting_Status", typeof(string));
+            TaulaMain.Columns.Add("BaroSetting", typeof(double));
+            TaulaMain.Columns.Add("MCP_FCU_MODE_BITS_Status", typeof(string));
+            TaulaMain.Columns.Add("VNAV", typeof(string));
+            TaulaMain.Columns.Add("AltHoldMode", typeof(string));
+            TaulaMain.Columns.Add("ApprMode", typeof(string));
+            TaulaMain.Columns.Add("TargetAltitudeSource_Status", typeof(string));
+            TaulaMain.Columns.Add("TargetAltitudeSource", typeof(string));
+            TaulaMain.Columns.Add("LWingD", typeof(string));
+            TaulaMain.Columns.Add("RollAngle_Status", typeof(string));
+            TaulaMain.Columns.Add("RollAngle", typeof(double));
+            TaulaMain.Columns.Add("TrueTrackAngle_Status", typeof(string));
+            TaulaMain.Columns.Add("TrueTrackAngle", typeof(double));
+            TaulaMain.Columns.Add("GS_Status", typeof(string));
+            TaulaMain.Columns.Add("GS", typeof(double));
+            TaulaMain.Columns.Add("TrackAngleRate_Status", typeof(string));
+            TaulaMain.Columns.Add("TrackAngleRate", typeof(double));
+            TaulaMain.Columns.Add("TAS_Status", typeof(string));
+            TaulaMain.Columns.Add("TAS", typeof(double));
+            TaulaMain.Columns.Add("MagneticHeading_Status", typeof(string));
+            TaulaMain.Columns.Add("MagneticHeading", typeof(double));
+            TaulaMain.Columns.Add("IndicatedAirspeed_Status", typeof(string));
+            TaulaMain.Columns.Add("IndicatedAirspeed", typeof(double));
+            TaulaMain.Columns.Add("Mach_Status", typeof(string));
+            TaulaMain.Columns.Add("Mach", typeof(double));
+            TaulaMain.Columns.Add("BaromAltRate_Status", typeof(string));
+            TaulaMain.Columns.Add("BaromAltRate", typeof(double));
+            TaulaMain.Columns.Add("Below", typeof(string));
+            TaulaMain.Columns.Add("InertialVertVel_Status", typeof(string));
+            TaulaMain.Columns.Add("InertialVertVel", typeof(double));
+            TaulaMain.Columns.Add("Velocity", typeof(double));
+            TaulaMain.Columns.Add("Heading", typeof(double));
+            TaulaMain.Columns.Add("3D Radar Height", typeof(int));
+            TaulaMain.Columns.Add("COM", typeof(string));
+            TaulaMain.Columns.Add("STAT", typeof(string));
+            TaulaMain.Columns.Add("SI", typeof(string));
+            TaulaMain.Columns.Add("MSSC", typeof(string));
+            TaulaMain.Columns.Add("ARC", typeof(string));
+            TaulaMain.Columns.Add("AIC", typeof(string));
+            TaulaMain.Columns.Add("B1A", typeof(string));
+            TaulaMain.Columns.Add("B1B", typeof(string));
+            TaulaMain.Columns.Add("TrackNumber", typeof(int));
+            TaulaMain.Columns.Add("CNF", typeof(string));
+            TaulaMain.Columns.Add("RAD", typeof(string));
+            TaulaMain.Columns.Add("DOU", typeof(string));
+            TaulaMain.Columns.Add("MAH", typeof(string));
+            TaulaMain.Columns.Add("CDM", typeof(string));
+            TaulaMain.Columns.Add("TRE", typeof(string));
+            TaulaMain.Columns.Add("GHO", typeof(string));
+            TaulaMain.Columns.Add("SUP", typeof(string));
+            TaulaMain.Columns.Add("TCC", typeof(string));
 
             int indexByte = 0;
 
@@ -175,6 +267,9 @@ namespace ASTdecoder
                 //primer byte
                 int fspecAnalyzedByte = 0;
                 octetanalyzed = octetanalyzed + 3 + record.fspeclength;
+
+                DataRow filaActual = TaulaMain.NewRow();
+
                 while (fspecAnalyzedByte < record.fspeclength) //itera el fspec mirant quins son 1 i quins 0
                 {
                     int fspecAnalyzedBit = 0;
@@ -184,49 +279,38 @@ namespace ASTdecoder
                         {
                             var resultDataItem = I048_data_items.data_items.GetDataItem(fspecAnalyzedBit, fspecAnalyzedByte, data, record.fspeclength, octetanalyzed); // (index de l'octet, octet de l'fspec que toca,  
                             octetanalyzed = octetanalyzed + resultDataItem.Item3;
-                            dtNonCompressed.Merge(resultDataItem.Item4);
-                            
+                            //dtNonCompressed.Merge(resultDataItem.Item4);
+                            foreach (DataRow fila in resultDataItem.Item4.Rows)
+                            {
+                                foreach (DataColumn col in resultDataItem.Item4.Columns)
+                                {
+                                    if (TaulaMain.Columns.Contains(col.ColumnName))
+                                    {
+                                        filaActual[col.ColumnName] = fila[col.ColumnName];
+                                    }
+                                }
+                            }
+
                         }
                         fspecAnalyzedBit++;
                     }
                     fspecAnalyzedByte++;
                 }
+                TaulaMain.Rows.Add(filaActual);
+
                 octetanalyzed = octetanalyzed - 3 - record.fspeclength;
-                //Compressor
-                List<string> valorsUnificats = new List<string>();
-
-                foreach (DataRow fila in dtNonCompressed.Rows)
-                {
-                    foreach (var valor in fila.ItemArray)
-                    {
-                        if (valor != null && !string.IsNullOrWhiteSpace(valor.ToString()))
-                        {
-                            valorsUnificats.Add(valor.ToString());
-                        }
-                    }
-                }
-
-                for (int i = 0; i < valorsUnificats.Count; i++)
-                {
-                    if (!dtMain.Columns.Contains(dtNonCompressed.Columns[i].ColumnName))
-                    {
-                        dtMain.Columns.Add(dtNonCompressed.Columns[i].ColumnName);
-                    }
-                    //dtMain.Columns.Add(dtNonCompressed.Columns[i].ColumnName);
-                }
-
-                // Afegim la fila amb els valors
-                dtMain.Rows.Add(valorsUnificats.ToArray());
 
                 indexByte = indexByte + record.lenght;
             }
-            if (!dtMain.Columns.Contains("Index"))
+
+
+            if (!TaulaMain.Columns.Contains("Index"))
             {
-                dtMain.Columns.Add("Index", typeof(int));
+                TaulaMain.Columns.Add("Index", typeof(int));
             }
-            for (int i = 0; i < dtMain.Rows.Count; i++)
+            for (int i = 0; i < TaulaMain.Rows.Count; i++)
             {
-                dtMain.Rows[i]["Index"] = i + 1; // o només 'i' si vols començar a 0
+                TaulaMain.Rows[i]["Index"] = i + 1; // o només 'i' si vols començar a 0
             }
 
 
