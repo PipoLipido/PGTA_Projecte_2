@@ -44,11 +44,14 @@ namespace I048_data_items
 
                 // While used to know the length of the data item
                 int length_octets = 1;
-                int byteIndex = 1;
+                int byteIndex = 0;
                 string bit = "0";
-                while (byteIndex < 3)
+                while (byteIndex < 2)
                 {
                     bit = ((Convert.ToString(data[octetanalyzed + byteIndex], 2).PadLeft(8, '0')).Substring(6, 1));
+
+                    // aqui no hauria de mirar el octet analyzed +0 y que byte index vagi de 0 a 2 maxim ???????????????????????????????????????????????
+
                     if (bit == "1")
                     {
                         length_octets = length_octets + 1;
@@ -415,270 +418,257 @@ namespace I048_data_items
             string ME = "N/A";
             string MI = "N/A";
             string FOE_FRI = "N/A";
+            string ADSB_EP = "N/A";
+            string ADSB_VAL = "N/A";
+            string SCN_EP = "N/A";
+            string SCN_VAL = "N/A";
+            string PAI_EP = "N/A";
+            string PAI_VAL = "N/A";
 
-
-            int byteIndex = 0;
-            while (byteIndex < length_octets)
+            if (length_octets >= 1)
             {
-                if (byteIndex == 0)
+                TYP = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(0, 3);
+
+                if (TYP == "000")
                 {
-                    TYP = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(0, 3);
-
-                    if (TYP == "000")
-                    {
-                        TYP = "No detection";
-                    }
-                    else if (TYP == "001")
-                    {
-                        TYP = "Single PSR detection";
-                    }
-                    else if (TYP == "010")
-                    {
-                        TYP = "Single SSR detection";
-                    }
-                    else if (TYP == "011")
-                    {
-                        TYP = "SSR + PSR detection";
-                    }
-                    else if (TYP == "100")
-                    {
-                        TYP = "Single ModeS All-Call";
-                    }
-                    else if (TYP == "101")
-                    {
-                        TYP = "Single ModeS Roll-Call";
-                    }
-                    else if (TYP == "110")
-                    {
-                        TYP = "ModeS All-Call + PSR";
-                    }
-                    else if (TYP == "111")
-                    {
-                        TYP = "ModeS Roll-Call + PSR";
-                    }
-                    else
-                    {
-                        TYP = "Valor de TYP no reconocido";
-                    }
-
-                    SIM = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(3, 1);
-
-                    if (SIM == "1")
-                    {
-                        SIM = "Simulated target report";
-                    }
-                    else
-                    {
-                        SIM = "Actual target report";
-                    }
-
-
-                    RDP = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(4, 1);
-
-                    if (RDP == "1")
-                    {
-                        RDP = "Report from RDP Chain 2 ";
-                    }
-                    else
-                    {
-                        RDP = "Report from RDP Chain 1";
-                    }
-
-
-                    SPI = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(5, 1);
-
-                    if (SPI == "1")
-                    {
-                        SPI = "Special Position Identification";
-                    }
-                    else
-                    {
-                        SPI = "Absence of SPI";
-                    }
-
-
-                    RAB = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(6, 1);
-
-                    if (RAB == "1")
-                    {
-                        RAB = "Report from field monitor(fixed transponder)";
-                    }
-                    else
-                    {
-                        RAB = "Report from aircraft transponder";
-                    }
-
-                    byteIndex = byteIndex + 1;
-
+                    TYP = "No detection";
+                }
+                else if (TYP == "001")
+                {
+                    TYP = "Single PSR detection";
+                }
+                else if (TYP == "010")
+                {
+                    TYP = "Single SSR detection";
+                }
+                else if (TYP == "011")
+                {
+                    TYP = "SSR + PSR detection";
+                }
+                else if (TYP == "100")
+                {
+                    TYP = "Single ModeS All-Call";
+                }
+                else if (TYP == "101")
+                {
+                    TYP = "Single ModeS Roll-Call";
+                }
+                else if (TYP == "110")
+                {
+                    TYP = "ModeS All-Call + PSR";
+                }
+                else if (TYP == "111")
+                {
+                    TYP = "ModeS Roll-Call + PSR";
+                }
+                else
+                {
+                    TYP = "Valor de TYP no reconocido";
                 }
 
-                else if (byteIndex == 1)
+                SIM = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(3, 1);
+
+                if (SIM == "1")
                 {
-                    octetanalyzed = octetanalyzed + 1;
-
-                    TST = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(0, 1);
-
-                    if (TST == "1")
-                    {
-                        TST = "Test target report";
-                    }
-                    else
-                    {
-                        TST = "Real target report";
-                    }
-
-                    ERR = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(1, 1);
-
-                    if (ERR == "1")
-                    {
-                        ERR = "Extended Range present";
-                    }
-                    else
-                    {
-                        ERR = "No Extended Range";
-                    }
-
-                    XPP = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(2, 1);
-
-                    if (XPP == "1")
-                    {
-                        XPP = "X-Pulse present";
-                    }
-                    else
-                    {
-                        XPP = "No X-Pulse present";
-                    }
-
-
-                    ME = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(3, 1);
-
-                    if (ME == "1")
-                    {
-                        ME = "No Military emergency";
-                    }
-                    else
-                    {
-                        ME = "Military emergency";
-                    }
-
-
-                    MI = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(4, 1);
-
-                    if (MI == "1")
-                    {
-                        MI = "Report from field monitor(fixed transponder)";
-                    }
-                    else
-                    {
-                        MI = "Report from aircraft transponder";
-                    }
-
-
-                    FOE_FRI = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(5, 2);
-
-                    if (FOE_FRI == "00")
-                    {
-                        FOE_FRI = "No Mode 4 interrogation";
-                    }
-                    else if (FOE_FRI == "01")
-                    {
-                        FOE_FRI = "Friendly target";
-                    }
-                    else if (FOE_FRI == "10")
-                    {
-                        FOE_FRI = "Unknown target";
-                    }
-                    else if (FOE_FRI == "11")
-                    {
-                        FOE_FRI = "No reply";
-                    }
-
-                    byteIndex = byteIndex + 1;
+                    SIM = "Simulated target report";
+                }
+                else
+                {
+                    SIM = "Actual target report";
                 }
 
-                else if (byteIndex == 2)
+
+                RDP = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(4, 1);
+
+                if (RDP == "1")
                 {
-                    octetanalyzed = octetanalyzed + 1;
-                    //    string TST = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(0, 1);
-
-                    //    if (TST == "1")
-                    //    {
-                    //        TST = "Test target report";
-                    //    }
-                    //    else
-                    //    {
-                    //        TST = "Real target report";
-                    //    }
-
-                    //    string ERR = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(1, 1);
-
-                    //    if (ERR == "1")
-                    //    {
-                    //        ERR = "Extended Range present";
-                    //    }
-                    //    else
-                    //    {
-                    //        ERR = "No Extended Range";
-                    //    }
-
-                    //    string XPP = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(2, 1);
-
-                    //    if (XPP == "1")
-                    //    {
-                    //        XPP = "X-Pulse present";
-                    //    }
-                    //    else
-                    //    {
-                    //        XPP = "No X-Pulse present";
-                    //    }
+                    RDP = "Report from RDP Chain 2 ";
+                }
+                else
+                {
+                    RDP = "Report from RDP Chain 1";
+                }
 
 
-                    //    string ME = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(3, 1);
+                SPI = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(5, 1);
 
-                    //    if (ME == "1")
-                    //    {
-                    //        ME = "No Military emergency";
-                    //    }
-                    //    else
-                    //    {
-                    //        ME = "Military emergency";
-                    //    }
-
-
-                    //    string MI = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(4, 1);
-
-                    //    if (MI == "1")
-                    //    {
-                    //        MI = "Report from field monitor(fixed transponder)";
-                    //    }
-                    //    else
-                    //    {
-                    //        MI = "Report from aircraft transponder";
-                    //    }                    
+                if (SPI == "1")
+                {
+                    SPI = "Special Position Identification";
+                }
+                else
+                {
+                    SPI = "Absence of SPI";
+                }
 
 
-                    //    string FOE_FRI = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(5, 2);
+                RAB = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0').Substring(6, 1);
 
-                    //    if (FOE_FRI == "00")
-                    //    {
-                    //        FOE_FRI = "No Mode 4 interrogation";
-                    //    }
-                    //    else if (FOE_FRI == "01")
-                    //    {  
-                    //        FOE_FRI = "Friendly target";
-                    //    }
-                    //    else if (FOE_FRI == "10")
-                    //    {
-                    //        FOE_FRI = "Unknown target";
-                    //    }
-                    //    else if (FOE_FRI == "11")
-                    //    {
-                    //        FOE_FRI = "No reply";
-                    //    }
-                    //}
+                if (RAB == "1")
+                {
+                    RAB = "Report from field monitor(fixed transponder)";
+                }
+                else
+                {
+                    RAB = "Report from aircraft transponder";
+                }
+            }
+
+            if (length_octets >= 2)
+            {
+                octetanalyzed = octetanalyzed + 1;
+
+                TST = Convert.ToString(data[octetanalyzed+1], 2).PadLeft(8, '0').Substring(0, 1);
+
+                if (TST == "1")
+                {
+                    TST = "Test target report";
+                }
+                else
+                {
+                    TST = "Real target report";
+                }
+
+                ERR = Convert.ToString(data[octetanalyzed+1], 2).PadLeft(8, '0').Substring(1, 1);
+
+                if (ERR == "1")
+                {
+                    ERR = "Extended Range present";
+                }
+                else
+                {
+                    ERR = "No Extended Range";
+                }
+
+                XPP = Convert.ToString(data[octetanalyzed + 1], 2).PadLeft(8, '0').Substring(2, 1);
+
+                if (XPP == "1")
+                {
+                    XPP = "X-Pulse present";
+                }
+                else
+                {
+                    XPP = "No X-Pulse present";
+                }
+
+
+                ME = Convert.ToString(data[octetanalyzed + 1], 2).PadLeft(8, '0').Substring(3, 1);
+
+                if (ME == "1")
+                {
+                    ME = "No Military emergency";
+                }
+                else
+                {
+                    ME = "Military emergency";
+                }
+
+
+                MI = Convert.ToString(data[octetanalyzed + 1], 2).PadLeft(8, '0').Substring(4, 1);
+
+                if (MI == "1")
+                {
+                    MI = "Report from field monitor(fixed transponder)";
+                }
+                else
+                {
+                    MI = "Report from aircraft transponder";
+                }
+
+
+                FOE_FRI = Convert.ToString(data[octetanalyzed + 1], 2).PadLeft(8, '0').Substring(5, 2);
+
+                if (FOE_FRI == "00")
+                {
+                    FOE_FRI = "No Mode 4 interrogation";
+                }
+                else if (FOE_FRI == "01")
+                {
+                    FOE_FRI = "Friendly target";
+                }
+                else if (FOE_FRI == "10")
+                {
+                    FOE_FRI = "Unknown target";
+                }
+                else if (FOE_FRI == "11")
+                {
+                    FOE_FRI = "No reply";
+                }
+            }
+
+            if (length_octets >= 3)
+            {
+                ADSB_EP = Convert.ToString(data[octetanalyzed + 2], 2).PadLeft(8, '0').Substring(0, 1);
+
+                if (ADSB_EP == "1")
+                {
+                    ADSB_EP = "ADSB populated";
+                }
+                else
+                {
+                    ADSB_EP = "ADSB not populated";
+                }
+
+                ADSB_VAL = Convert.ToString(data[octetanalyzed + 2], 2).PadLeft(8, '0').Substring(1, 1);
+
+                if (ADSB_VAL == "1")
+                {
+                    ADSB_VAL = "Available";
+                }
+                else
+                {
+                    ADSB_VAL = "NoT  available";
+                }
+
+                ADSB_EP = Convert.ToString(data[octetanalyzed + 2], 2).PadLeft(8, '0').Substring(2, 1);
+
+                if (SCN_EP == "1")
+                {
+                    SCN_EP = "SCN populated";
+                }
+                else
+                {
+                    SCN_EP = "SCN not populated";
+                }
+
+
+                ADSB_EP = Convert.ToString(data[octetanalyzed + 2], 2).PadLeft(8, '0').Substring(3, 1);
+
+                if (SCN_VAL == "1")
+                {
+                    SCN_VAL = "Available";
+                }
+                else
+                {
+                    SCN_VAL = "Not available";
+                }
+
+
+                ADSB_EP = Convert.ToString(data[octetanalyzed + 2], 2).PadLeft(8, '0').Substring(4, 1);
+
+                if (PAI_EP == "1")
+                {
+                    PAI_EP = "PAI populated";
+                }
+                else
+                {
+                    PAI_EP = "PAI not populated";
+                }
+
+
+                ADSB_EP = Convert.ToString(data[octetanalyzed + 2], 2).PadLeft(8, '0').Substring(5, 1);
+
+                if (PAI_VAL == "1")
+                {
+                    PAI_VAL = "Available";
+                }
+                else
+                {
+                    PAI_VAL = "Not available";
                 }
 
             }
+
             DataTable dt = new DataTable();
             dt.Columns.Add("TYP", typeof(string));
             dt.Columns.Add("SIM", typeof(string));
@@ -691,8 +681,14 @@ namespace I048_data_items
             dt.Columns.Add("ME", typeof(string));
             dt.Columns.Add("MI", typeof(string));
             dt.Columns.Add("FOE_FRI", typeof(string));
+            dt.Columns.Add("ADSB_EP", typeof(string));
+            dt.Columns.Add("ADSB_VAL", typeof(string));
+            dt.Columns.Add("SCN_EP", typeof(string));
+            dt.Columns.Add("SCN_VAL", typeof(string));
+            dt.Columns.Add("PAI_EP", typeof(string));
+            dt.Columns.Add("PAI_VAL", typeof(string));
 
-            dt.Rows.Add(TYP, SIM, RDP, SPI, RAB, TST, ERR, XPP, ME, MI, FOE_FRI);
+            dt.Rows.Add(TYP, SIM, RDP, SPI, RAB, TST, ERR, XPP, ME, MI, FOE_FRI, ADSB_EP, ADSB_VAL, SCN_EP, SCN_VAL, PAI_EP, PAI_VAL);
 
             return dt;
         }

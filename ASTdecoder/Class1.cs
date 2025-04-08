@@ -124,13 +124,6 @@ namespace ASTdecoder
 
     }
 
-    //public class AsterixData
-    //{
-    //    public int Mode3A { get; set; }
-    //    public int TimeOfDay { get; set; }
-    //    public int FlightLevel { get; set; }
-    //}
-
     public class AsterixDecoder
     {
         public static List<CAT> ParseAsterixCat48(byte[] data)
@@ -192,6 +185,7 @@ namespace ASTdecoder
                             var resultDataItem = I048_data_items.data_items.GetDataItem(fspecAnalyzedBit, fspecAnalyzedByte, data, record.fspeclength, octetanalyzed); // (index de l'octet, octet de l'fspec que toca,  
                             octetanalyzed = octetanalyzed + resultDataItem.Item3;
                             dtNonCompressed.Merge(resultDataItem.Item4);
+                            
                         }
                         fspecAnalyzedBit++;
                     }
