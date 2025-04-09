@@ -129,6 +129,7 @@ namespace ASTdecoder
     {
         public static List<CAT> ParseAsterixCat48(byte[] data)
         {
+            int missatgeAnalitzat = 1;
             List<CAT> results = new List<CAT>();
 
             
@@ -298,8 +299,15 @@ namespace ASTdecoder
                     }
                     fspecAnalyzedByte++;
                 }
+
                 TaulaMain.Rows.Add(filaActual);
 
+                missatgeAnalitzat = missatgeAnalitzat + 1;
+
+                if (missatgeAnalitzat == 3476) //3476
+                {
+                    missatgeAnalitzat = 3476;
+                }
                 octetanalyzed = octetanalyzed - 3 - record.fspeclength;
 
                 indexByte = indexByte + record.lenght;
