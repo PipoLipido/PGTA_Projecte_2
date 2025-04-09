@@ -36,7 +36,11 @@ namespace Consola_projecte2
                 byte[] fileData = File.ReadAllBytes(openFileDialog.FileName);
                 List<CAT> result = AsterixDecoder.ParseAsterixCat48(fileData);
 
-                dataGridView1.DataSource = result;
+                int indexSeleccionat = 0; 
+                DataTable dt = result[indexSeleccionat].dt;
+                dataGridView1.DataSource = dt;
+
+
             }
         }
 

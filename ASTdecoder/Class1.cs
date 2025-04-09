@@ -9,6 +9,7 @@ namespace ASTdecoder
 {
     public class CAT
     {
+        public DataTable dt { get; set; }
         //FSPEC
         public int fspeclength { get; set; }
         public int DSI { get; set; }
@@ -130,6 +131,7 @@ namespace ASTdecoder
         {
             List<CAT> results = new List<CAT>();
 
+            
             DataTable TaulaMain = new DataTable();
             TaulaMain.Columns.Add("SAC", typeof(int));
             TaulaMain.Columns.Add("SIC", typeof(int));
@@ -227,7 +229,7 @@ namespace ASTdecoder
             TaulaMain.Columns.Add("TCC", typeof(string));
 
             int indexByte = 0;
-
+            CAT record = new CAT();
             while (indexByte < data.Length) //en comptes de mirar totes les dades com un sol vector format per tots els missatges junts, separem missatge per missatge.
             {
                 DataTable dtNonCompressed = new DataTable();
@@ -239,7 +241,7 @@ namespace ASTdecoder
                     continue;
                 }
 
-                CAT record = new CAT();
+                //CAT record = new CAT();
                 record.DSI = data[indexByte];
 
                 int length = (data[indexByte + 1] << 8) | data[indexByte + 2];
@@ -313,7 +315,8 @@ namespace ASTdecoder
                 TaulaMain.Rows[i]["Index"] = i + 1; // o només 'i' si vols començar a 0
             }
 
-
+            record.dt = TaulaMain;
+            results.Add(record);
             return results;
         }
     }
