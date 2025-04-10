@@ -17,6 +17,7 @@ namespace Consola_projecte2
 {
     public partial class MainConsole : Form
     {
+        DataTable dt = new DataTable();
         public MainConsole()
         {
             InitializeComponent();
@@ -37,10 +38,8 @@ namespace Consola_projecte2
                 List<CAT> result = AsterixDecoder.ParseAsterixCat48(fileData);
 
                 int indexSeleccionat = 0; 
-                DataTable dt = result[indexSeleccionat].dt;
+                dt = result[indexSeleccionat].dt;
                 dataGridView1.DataSource = dt;
-
-
             }
         }
 
@@ -52,6 +51,13 @@ namespace Consola_projecte2
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void Map_Click(object sender, EventArgs e)
+        {
+            
+            mapconsole mapconsole = new mapconsole(dt);
+            mapconsole.Show();
         }
     }
 }
