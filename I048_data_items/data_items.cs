@@ -837,7 +837,7 @@ namespace I048_data_items
 
                 if (subfields[index] == "0") // Corresponding to subfield 1 (SSR plot runlength)
                 {
-                    SRL = Convert.ToInt32(Byte, 2) * 0.0439453125;
+                    SRL = Convert.ToInt32(Byte, 2) * (360/Math.Pow(2, 13));
                 }
                 else if (subfields[index] == "1") // ( Number of received replies for M(SSR))
                 {
