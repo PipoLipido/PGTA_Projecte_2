@@ -447,19 +447,19 @@ namespace I048_data_items
                 }
                 else if (TYP == "100")
                 {
-                    TYP = "Single ModeS All-Call";
+                    TYP = "Single Mode S All-Call";
                 }
                 else if (TYP == "101")
                 {
-                    TYP = "Single ModeS Roll-Call";
+                    TYP = "Single Mode S Roll-Call";
                 }
                 else if (TYP == "110")
                 {
-                    TYP = "ModeS All-Call + PSR";
+                    TYP = "Mode S All-Call + PSR";
                 }
                 else if (TYP == "111")
                 {
-                    TYP = "ModeS Roll-Call + PSR";
+                    TYP = "Mode S Roll-Call + PSR";
                 }
                 else
                 {
@@ -777,7 +777,7 @@ namespace I048_data_items
 
 
             dt.Columns.Add("Mode3A", typeof(string));
-            dt.Rows.Add(V, G, L, $"A = {A:D2}, B = {B:D2}, C = {C:D2}, D = {D:D2}");
+            dt.Rows.Add(V, G, L, A + B + C + D);
 
             return dt;
         }

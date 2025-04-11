@@ -59,5 +59,35 @@ namespace Consola_projecte2
             mapconsole mapconsole = new mapconsole(dt);
             mapconsole.Show();
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PureTargetButton_Click(object sender, EventArgs e)
+        {
+            if (dt != null)
+            {
+                DataTable PureTargetTable = dt;
+                List<DataRow> EliminatedRows = new List<DataRow>();
+
+                foreach (DataRow row in PureTargetTable.Rows)
+                {
+                    if (row["TYP"].ToString() != "Single Mode S All-Call" & row["TYP"].ToString() != "Single Mode S Roll-Call" & row["TYP"].ToString() != "Mode S All-Call + PSR" &
+                        row["TYP"].ToString() != "Mode S Roll-Call + PSR")
+                    {
+                        EliminatedRows.Add(row);
+                    }
+                }
+
+                foreach (DataRow row in EliminatedRows)
+                {
+                    PureTargetTable.Rows.Remove(row);
+                }
+
+                dataGridView1.DataSource = PureTargetTable;
+            }
+        }
     }
 }
