@@ -475,9 +475,9 @@ namespace ASTdecoder
             dt.Columns.Add("SAC", typeof(int));
             dt.Columns.Add("SIC", typeof(int));
             dt.Columns.Add("Time of day (seconds)", typeof(string));
-            //latitud
-            //longitud
-            //hwgs84    
+            dt.Columns.Add("latitud", typeof(double));
+            dt.Columns.Add("longitud", typeof(double));
+            dt.Columns.Add("hwgs84", typeof(double));
             dt.Columns.Add("TYP", typeof(string));
             dt.Columns.Add("SIM", typeof(string));
             dt.Columns.Add("RDP", typeof(string));
@@ -581,6 +581,8 @@ namespace ASTdecoder
             return dt;
         }
     }
+
+
 
     //_______________________________________________________________________________
     //Multithread en el loop principal

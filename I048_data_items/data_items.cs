@@ -394,7 +394,7 @@ namespace I048_data_items
         }
         public static DataTable TimeofDay(byte byte1, byte byte2, byte byte3)
         {
-            string TimeOfDayString = Convert.ToString((byte1 << 16) | (byte2 << 8) | byte3,2);
+            string TimeOfDayString = Convert.ToString((byte1 << 16) | (byte2 << 8) | byte3, 2);
             double TimeOfDay = Convert.ToInt32(TimeOfDayString, 2);
             TimeOfDay = TimeOfDay / 128;
             TimeSpan time = TimeSpan.FromSeconds(TimeOfDay);
@@ -518,7 +518,7 @@ namespace I048_data_items
             {
                 octetanalyzed = octetanalyzed + 1;
 
-                TST = Convert.ToString(data[octetanalyzed+1], 2).PadLeft(8, '0').Substring(0, 1);
+                TST = Convert.ToString(data[octetanalyzed + 1], 2).PadLeft(8, '0').Substring(0, 1);
 
                 if (TST == "1")
                 {
@@ -529,7 +529,7 @@ namespace I048_data_items
                     TST = "Real target report";
                 }
 
-                ERR = Convert.ToString(data[octetanalyzed+1], 2).PadLeft(8, '0').Substring(1, 1);
+                ERR = Convert.ToString(data[octetanalyzed + 1], 2).PadLeft(8, '0').Substring(1, 1);
 
                 if (ERR == "1")
                 {
@@ -838,7 +838,7 @@ namespace I048_data_items
 
                 if (subfields[index] == "0") // Corresponding to subfield 1 (SSR plot runlength)
                 {
-                    SRL = Convert.ToInt32(Byte, 2) * (360/Math.Pow(2, 13));
+                    SRL = Convert.ToInt32(Byte, 2) * (360 / Math.Pow(2, 13));
                 }
                 else if (subfields[index] == "1") // ( Number of received replies for M(SSR))
                 {
@@ -858,7 +858,7 @@ namespace I048_data_items
                 }
                 else if (subfields[index] == "5") // (Difference in Range)
                 {
-                    RPD = Convert.ToInt32(Byte, 2) /256;
+                    RPD = Convert.ToInt32(Byte, 2) / 256;
                 }
                 else if (subfields[index] == "6") // (Difference in Azimuth)
                 {
@@ -1124,7 +1124,7 @@ namespace I048_data_items
 
             string HeadingString = Convert.ToString(((byte3 << 8) | byte4), 2);
             double Heading = Convert.ToInt32(HeadingString, 2);
-            Heading = Heading * 360/(Math.Pow(2,16));
+            Heading = Heading * 360 / (Math.Pow(2, 16));
 
             DataTable dt = new DataTable();
 
@@ -1355,6 +1355,8 @@ namespace I048_data_items
 
             return dt;
         }
+
+
         public static DataTable TrackStatus(byte[] data, int octetanalyzed)
         {
             string octet1bits = Convert.ToString(data[octetanalyzed], 2).PadLeft(8, '0');
@@ -1422,12 +1424,38 @@ namespace I048_data_items
 
             dt.Rows.Add(CNF, RAD, DOU, MAH, CDM, TRE, GHO, SUP, TCC);
 
-            
+
 
             return dt;
         }
+        public static DataTable LatLong(byte[] data, int octetanalyzed)
+        {
+            //Check if it is negative or positive
+            double radarLat = 41.2972; // latitud (ex: Barcelona)
+            double radarLon = 2.0833;   // longitud
 
-        
+            // Aconseguim els valors polars
+            double rho = dt.Rows["Rho (Nautical Miles)"] != DBNull.Value ? Convert.ToDouble(row["Rho (Nautical Miles)"]) : 0;
+            double theta = row["Theta (degrees)"] != DBNull.Value ? Convert.ToDouble(row["Theta (degrees)"]) : 0;
+
+            // Convertim l'angle de graus a radians.
+            double thetaRad = theta * Math.PI / 180.0;
+
+            // Calcular la variació en latitud i longitud.
+            // 1 grau de latitud ≈ 60 milles nàutiques.
+            double deltaLat = (rho * Math.Cos(thetaRad)) / 60.0;
+            double deltaLon = (rho * Math.Sin(thetaRad)) / (60.0 * Math.Cos(radarLat * Math.PI / 180.0));
+
+            // La nova latitud i longitud
+            double lat = radarLat + deltaLat;
+            double lng = radarLon + deltaLon;
+
+            // Altres dades (velocitat i altitud)
+            double speed = row["Mach"] != DBNull.Value ? Convert.ToDouble(row["Mach"]) : 0;
+            double altitude = row["Flight Level"] != DBNull.Value ? Convert.ToDouble(row["Flight Level"]) : 0;
+            return dt;
+
+        }
+
     }
-
 }
