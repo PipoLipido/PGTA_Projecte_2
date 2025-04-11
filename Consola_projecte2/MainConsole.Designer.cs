@@ -35,12 +35,15 @@
             this.PureTargetButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.LLFilter = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // show_data
             // 
-            this.show_data.Location = new System.Drawing.Point(1225, 54);
+            this.show_data.Location = new System.Drawing.Point(1284, 57);
             this.show_data.Name = "show_data";
             this.show_data.Size = new System.Drawing.Size(75, 23);
             this.show_data.TabIndex = 0;
@@ -63,15 +66,15 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(52, 38);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1140, 472);
+            this.dataGridView1.Size = new System.Drawing.Size(1223, 556);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Map
             // 
-            this.Map.Location = new System.Drawing.Point(52, 534);
+            this.Map.Location = new System.Drawing.Point(1284, 432);
             this.Map.Name = "Map";
-            this.Map.Size = new System.Drawing.Size(92, 19);
+            this.Map.Size = new System.Drawing.Size(92, 24);
             this.Map.TabIndex = 3;
             this.Map.Text = "Map";
             this.Map.UseVisualStyleBackColor = true;
@@ -79,7 +82,7 @@
             // 
             // PureTargetButton
             // 
-            this.PureTargetButton.Location = new System.Drawing.Point(1225, 123);
+            this.PureTargetButton.Location = new System.Drawing.Point(1284, 126);
             this.PureTargetButton.Name = "PureTargetButton";
             this.PureTargetButton.Size = new System.Drawing.Size(122, 23);
             this.PureTargetButton.TabIndex = 4;
@@ -90,7 +93,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1222, 38);
+            this.label1.Location = new System.Drawing.Point(1281, 41);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 13);
             this.label1.TabIndex = 5;
@@ -100,17 +103,48 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1222, 97);
+            this.label2.Location = new System.Drawing.Point(1281, 100);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(34, 13);
             this.label2.TabIndex = 6;
             this.label2.Text = "Filters";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1284, 299);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(122, 23);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "Pure Target Filter";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(1281, 405);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(55, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Simulation";
+            // 
+            // LLFilter
+            // 
+            this.LLFilter.Location = new System.Drawing.Point(1284, 155);
+            this.LLFilter.Name = "LLFilter";
+            this.LLFilter.Size = new System.Drawing.Size(122, 23);
+            this.LLFilter.TabIndex = 10;
+            this.LLFilter.Text = "Lat/Long Filter";
+            this.LLFilter.UseVisualStyleBackColor = true;
+            this.LLFilter.Click += new System.EventHandler(this.LLFilter_Click);
+            // 
             // MainConsole
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1426, 596);
+            this.ClientSize = new System.Drawing.Size(1451, 633);
+            this.Controls.Add(this.LLFilter);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.PureTargetButton);
@@ -136,6 +170,10 @@
         private System.Windows.Forms.Button PureTargetButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button LatLongFilter;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button LLFilter;
     }
 }
 

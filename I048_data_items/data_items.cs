@@ -774,10 +774,11 @@ namespace I048_data_items
             dt.Columns.Add("V", typeof(string));
             dt.Columns.Add("G", typeof(string));
             dt.Columns.Add("L", typeof(string));
-
-
             dt.Columns.Add("Mode3A", typeof(string));
-            dt.Rows.Add(V, G, L, A + B + C + D);
+
+            string Mode3A = (A.ToString() + B.ToString() + C.ToString() + D.ToString());
+
+            dt.Rows.Add(V, G, L, Mode3A);
 
             return dt;
         }
