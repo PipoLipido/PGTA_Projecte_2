@@ -134,6 +134,7 @@ namespace ASTdecoder
     //    {
     //        List<CAT> results = new List<CAT>();
 
+    //        int missatge = 1;
 
     //        DataTable TaulaMain = new DataTable();
     //        TaulaMain.Columns.Add("SAC", typeof(int));
@@ -257,8 +258,11 @@ namespace ASTdecoder
 
     //            while (indexfound == false)
     //            {
-    //                int bit = (data[indexByte + 3 + lastFspecByte] >> 7) & 1;
-    //                if (bit == 0)
+    //                int byteAnalitzat = data[indexByte + 3 + lastFspecByte];
+    //                //string CadenaBitsAnalitzat = Convert.ToString(byteAnalitzat, 2);
+    //                int ultimBit = byteAnalitzat % 2;
+    //                //int bit = (data[indexByte + 3 + lastFspecByte] >> 7) & 1;
+    //                if (ultimBit == 0)
     //                {
     //                    indexfound = true;
     //                }
@@ -301,6 +305,11 @@ namespace ASTdecoder
     //                }
     //                fspecAnalyzedByte++;
     //            }
+    //            missatge += 1;
+    //            if(missatge == 3476)
+    //            {
+    //                missatge = 3476;
+    //            }
     //            TaulaMain.Rows.Add(filaActual);
 
     //            octetanalyzed = octetanalyzed - 3 - record.fspeclength;
@@ -326,6 +335,7 @@ namespace ASTdecoder
 
     //_________________________________________________________________________________
     //Multithread en el doble loop
+
     public class AsterixDecoder
     {
         public static List<CAT> ParseAsterixCat48(byte[] data)
@@ -416,8 +426,8 @@ namespace ASTdecoder
             while (!indexFound)
             {
                 int currentByte = data[fspecStart + lastFspecByte];
-                int bit = (currentByte >> 7) & 1;
-                if (bit == 0)
+                int ultimBit = currentByte % 2;
+                if (ultimBit == 0)
                     indexFound = true;
                 fspec.Add(Convert.ToString(currentByte, 2).PadLeft(8, '0'));
                 lastFspecByte++;
@@ -465,6 +475,9 @@ namespace ASTdecoder
             dt.Columns.Add("SAC", typeof(int));
             dt.Columns.Add("SIC", typeof(int));
             dt.Columns.Add("Time of day (seconds)", typeof(string));
+            //latitud
+            //longitud
+            //hwgs84    
             dt.Columns.Add("TYP", typeof(string));
             dt.Columns.Add("SIM", typeof(string));
             dt.Columns.Add("RDP", typeof(string));
@@ -476,16 +489,16 @@ namespace ASTdecoder
             dt.Columns.Add("ME", typeof(string));
             dt.Columns.Add("MI", typeof(string));
             dt.Columns.Add("FOE_FRI", typeof(string));
+
             dt.Columns.Add("ADSB_EP", typeof(string));
             dt.Columns.Add("ADSB_VAL", typeof(string));
             dt.Columns.Add("SCN_EP", typeof(string));
             dt.Columns.Add("SCN_VAL", typeof(string));
             dt.Columns.Add("PAI_EP", typeof(string));
             dt.Columns.Add("PAI_VAL", typeof(string));
+
             dt.Columns.Add("Rho (Nautical Miles)", typeof(double));
             dt.Columns.Add("Theta (degrees)", typeof(double));
-            dt.Columns.Add("X coordinate", typeof(int));
-            dt.Columns.Add("Y coordinate", typeof(int));
             dt.Columns.Add("V", typeof(string));
             dt.Columns.Add("G", typeof(string));
             dt.Columns.Add("L", typeof(string));
@@ -493,6 +506,7 @@ namespace ASTdecoder
             dt.Columns.Add("V_fl", typeof(string));
             dt.Columns.Add("G_fl", typeof(string));
             dt.Columns.Add("Flight Level", typeof(double));
+            //Mode C corrected
             dt.Columns.Add("SRL", typeof(double));
             dt.Columns.Add("SRR", typeof(int));
             dt.Columns.Add("SAM", typeof(double));
@@ -500,7 +514,9 @@ namespace ASTdecoder
             dt.Columns.Add("PAM", typeof(double));
             dt.Columns.Add("RPD", typeof(double));
             dt.Columns.Add("APD", typeof(double));
+            dt.Columns.Add("Aircraft Address", typeof(string));
             dt.Columns.Add("Aircraft_ID", typeof(string));
+            //MODE S
             dt.Columns.Add("SelectedAltitude_Status", typeof(string));
             dt.Columns.Add("SelectedAltitude", typeof(int));
             dt.Columns.Add("FMSAltitude_Status", typeof(string));
@@ -513,7 +529,7 @@ namespace ASTdecoder
             dt.Columns.Add("ApprMode", typeof(string));
             dt.Columns.Add("TargetAltitudeSource_Status", typeof(string));
             dt.Columns.Add("TargetAltitudeSource", typeof(string));
-            dt.Columns.Add("LWingD", typeof(string));
+            dt.Columns.Add("LWingD", typeof(string)); //no apareix
             dt.Columns.Add("RollAngle_Status", typeof(string));
             dt.Columns.Add("RollAngle", typeof(double));
             dt.Columns.Add("TrueTrackAngle_Status", typeof(string));
@@ -532,21 +548,16 @@ namespace ASTdecoder
             dt.Columns.Add("Mach", typeof(double));
             dt.Columns.Add("BaromAltRate_Status", typeof(string));
             dt.Columns.Add("BaromAltRate", typeof(double));
-            dt.Columns.Add("Below", typeof(string));
+            dt.Columns.Add("Below", typeof(string)); // no apareix
             dt.Columns.Add("InertialVertVel_Status", typeof(string));
             dt.Columns.Add("InertialVertVel", typeof(double));
+
+            dt.Columns.Add("TrackNumber", typeof(int));
+            dt.Columns.Add("X coordinate", typeof(int));
+            dt.Columns.Add("Y coordinate", typeof(int));
             dt.Columns.Add("Velocity", typeof(double));
             dt.Columns.Add("Heading", typeof(double));
-            dt.Columns.Add("3D Radar Height", typeof(int));
-            dt.Columns.Add("COM", typeof(string));
-            dt.Columns.Add("STAT", typeof(string));
-            dt.Columns.Add("SI", typeof(string));
-            dt.Columns.Add("MSSC", typeof(string));
-            dt.Columns.Add("ARC", typeof(string));
-            dt.Columns.Add("AIC", typeof(string));
-            dt.Columns.Add("B1A", typeof(string));
-            dt.Columns.Add("B1B", typeof(string));
-            dt.Columns.Add("TrackNumber", typeof(int));
+
             dt.Columns.Add("CNF", typeof(string));
             dt.Columns.Add("RAD", typeof(string));
             dt.Columns.Add("DOU", typeof(string));
@@ -556,6 +567,16 @@ namespace ASTdecoder
             dt.Columns.Add("GHO", typeof(string));
             dt.Columns.Add("SUP", typeof(string));
             dt.Columns.Add("TCC", typeof(string));
+
+            dt.Columns.Add("3D Radar Height", typeof(int));
+            dt.Columns.Add("COM", typeof(string));
+            dt.Columns.Add("STAT", typeof(string));
+            dt.Columns.Add("SI", typeof(string));
+            dt.Columns.Add("MSSC", typeof(string));
+            dt.Columns.Add("ARC", typeof(string));
+            dt.Columns.Add("AIC", typeof(string));
+            dt.Columns.Add("B1A", typeof(string));
+            dt.Columns.Add("B1B", typeof(string));
 
             return dt;
         }
