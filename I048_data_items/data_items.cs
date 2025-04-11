@@ -850,7 +850,7 @@ namespace I048_data_items
                 }
                 else if (subfields[index] == "3") // (PSR plot runlength)
                 {
-                    PRL = Convert.ToInt32(Byte, 2) * 0.0439453125;
+                    PRL = Convert.ToInt32(Byte, 2) * (360 / Math.Pow(2, 13));
                 }
                 else if (subfields[index] == "4") // (PSR amplitude)
                 {
@@ -858,11 +858,11 @@ namespace I048_data_items
                 }
                 else if (subfields[index] == "5") // (Difference in Range)
                 {
-                    RPD = Convert.ToInt32(Byte, 2) * 0.00390625;
+                    RPD = Convert.ToInt32(Byte, 2) /256;
                 }
                 else if (subfields[index] == "6") // (Difference in Azimuth)
                 {
-                    APD = ComplementADos(Byte) * 0.02197265625;
+                    APD = ComplementADos(Byte) * (360 / Math.Pow(2, 14));
                 }
 
             }
