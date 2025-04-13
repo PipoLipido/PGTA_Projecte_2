@@ -7,6 +7,8 @@ using System.Data;
 using System.IO;
 using System.Reflection;
 using System.Security.Policy;
+using I048_data_items;
+
 
 
 namespace I048_data_items
@@ -1428,32 +1430,43 @@ namespace I048_data_items
 
             return dt;
         }
-        public static DataTable LatLong(byte[] data, int octetanalyzed)
+        public static (double Lat, double Long) LatLong(DataTable dt)
         {
-            //Check if it is negative or positive
-            double radarLat = 41.2972; // latitud (ex: Barcelona)
-            double radarLon = 2.0833;   // longitud
 
-            // Aconseguim els valors polars
-            double rho = dt.Rows["Rho (Nautical Miles)"] != DBNull.Value ? Convert.ToDouble(row["Rho (Nautical Miles)"]) : 0;
-            double theta = row["Theta (degrees)"] != DBNull.Value ? Convert.ToDouble(row["Theta (degrees)"]) : 0;
+            // We obtain the radar latitude and longitude in degrees
 
-            // Convertim l'angle de graus a radians.
-            double thetaRad = theta * Math.PI / 180.0;
+            // Both positive as are in the N and E sector
 
-            // Calcular la variació en latitud i longitud.
-            // 1 grau de latitud ≈ 60 milles nàutiques.
-            double deltaLat = (rho * Math.Cos(thetaRad)) / 60.0;
-            double deltaLon = (rho * Math.Sin(thetaRad)) / (60.0 * Math.Cos(radarLat * Math.PI / 180.0));
+            string RadLat = (41.2972 + (18 / 60) + (2.5284 / 3600)).ToString();
+            string RadLong = (2.0833 + (6 / 60) + (7.4095 / 3600)).ToString();
 
-            // La nova latitud i longitud
-            double lat = radarLat + deltaLat;
-            double lng = radarLon + deltaLon;
+            // Convert from cartesian to spherical
 
-            // Altres dades (velocitat i altitud)
-            double speed = row["Mach"] != DBNull.Value ? Convert.ToDouble(row["Mach"]) : 0;
-            double altitude = row["Flight Level"] != DBNull.Value ? Convert.ToDouble(row["Flight Level"]) : 0;
-            return dt;
+            DataColumn sphericAzimuth = new DataColumn();
+            DataColumn sphericRange = new DataColumn();
+            DataColumn sphericElevation = new DataColumn();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                if (row["X coordinate"] != "N/A"  & row["Y coordinate"] != "N/A")
+                {
+                    sphericAzimuth.Rows.Add(GeoUtils.CalculateAzimuth(row["X coordinate"], row["Y coordinate"]));
+                    sphericRange.Rows.Add();
+                    sphericElevation.Rows.Add();
+
+
+                }
+                if (row["Y coordinate"] != "N/A")
+                {
+                    double CartesianY = Convert.ToDouble(row["Y coordinate"]);
+                    long[] = CartesianY * constante;
+                }
+                
+            }
+
+
+
+            return (double Lat, double Long);
 
         }
 
