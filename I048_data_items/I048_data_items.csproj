@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="data_items.cs" />
+    <Compile Include="GeneralMatrix_v2.cs" />
+    <Compile Include="GeoUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

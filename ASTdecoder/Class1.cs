@@ -582,241 +582,242 @@ namespace ASTdecoder
         }
     }
 
-
-
-    //_______________________________________________________________________________
-    //Multithread en el loop principal
-
-    //public class AsterixDecoder
-    //{
-    //    public static List<CAT> ParseAsterixCat48(byte[] data)
-    //    {
-    //        // 1. Creem el DataTable amb la mateixa estructura que el codi original.
-    //        DataTable TaulaMain = CreateSchema();
-
-    //        // 2. Recorrer el vector per identificar els segments (missatges) de categoria 48.
-    //        // Cada segment s’identifica per la seva posició d'inici i longitud.
-    //        List<(int StartIndex, int MessageLength)> segments = new List<(int, int)>();
-    //        int indexByte = 0;
-    //        while (indexByte < data.Length)
-    //        {
-    //            // Si el byte actual no és 48, incrementem i continuem.
-    //            if (data[indexByte] != 48)
-    //            {
-    //                indexByte++;
-    //                continue;
-    //            }
-    //            int messageLength = (data[indexByte + 1] << 8) | data[indexByte + 2];
-    //            segments.Add((indexByte, messageLength));
-    //            indexByte += messageLength;
-    //        }
-
-    //        // 3. Processar cada missatge en paral·lel utilitzant la llista de segments.
-    //        // Com que el DataTable no és thread-safe, recollim els resultats en una estructura concurrent (per exemple, un ConcurrentDictionary)
-    //        // i després els afegim seqüencialment al DataTable.
-    //        var resultDict = new ConcurrentDictionary<int, Dictionary<string, object>>();
-
-    //        Parallel.For(0, segments.Count, i =>
-    //        {
-    //            var seg = segments[i];
-    //            var rowData = ProcessMessage(data, seg.StartIndex, seg.MessageLength, TaulaMain);
-    //            resultDict[i] = rowData;
-    //        });
-
-    //        // 4. Omplir el DataTable amb les files processades (ordenades per l'ordre original)
-    //        for (int i = 0; i < segments.Count; i++)
-    //        {
-    //            DataRow row = TaulaMain.NewRow();
-    //            foreach (var pair in resultDict[i])
-    //            {
-    //                if (TaulaMain.Columns.Contains(pair.Key))
-    //                {
-    //                    row[pair.Key] = pair.Value;
-    //                }
-    //            }
-    //            TaulaMain.Rows.Add(row);
-    //        }
-
-    //        // 5. Afegir la columna "Index" si no existeix i assignar un índex a cada fila.
-    //        if (!TaulaMain.Columns.Contains("Index"))
-    //        {
-    //            TaulaMain.Columns.Add("Index", typeof(int));
-    //        }
-    //        for (int i = 0; i < TaulaMain.Rows.Count; i++)
-    //        {
-    //            TaulaMain.Rows[i]["Index"] = i + 1; // o "i" si vols començar a 0
-    //        }
-
-    //        // 6. Crear l'objecte CAT i retornar el resultat.
-    //        CAT record = new CAT();
-    //        record.dt = TaulaMain;
-    //        return new List<CAT> { record };
-    //    }
-
-    //    // Mètode que processa un missatge individual a partir de la seva posició d'inici.
-    //    // Es basa en el codi original per extreure el header, FSPEC i cada data item.
-    //    private static Dictionary<string, object> ProcessMessage(byte[] data, int start, int length, DataTable schema)
-    //    {
-    //        Dictionary<string, object> rowData = new Dictionary<string, object>();
-    //        int octetAnalitzat = start;
-
-    //        // Processar el header bàsic
-    //        int dsi = data[start];
-    //        if (schema.Columns.Contains("DSI"))
-    //            rowData["DSI"] = dsi;
-
-    //        int recLength = (data[start + 1] << 8) | data[start + 2];
-    //        if (schema.Columns.Contains("lenght"))
-    //            rowData["lenght"] = recLength;
-
-    //        // Processar el camp FSPEC: determinar quants octets ocupa
-    //        int fspecStart = start + 3;
-    //        int fspecLength = 0;
-    //        bool trobat = false;
-    //        List<string> fspec = new List<string>();
-
-    //        while (!trobat)
-    //        {
-    //            int currentByte = data[fspecStart + fspecLength];
-    //            int bit = (currentByte >> 7) & 1;
-    //            if (bit == 0)
-    //                trobat = true;
-    //            fspec.Add(Convert.ToString(currentByte, 2).PadLeft(8, '0'));
-    //            fspecLength++;
-    //        }
-
-    //        // Actualitzem la posició després del header i del FSPEC.
-    //        octetAnalitzat = start + 3 + fspecLength;
-
-    //        // Processar el doble bucle per recórrer els bits del FSPEC.
-    //        for (int byteIdx = 0; byteIdx < fspecLength; byteIdx++)
-    //        {
-    //            for (int bitIdx = 0; bitIdx < 7; bitIdx++)
-    //            {
-    //                if (fspec[byteIdx].Substring(bitIdx, 1) != "0")
-    //                {
-    //                    // Aquest mètode extreu el data item corresponent. 
-    //                    // Se li passa: l'índex del bit, el número d'octet de FSPEC, el vector de dades, la longitud FSPEC i la posició actual.
-    //                    var resultItem = I048_data_items.data_items.GetDataItem(bitIdx, byteIdx, data, fspecLength, octetAnalitzat);
-    //                    // resultItem.Item3 indica el nombre d'octets consumits per aquest item
-    //                    octetAnalitzat += resultItem.Item3;
-    //                    // Incorporar les dades extretes al diccionari (fil·la de dades)
-    //                    foreach (DataRow fila in resultItem.Item4.Rows)
-    //                    {
-    //                        foreach (DataColumn col in resultItem.Item4.Columns)
-    //                        {
-    //                            if (schema.Columns.Contains(col.ColumnName))
-    //                            {
-    //                                rowData[col.ColumnName] = fila[col.ColumnName];
-    //                            }
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
-    //        return rowData;
-    //    }
-
-    //    // Mètode auxiliar per crear l'esquema del DataTable (les columnes segons el codi original).
-    //    private static DataTable CreateSchema()
-    //    {
-    //        DataTable dt = new DataTable();
-    //        dt.Columns.Add("SAC", typeof(int));
-    //        dt.Columns.Add("SIC", typeof(int));
-    //        dt.Columns.Add("Time of day (seconds)", typeof(string));
-    //        dt.Columns.Add("TYP", typeof(string));
-    //        dt.Columns.Add("SIM", typeof(string));
-    //        dt.Columns.Add("RDP", typeof(string));
-    //        dt.Columns.Add("SPI", typeof(string));
-    //        dt.Columns.Add("RAB", typeof(string));
-    //        dt.Columns.Add("TST", typeof(string));
-    //        dt.Columns.Add("ERR", typeof(string));
-    //        dt.Columns.Add("XPP", typeof(string));
-    //        dt.Columns.Add("ME", typeof(string));
-    //        dt.Columns.Add("MI", typeof(string));
-    //        dt.Columns.Add("FOE_FRI", typeof(string));
-    //        dt.Columns.Add("ADSB_EP", typeof(string));
-    //        dt.Columns.Add("ADSB_VAL", typeof(string));
-    //        dt.Columns.Add("SCN_EP", typeof(string));
-    //        dt.Columns.Add("SCN_VAL", typeof(string));
-    //        dt.Columns.Add("PAI_EP", typeof(string));
-    //        dt.Columns.Add("PAI_VAL", typeof(string));
-    //        dt.Columns.Add("Rho (Nautical Miles)", typeof(double));
-    //        dt.Columns.Add("Theta (degrees)", typeof(double));
-    //        dt.Columns.Add("X coordinate", typeof(int));
-    //        dt.Columns.Add("Y coordinate", typeof(int));
-    //        dt.Columns.Add("V", typeof(string));
-    //        dt.Columns.Add("G", typeof(string));
-    //        dt.Columns.Add("L", typeof(string));
-    //        dt.Columns.Add("Mode3A", typeof(string));
-    //        dt.Columns.Add("V_fl", typeof(string));
-    //        dt.Columns.Add("G_fl", typeof(string));
-    //        dt.Columns.Add("Flight Level", typeof(double));
-    //        dt.Columns.Add("SRL", typeof(double));
-    //        dt.Columns.Add("SRR", typeof(int));
-    //        dt.Columns.Add("SAM", typeof(double));
-    //        dt.Columns.Add("PRL", typeof(double));
-    //        dt.Columns.Add("PAM", typeof(double));
-    //        dt.Columns.Add("RPD", typeof(double));
-    //        dt.Columns.Add("APD", typeof(double));
-    //        dt.Columns.Add("Aircraft_ID", typeof(string));
-    //        dt.Columns.Add("SelectedAltitude_Status", typeof(string));
-    //        dt.Columns.Add("SelectedAltitude", typeof(int));
-    //        dt.Columns.Add("FMSAltitude_Status", typeof(string));
-    //        dt.Columns.Add("FMSAltitude", typeof(int));
-    //        dt.Columns.Add("BaroSetting_Status", typeof(string));
-    //        dt.Columns.Add("BaroSetting", typeof(double));
-    //        dt.Columns.Add("MCP_FCU_MODE_BITS_Status", typeof(string));
-    //        dt.Columns.Add("VNAV", typeof(string));
-    //        dt.Columns.Add("AltHoldMode", typeof(string));
-    //        dt.Columns.Add("ApprMode", typeof(string));
-    //        dt.Columns.Add("TargetAltitudeSource_Status", typeof(string));
-    //        dt.Columns.Add("TargetAltitudeSource", typeof(string));
-    //        dt.Columns.Add("LWingD", typeof(string));
-    //        dt.Columns.Add("RollAngle_Status", typeof(string));
-    //        dt.Columns.Add("RollAngle", typeof(double));
-    //        dt.Columns.Add("TrueTrackAngle_Status", typeof(string));
-    //        dt.Columns.Add("TrueTrackAngle", typeof(double));
-    //        dt.Columns.Add("GS_Status", typeof(string));
-    //        dt.Columns.Add("GS", typeof(double));
-    //        dt.Columns.Add("TrackAngleRate_Status", typeof(string));
-    //        dt.Columns.Add("TrackAngleRate", typeof(double));
-    //        dt.Columns.Add("TAS_Status", typeof(string));
-    //        dt.Columns.Add("TAS", typeof(double));
-    //        dt.Columns.Add("MagneticHeading_Status", typeof(string));
-    //        dt.Columns.Add("MagneticHeading", typeof(double));
-    //        dt.Columns.Add("IndicatedAirspeed_Status", typeof(string));
-    //        dt.Columns.Add("IndicatedAirspeed", typeof(double));
-    //        dt.Columns.Add("Mach_Status", typeof(string));
-    //        dt.Columns.Add("Mach", typeof(double));
-    //        dt.Columns.Add("BaromAltRate_Status", typeof(string));
-    //        dt.Columns.Add("BaromAltRate", typeof(double));
-    //        dt.Columns.Add("Below", typeof(string));
-    //        dt.Columns.Add("InertialVertVel_Status", typeof(string));
-    //        dt.Columns.Add("InertialVertVel", typeof(double));
-    //        dt.Columns.Add("Velocity", typeof(double));
-    //        dt.Columns.Add("Heading", typeof(double));
-    //        dt.Columns.Add("3D Radar Height", typeof(int));
-    //        dt.Columns.Add("COM", typeof(string));
-    //        dt.Columns.Add("STAT", typeof(string));
-    //        dt.Columns.Add("SI", typeof(string));
-    //        dt.Columns.Add("MSSC", typeof(string));
-    //        dt.Columns.Add("ARC", typeof(string));
-    //        dt.Columns.Add("AIC", typeof(string));
-    //        dt.Columns.Add("B1A", typeof(string));
-    //        dt.Columns.Add("B1B", typeof(string));
-    //        dt.Columns.Add("TrackNumber", typeof(int));
-    //        dt.Columns.Add("CNF", typeof(string));
-    //        dt.Columns.Add("RAD", typeof(string));
-    //        dt.Columns.Add("DOU", typeof(string));
-    //        dt.Columns.Add("MAH", typeof(string));
-    //        dt.Columns.Add("CDM", typeof(string));
-    //        dt.Columns.Add("TRE", typeof(string));
-    //        dt.Columns.Add("GHO", typeof(string));
-    //        dt.Columns.Add("SUP", typeof(string));
-    //        dt.Columns.Add("TCC", typeof(string));
-    //        return dt;
-    //    }
-    //}
-
 }
+
+
+        //_______________________________________________________________________________
+        //Multithread en el loop principal
+
+        //public class AsterixDecoder
+        //{
+        //    public static List<CAT> ParseAsterixCat48(byte[] data)
+        //    {
+        //        // 1. Creem el DataTable amb la mateixa estructura que el codi original.
+        //        DataTable TaulaMain = CreateSchema();
+
+        //        // 2. Recorrer el vector per identificar els segments (missatges) de categoria 48.
+        //        // Cada segment s’identifica per la seva posició d'inici i longitud.
+        //        List<(int StartIndex, int MessageLength)> segments = new List<(int, int)>();
+        //        int indexByte = 0;
+        //        while (indexByte < data.Length)
+        //        {
+        //            // Si el byte actual no és 48, incrementem i continuem.
+        //            if (data[indexByte] != 48)
+        //            {
+        //                indexByte++;
+        //                continue;
+        //            }
+        //            int messageLength = (data[indexByte + 1] << 8) | data[indexByte + 2];
+        //            segments.Add((indexByte, messageLength));
+        //            indexByte += messageLength;
+        //        }
+
+        //        // 3. Processar cada missatge en paral·lel utilitzant la llista de segments.
+        //        // Com que el DataTable no és thread-safe, recollim els resultats en una estructura concurrent (per exemple, un ConcurrentDictionary)
+        //        // i després els afegim seqüencialment al DataTable.
+        //        var resultDict = new ConcurrentDictionary<int, Dictionary<string, object>>();
+
+        //        Parallel.For(0, segments.Count, i =>
+        //        {
+        //            var seg = segments[i];
+        //            var rowData = ProcessMessage(data, seg.StartIndex, seg.MessageLength, TaulaMain);
+        //            resultDict[i] = rowData;
+        //        });
+
+        //        // 4. Omplir el DataTable amb les files processades (ordenades per l'ordre original)
+        //        for (int i = 0; i < segments.Count; i++)
+        //        {
+        //            DataRow row = TaulaMain.NewRow();
+        //            foreach (var pair in resultDict[i])
+        //            {
+        //                if (TaulaMain.Columns.Contains(pair.Key))
+        //                {
+        //                    row[pair.Key] = pair.Value;
+        //                }
+        //            }
+        //            TaulaMain.Rows.Add(row);
+        //        }
+
+        //        // 5. Afegir la columna "Index" si no existeix i assignar un índex a cada fila.
+        //        if (!TaulaMain.Columns.Contains("Index"))
+        //        {
+        //            TaulaMain.Columns.Add("Index", typeof(int));
+        //        }
+        //        for (int i = 0; i < TaulaMain.Rows.Count; i++)
+        //        {
+        //            TaulaMain.Rows[i]["Index"] = i + 1; // o "i" si vols començar a 0
+        //        }
+
+        //        // 6. Crear l'objecte CAT i retornar el resultat.
+        //        CAT record = new CAT();
+        //        record.dt = TaulaMain;
+        //        return new List<CAT> { record };
+        //    }
+
+        //    // Mètode que processa un missatge individual a partir de la seva posició d'inici.
+        //    // Es basa en el codi original per extreure el header, FSPEC i cada data item.
+        //    private static Dictionary<string, object> ProcessMessage(byte[] data, int start, int length, DataTable schema)
+        //    {
+        //        Dictionary<string, object> rowData = new Dictionary<string, object>();
+        //        int octetAnalitzat = start;
+
+        //        // Processar el header bàsic
+        //        int dsi = data[start];
+        //        if (schema.Columns.Contains("DSI"))
+        //            rowData["DSI"] = dsi;
+
+        //        int recLength = (data[start + 1] << 8) | data[start + 2];
+        //        if (schema.Columns.Contains("lenght"))
+        //            rowData["lenght"] = recLength;
+
+        //        // Processar el camp FSPEC: determinar quants octets ocupa
+        //        int fspecStart = start + 3;
+        //        int fspecLength = 0;
+        //        bool trobat = false;
+        //        List<string> fspec = new List<string>();
+
+        //        while (!trobat)
+        //        {
+        //            int currentByte = data[fspecStart + fspecLength];
+        //            int bit = (currentByte >> 7) & 1;
+        //            if (bit == 0)
+        //                trobat = true;
+        //            fspec.Add(Convert.ToString(currentByte, 2).PadLeft(8, '0'));
+        //            fspecLength++;
+        //        }
+
+        //        // Actualitzem la posició després del header i del FSPEC.
+        //        octetAnalitzat = start + 3 + fspecLength;
+
+        //        // Processar el doble bucle per recórrer els bits del FSPEC.
+        //        for (int byteIdx = 0; byteIdx < fspecLength; byteIdx++)
+        //        {
+        //            for (int bitIdx = 0; bitIdx < 7; bitIdx++)
+        //            {
+        //                if (fspec[byteIdx].Substring(bitIdx, 1) != "0")
+        //                {
+        //                    // Aquest mètode extreu el data item corresponent. 
+        //                    // Se li passa: l'índex del bit, el número d'octet de FSPEC, el vector de dades, la longitud FSPEC i la posició actual.
+        //                    var resultItem = I048_data_items.data_items.GetDataItem(bitIdx, byteIdx, data, fspecLength, octetAnalitzat);
+        //                    // resultItem.Item3 indica el nombre d'octets consumits per aquest item
+        //                    octetAnalitzat += resultItem.Item3;
+        //                    // Incorporar les dades extretes al diccionari (fil·la de dades)
+        //                    foreach (DataRow fila in resultItem.Item4.Rows)
+        //                    {
+        //                        foreach (DataColumn col in resultItem.Item4.Columns)
+        //                        {
+        //                            if (schema.Columns.Contains(col.ColumnName))
+        //                            {
+        //                                rowData[col.ColumnName] = fila[col.ColumnName];
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        return rowData;
+        //    }
+
+        //    // Mètode auxiliar per crear l'esquema del DataTable (les columnes segons el codi original).
+        //    private static DataTable CreateSchema()
+        //    {
+        //        DataTable dt = new DataTable();
+        //        dt.Columns.Add("SAC", typeof(int));
+        //        dt.Columns.Add("SIC", typeof(int));
+        //        dt.Columns.Add("Time of day (seconds)", typeof(string));
+        //        dt.Columns.Add("TYP", typeof(string));
+        //        dt.Columns.Add("SIM", typeof(string));
+        //        dt.Columns.Add("RDP", typeof(string));
+        //        dt.Columns.Add("SPI", typeof(string));
+        //        dt.Columns.Add("RAB", typeof(string));
+        //        dt.Columns.Add("TST", typeof(string));
+        //        dt.Columns.Add("ERR", typeof(string));
+        //        dt.Columns.Add("XPP", typeof(string));
+        //        dt.Columns.Add("ME", typeof(string));
+        //        dt.Columns.Add("MI", typeof(string));
+        //        dt.Columns.Add("FOE_FRI", typeof(string));
+        //        dt.Columns.Add("ADSB_EP", typeof(string));
+        //        dt.Columns.Add("ADSB_VAL", typeof(string));
+        //        dt.Columns.Add("SCN_EP", typeof(string));
+        //        dt.Columns.Add("SCN_VAL", typeof(string));
+        //        dt.Columns.Add("PAI_EP", typeof(string));
+        //        dt.Columns.Add("PAI_VAL", typeof(string));
+        //        dt.Columns.Add("Rho (Nautical Miles)", typeof(double));
+        //        dt.Columns.Add("Theta (degrees)", typeof(double));
+        //        dt.Columns.Add("X coordinate", typeof(int));
+        //        dt.Columns.Add("Y coordinate", typeof(int));
+        //        dt.Columns.Add("V", typeof(string));
+        //        dt.Columns.Add("G", typeof(string));
+        //        dt.Columns.Add("L", typeof(string));
+        //        dt.Columns.Add("Mode3A", typeof(string));
+        //        dt.Columns.Add("V_fl", typeof(string));
+        //        dt.Columns.Add("G_fl", typeof(string));
+        //        dt.Columns.Add("Flight Level", typeof(double));
+        //        dt.Columns.Add("SRL", typeof(double));
+        //        dt.Columns.Add("SRR", typeof(int));
+        //        dt.Columns.Add("SAM", typeof(double));
+        //        dt.Columns.Add("PRL", typeof(double));
+        //        dt.Columns.Add("PAM", typeof(double));
+        //        dt.Columns.Add("RPD", typeof(double));
+        //        dt.Columns.Add("APD", typeof(double));
+        //        dt.Columns.Add("Aircraft_ID", typeof(string));
+        //        dt.Columns.Add("SelectedAltitude_Status", typeof(string));
+        //        dt.Columns.Add("SelectedAltitude", typeof(int));
+        //        dt.Columns.Add("FMSAltitude_Status", typeof(string));
+        //        dt.Columns.Add("FMSAltitude", typeof(int));
+        //        dt.Columns.Add("BaroSetting_Status", typeof(string));
+        //        dt.Columns.Add("BaroSetting", typeof(double));
+        //        dt.Columns.Add("MCP_FCU_MODE_BITS_Status", typeof(string));
+        //        dt.Columns.Add("VNAV", typeof(string));
+        //        dt.Columns.Add("AltHoldMode", typeof(string));
+        //        dt.Columns.Add("ApprMode", typeof(string));
+        //        dt.Columns.Add("TargetAltitudeSource_Status", typeof(string));
+        //        dt.Columns.Add("TargetAltitudeSource", typeof(string));
+        //        dt.Columns.Add("LWingD", typeof(string));
+        //        dt.Columns.Add("RollAngle_Status", typeof(string));
+        //        dt.Columns.Add("RollAngle", typeof(double));
+        //        dt.Columns.Add("TrueTrackAngle_Status", typeof(string));
+        //        dt.Columns.Add("TrueTrackAngle", typeof(double));
+        //        dt.Columns.Add("GS_Status", typeof(string));
+        //        dt.Columns.Add("GS", typeof(double));
+        //        dt.Columns.Add("TrackAngleRate_Status", typeof(string));
+        //        dt.Columns.Add("TrackAngleRate", typeof(double));
+        //        dt.Columns.Add("TAS_Status", typeof(string));
+        //        dt.Columns.Add("TAS", typeof(double));
+        //        dt.Columns.Add("MagneticHeading_Status", typeof(string));
+        //        dt.Columns.Add("MagneticHeading", typeof(double));
+        //        dt.Columns.Add("IndicatedAirspeed_Status", typeof(string));
+        //        dt.Columns.Add("IndicatedAirspeed", typeof(double));
+        //        dt.Columns.Add("Mach_Status", typeof(string));
+        //        dt.Columns.Add("Mach", typeof(double));
+        //        dt.Columns.Add("BaromAltRate_Status", typeof(string));
+        //        dt.Columns.Add("BaromAltRate", typeof(double));
+        //        dt.Columns.Add("Below", typeof(string));
+        //        dt.Columns.Add("InertialVertVel_Status", typeof(string));
+        //        dt.Columns.Add("InertialVertVel", typeof(double));
+        //        dt.Columns.Add("Velocity", typeof(double));
+        //        dt.Columns.Add("Heading", typeof(double));
+        //        dt.Columns.Add("3D Radar Height", typeof(int));
+        //        dt.Columns.Add("COM", typeof(string));
+        //        dt.Columns.Add("STAT", typeof(string));
+        //        dt.Columns.Add("SI", typeof(string));
+        //        dt.Columns.Add("MSSC", typeof(string));
+        //        dt.Columns.Add("ARC", typeof(string));
+        //        dt.Columns.Add("AIC", typeof(string));
+        //        dt.Columns.Add("B1A", typeof(string));
+        //        dt.Columns.Add("B1B", typeof(string));
+        //        dt.Columns.Add("TrackNumber", typeof(int));
+        //        dt.Columns.Add("CNF", typeof(string));
+        //        dt.Columns.Add("RAD", typeof(string));
+        //        dt.Columns.Add("DOU", typeof(string));
+        //        dt.Columns.Add("MAH", typeof(string));
+        //        dt.Columns.Add("CDM", typeof(string));
+        //        dt.Columns.Add("TRE", typeof(string));
+        //        dt.Columns.Add("GHO", typeof(string));
+        //        dt.Columns.Add("SUP", typeof(string));
+        //        dt.Columns.Add("TCC", typeof(string));
+        //        return dt;
+        //    }
+        //}
+
+    }
