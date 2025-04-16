@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Security.Policy;
 using I048_data_items;
 using MultiCAT6.Utils;
+using System.Text.RegularExpressions;
 
 namespace I048_data_items
 {
@@ -1429,52 +1430,81 @@ namespace I048_data_items
 
             return dt;
         }
-        //public static (double Lat, double Long) LatLong(DataTable dt)
-        //{
-        //    //(ρ, Az, El) _ (XL, YL, ZL) _ (Xg, Yg, Zg) _ (L, G, H) 
+        public static DataTable LatLong(DataTable dt)
+        {
+            //(ρ, Az, El) _ (XL, YL, ZL) _ (Xg, Yg, Zg) _ (L, G, H) 
 
-        //    // We obtain the radar latitude and longitude in degrees
+            // We obtain the radar latitude and longitude in degrees
 
-        //    // Both positive as are in the N and E sector
+            // Both positive as are in the N and E sector
 
-        //    string RadLat = (41.2972 + (18 / 60) + (2.5284 / 3600)).ToString();
-        //    string RadLong = (2.0833 + (6 / 60) + (7.4095 / 3600)).ToString();
+            string RadLat = (41.2972 + (18 / 60) + (2.5284 / 3600)).ToString();
+            string RadLong = (2.0833 + (6 / 60) + (7.4095 / 3600)).ToString();
 
-        //    double Elevation = 2.007;
-        //    double antennaHeight = 25.25;
-        //    double earthRadius = 6371000.0;
+            double Elevation = 2.007;
+            double antennaHeight = 25.25;
+            double earthRadius = 6371000.0;
 
-        //    // Convert from cartesian to spherical
-
-        //    List<Double> sphericAzimuth = new List<Double>();
-        //    List<Double> sphericRange = new List<Double>();
-        //    List<Double> sphericElevation = new List<Double>();
-
-        //    CoordinatesWGS84 radPos = new CoordinatesWGS84(RadLat, RadLong, Elevation + antennaHeight);
-
-        //    foreach (DataRow row in dt.Rows)
-        //    {
-                
-        //        if (row["X coordinate"] != "N/A"  & row["Y coordinate"] != "N/A")
-        //        {
-        //            double x = Convert.ToDouble(row["X coordinate"]);
-        //            double y = Convert.ToDouble(row["X coordinate"]);
-        //            sphericAzimuth.Add(GeoUtils.CalculateAzimuth(x, y));
-        //            sphericRange.Add(Math.Sqrt(Math.Pow(x,2) + Math.Pow(y, 2)));
-
-        //            double EarthRadius = 
-        //            sphericElevation.Add(Math.Asin((2 * earthRadius * (Altitude - (antennaHeight + Elevation)) + Altitude * Altitude - (antennaHeight + Elevation) * (antennaHeight + Elevation) - range * range) / (2 * range * (earthRadius + antennaHeight + Elevation))));
+            CoordinatesWGS84 radPos = new CoordinatesWGS84(RadLat, RadLong, antennaHeight + Elevation);
 
 
-        //        }
-                
-        //    }
+            // Convert from cartesian to spherical
+
+            List<string> Lat = new List<string>();
+            List<string> Long = new List<string>();
+            List<string> geoAltitude = new List<string>();
+
+            double sphericAzimuth = 0;
+            double sphericRange = 0;
+            double sphericElevation = 0;
+            GeoUtils GeoUtils = new GeoUtils();
+
+            foreach (DataRow row in dt.Rows)
+            {
+
+                if (row["X coordinate"] != DBNull.Value & row["Y coordinate"] != DBNull.Value)
+                {
+                    double x = Convert.ToDouble(row["X coordinate"]);
+                    double y = Convert.ToDouble(row["X coordinate"]);
+                    double Altitude = Convert.ToDouble(row["Corrected Altitude"]);
+
+                    // Convert to radar spherical
+                    sphericAzimuth = GeoUtils.CalculateAzimuth(x, y);
+                    double range = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
+                    sphericRange = range;
+                    sphericElevation = Math.Asin((2 * earthRadius * (Altitude - (antennaHeight + Elevation)) + Altitude * Altitude - (antennaHeight + Elevation) * (antennaHeight + Elevation) - range * range) / (2 * range * (earthRadius + antennaHeight + Elevation)));
+
+                    // Convert to radar cartesian
+                    double XL = sphericRange * Math.Cos(sphericElevation) * Math.Sin(sphericAzimuth);
+                    double YL = sphericRange * Math.Cos(sphericElevation) * Math.Cos(sphericAzimuth);
+                    double ZL = sphericRange * Math.Sin(sphericElevation);
+                    CoordinatesXYZ cartesianCoords = new CoordinatesXYZ(XL, YL, ZL);
+
+                    //Convert to geocentric radar 
+                    CoordinatesXYZ geocentricCoords = GeoUtils.change_radar_cartesian2geocentric(radPos, cartesianCoords);
+
+                    //Transform to geodesic
+                    CoordinatesWGS84 LatLong = GeoUtils.change_geocentric2geodesic(geocentricCoords);
+
+                    Lat.Add(Convert.ToString(LatLong.Lat * 180 / Math.PI));
+                    Long.Add(Convert.ToString(LatLong.Lon * 180 / Math.PI));
+                    geoAltitude.Add(Convert.ToString(LatLong.Height));
+
+                }
+
+            }
+
+            for (int index = 0; index < dt.Rows.Count; index++)
+            {
+                dt.Rows[index]["latitud"] = Lat[index];
+                dt.Rows[index]["longitud"] = Long[index];
+                dt.Rows[index]["hwgs84"] = geoAltitude[index];
+            }
+
+            return dt;
 
 
-
-        //    return (double Lat, double Long);
-
-        //}
+        }
         public static DataTable Corrected_Altitude(DataTable dt)
         {
             List<string> Altitude_m = new List<string>();
