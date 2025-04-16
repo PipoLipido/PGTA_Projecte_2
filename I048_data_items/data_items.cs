@@ -1494,7 +1494,7 @@ namespace I048_data_items
 
             }
 
-            for (int index = 0; index < dt.Rows.Count; index++)
+            for (int index = 1; index < dt.Rows.Count; index++)
             {
                 dt.Rows[index]["latitud"] = Lat[index];
                 dt.Rows[index]["longitud"] = Long[index];
