@@ -18,6 +18,8 @@ namespace Consola_projecte2
 
         // Variables per la simulació temporal
         private int simulationStartTime;    // Moment inicial (ex. 0)
+        private int simulationEndTime;      //Moment final 
+        private int simulationStep = 1;      // +1 endavant, -1 enrere
         private int currentSimulationTime;  // Temps simulat actual, de tipus int
         private int timerInterval = 200;      // Interval del timer en mil·lisegons (500 ms per exemple)
         private Timer simulationTimer;
@@ -34,7 +36,7 @@ namespace Consola_projecte2
             InitializeComponent();
             this.airplanesTable = dt;
             InitializeGMap();
-            InitializeSimulationTimer();
+            //InitializeSimulationTimer();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -62,7 +64,8 @@ namespace Consola_projecte2
                 .SetValue(gmap, true, null);
 
             GMaps.Instance.Mode = AccessMode.ServerOnly;
-            this.Controls.Add(gmap);
+            //this.Controls.Add(gmap);
+            splitContainer1.Panel2.Controls.Add(gmap);
 
             markersOverlay = new GMapOverlay("markers");
             gmap.Overlays.Add(markersOverlay);
@@ -76,7 +79,7 @@ namespace Consola_projecte2
         {
             if (airplanesTable.Rows.Count > 0 && airplanesTable.Columns.Contains("Time of day (seconds)"))
             {
-                // Exemple: el primer registre té el temps en format "xx:yy:zz:ttt"
+                // Start format "xx:yy:zz:ttt"
                 string timeString = Convert.ToString(airplanesTable.Rows[0]["Time of day (seconds)"]);
                 string[] parts = timeString.Split(':');
                 int hours = int.Parse(parts[0]);
@@ -87,12 +90,35 @@ namespace Consola_projecte2
                 double totalSeconds = hours * 3600 + minutes * 60 + seconds + milliseconds / 1000.0;
                 simulationStartTime = Convert.ToInt32(totalSeconds);
                 currentSimulationTime = simulationStartTime;
+
+                //nou
+                simulationTimer = new Timer();
+                simulationTimer.Interval = timerInterval;
+                simulationTimer.Tick += SimulationTimer_Tick;
+                simulationTimer.Start();
+
+                //end
+                string timeStringend = Convert.ToString(airplanesTable.Rows[airplanesTable.Rows.Count - 1]["Time of day (seconds)"]);
+                string[] partsend = timeStringend.Split(':');
+                int hoursend = int.Parse(partsend[0]);
+                int minutesend = int.Parse(partsend[1]);
+                int secondsend = int.Parse(partsend[2]);
+                int millisecondsend = int.Parse(partsend[3]);
+
+                double totalSecondsend = hoursend * 3600 + minutesend * 60 + secondsend + millisecondsend / 1000.0;
+                simulationEndTime = Convert.ToInt32(totalSecondsend);
             }
             else
             {
                 simulationStartTime = 0;
                 currentSimulationTime = 0;
+                simulationEndTime = 0;
             }
+
+            this.trackBar1.Minimum = simulationStartTime;
+            this.trackBar1.Maximum = simulationEndTime;
+
+
 
             simulationTimer = new Timer();
             simulationTimer.Interval = timerInterval;
@@ -124,7 +150,13 @@ namespace Consola_projecte2
         private void SimulationTimer_Tick(object sender, EventArgs e)
         {
             // Incrementem el temps simulat
-            currentSimulationTime++;
+            currentSimulationTime += simulationStep;
+
+            if (currentSimulationTime < simulationStartTime || currentSimulationTime > simulationEndTime)
+            {
+                simulationTimer.Stop();
+                return;
+            }
 
             // Iterem cada fila del DataTable
             foreach (DataRow row in airplanesTable.Rows)
@@ -138,41 +170,50 @@ namespace Consola_projecte2
                     {
                         string id = Convert.ToString(row["Aircraft_ID"]);
 
-                        // Aconseguim els valors polars
-                        double rho = row["Rho (Nautical Miles)"] != DBNull.Value ? Convert.ToDouble(row["Rho (Nautical Miles)"]) : 0;
-                        double theta = row["Theta (degrees)"] != DBNull.Value ? Convert.ToDouble(row["Theta (degrees)"]) : 0;
-
-                        // Convertim l'angle de graus a radians.
-                        double thetaRad = theta * Math.PI / 180.0;
-
-                        // Calcular la variació en latitud i longitud.
-                        // 1 grau de latitud ≈ 60 milles nàutiques.
-                        double deltaLat = (rho * Math.Cos(thetaRad)) / 60.0;
-                        double deltaLon = (rho * Math.Sin(thetaRad)) / (60.0 * Math.Cos(radarLat * Math.PI / 180.0));
-
-                        // La nova latitud i longitud
-                        double lat = radarLat + deltaLat;
-                        double lng = radarLon + deltaLon;
-
-                        // Altres dades (velocitat i altitud)
-                        double speed = row["Mach"] != DBNull.Value ? Convert.ToDouble(row["Mach"]) : 0;
-                        double altitude = row["Flight Level"] != DBNull.Value ? Convert.ToDouble(row["Flight Level"]) : 0;
-
-                        // La nova posició calculada
-                        PointLatLng newPosition = new PointLatLng(lat, lng);
-
-                        // Si ja existeix un marcador per aquest avió, el mourem; si no, en creem un nou.
-                        if (aircraftMarkers.ContainsKey(id))
+                        if (id != "")
                         {
-                            aircraftMarkers[id].Position = newPosition;
-                        }
-                        else
-                        {
-                            GMarkerGoogle marker = new GMarkerGoogle(newPosition, GMarkerGoogleType.blue_dot);
-                            marker.ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nAltitud: FL{altitude}\nTemps: {recordTime}";
-                            marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-                            aircraftMarkers.Add(id, marker);
-                            markersOverlay.Markers.Add(marker);
+
+                            double lat = row["latitud"] != DBNull.Value ? Convert.ToDouble(row["latitud"]) : 0;
+                            double lng = row["longitud"] != DBNull.Value ? Convert.ToDouble(row["longitud"]) : 0;
+
+                            //// Aconseguim els valors polars
+                            //double rho = row["Rho (Nautical Miles)"] != DBNull.Value ? Convert.ToDouble(row["Rho (Nautical Miles)"]) : 0;
+                            //double theta = row["Theta (degrees)"] != DBNull.Value ? Convert.ToDouble(row["Theta (degrees)"]) : 0;
+
+                            //// Convertim l'angle de graus a radians.
+                            //double thetaRad = theta * Math.PI / 180.0;
+
+                            //// Calcular la variació en latitud i longitud.
+                            //// 1 grau de latitud ≈ 60 milles nàutiques.
+                            //double deltaLat = (rho * Math.Cos(thetaRad)) / 60.0;
+                            //double deltaLon = (rho * Math.Sin(thetaRad)) / (60.0 * Math.Cos(radarLat * Math.PI / 180.0));
+
+                            //// La nova latitud i longitud
+                            //double lat = radarLat + deltaLat;
+                            //double lng = radarLon + deltaLon;
+
+                            // Altres dades (velocitat i altitud)
+                            double speed = row["Mach"] != DBNull.Value ? Convert.ToDouble(row["Mach"]) : 0;
+                            double altitude = row["Flight Level"] != DBNull.Value ? Convert.ToDouble(row["Flight Level"]) : 0;
+
+                            // La nova posició calculada
+                            PointLatLng newPosition = new PointLatLng(lat, lng);
+
+                            // Si ja existeix un marcador per aquest avió, el mourem; si no, en creem un nou.
+                            if (aircraftMarkers.ContainsKey(id))
+                            {
+                                aircraftMarkers[id].Position = newPosition;
+                                aircraftMarkers[id].ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nAltitud: FL{altitude}";
+
+                            }
+                            else
+                            {
+                                GMarkerGoogle marker = new GMarkerGoogle(newPosition, GMarkerGoogleType.blue_dot);
+                                marker.ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nAltitud: FL{altitude}";
+                                marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
+                                aircraftMarkers.Add(id, marker);
+                                markersOverlay.Markers.Add(marker);
+                            }
                         }
                     }
                 }
@@ -180,9 +221,10 @@ namespace Consola_projecte2
 
             // Refresquem el mapa per veure els canvis.
             gmap.Refresh();
+            trackBar1.Value = currentSimulationTime;
 
             // Opcional: Comprovem si el temps simulat ha superat l'últim registre per aturar o reiniciar la simulació.
-            int simulationEndTime = simulationStartTime;
+            simulationEndTime = simulationStartTime;
             if (airplanesTable.Rows.Count > 0 && airplanesTable.Columns.Contains("Time of day (seconds)"))
             {
                 string timeStringEnd = Convert.ToString(airplanesTable.Rows[airplanesTable.Rows.Count - 1]["Time of day (seconds)"]);
@@ -200,6 +242,53 @@ namespace Consola_projecte2
                     // currentSimulationTime = simulationStartTime;
                 }
             }
+        }
+
+        
+
+        private void Play_Click(object sender, EventArgs e)
+        {
+            if (currentSimulationTime > simulationStartTime)
+            {
+                gmap.Refresh();
+                simulationStep = +1;
+                simulationTimer.Start();
+            }
+            else
+            {
+                InitializeSimulationTimer();
+            }
+        }
+
+        private void Stop_Click(object sender, EventArgs e)
+        {
+            simulationTimer.Stop();
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e) //no funciona al 100 per 100
+        {
+            aircraftMarkers.Clear();
+            gmap.Refresh();
+            currentSimulationTime = trackBar1.Value;
+            simulationTimer.Start();
+        }
+
+        private void Reset_Click(object sender, EventArgs e)
+        {
+            currentSimulationTime = simulationStartTime;
+            
+        }
+
+        private void reverse_Click(object sender, EventArgs e)
+        {
+            gmap.Refresh();
+            simulationStep = -1;
+            simulationTimer.Start();
+        }
+
+        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
