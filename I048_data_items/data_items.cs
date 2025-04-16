@@ -1429,88 +1429,116 @@ namespace I048_data_items
 
             return dt;
         }
-        public static (double Lat, double Long) LatLong(DataTable dt)
+        //public static (double Lat, double Long) LatLong(DataTable dt)
+        //{
+        //    //(ρ, Az, El) _ (XL, YL, ZL) _ (Xg, Yg, Zg) _ (L, G, H) 
+
+        //    // We obtain the radar latitude and longitude in degrees
+
+        //    // Both positive as are in the N and E sector
+
+        //    string RadLat = (41.2972 + (18 / 60) + (2.5284 / 3600)).ToString();
+        //    string RadLong = (2.0833 + (6 / 60) + (7.4095 / 3600)).ToString();
+
+        //    double Elevation = 2.007;
+        //    double antennaHeight = 25.25;
+        //    double earthRadius = 6371000.0;
+
+        //    // Convert from cartesian to spherical
+
+        //    List<Double> sphericAzimuth = new List<Double>();
+        //    List<Double> sphericRange = new List<Double>();
+        //    List<Double> sphericElevation = new List<Double>();
+
+        //    CoordinatesWGS84 radPos = new CoordinatesWGS84(RadLat, RadLong, Elevation + antennaHeight);
+
+        //    foreach (DataRow row in dt.Rows)
+        //    {
+                
+        //        if (row["X coordinate"] != "N/A"  & row["Y coordinate"] != "N/A")
+        //        {
+        //            double x = Convert.ToDouble(row["X coordinate"]);
+        //            double y = Convert.ToDouble(row["X coordinate"]);
+        //            sphericAzimuth.Add(GeoUtils.CalculateAzimuth(x, y));
+        //            sphericRange.Add(Math.Sqrt(Math.Pow(x,2) + Math.Pow(y, 2)));
+
+        //            double EarthRadius = 
+        //            sphericElevation.Add(Math.Asin((2 * earthRadius * (Altitude - (antennaHeight + Elevation)) + Altitude * Altitude - (antennaHeight + Elevation) * (antennaHeight + Elevation) - range * range) / (2 * range * (earthRadius + antennaHeight + Elevation))));
+
+
+        //        }
+                
+        //    }
+
+
+
+        //    return (double Lat, double Long);
+
+        //}
+        public static DataTable Corrected_Altitude(DataTable dt)
         {
-            //(ρ, Az, El) _ (XL, YL, ZL) _ (Xg, Yg, Zg) _ (L, G, H) 
-
-            // We obtain the radar latitude and longitude in degrees
-
-            // Both positive as are in the N and E sector
-
-            string RadLat = (41.2972 + (18 / 60) + (2.5284 / 3600)).ToString();
-            string RadLong = (2.0833 + (6 / 60) + (7.4095 / 3600)).ToString();
-
-            double Elevation = 2.007;
-            double antennaHeight = 25.25;
-            double earthRadius = 6371000.0;
-
-            // Convert from cartesian to spherical
-
-            List<Double> sphericAzimuth = new List<Double>();
-            List<Double> sphericRange = new List<Double>();
-            List<Double> sphericElevation = new List<Double>();
-
-            CoordinatesWGS84 radPos = new CoordinatesWGS84(RadLat, RadLong, Elevation + antennaHeight);
-
+            List<string> Altitude_m = new List<string>();
+            double baroPressureAnt = Convert.ToDouble(dt.Rows[1]["BaroSetting"]); ;
             foreach (DataRow row in dt.Rows)
             {
-                
-                if (row["X coordinate"] != "N/A"  & row["Y coordinate"] != "N/A")
+                if ((row["Flight Level"] != DBNull.Value) & (row["BaroSetting"] != DBNull.Value))
                 {
-                    double x = Convert.ToDouble(row["X coordinate"]);
-                    double y = Convert.ToDouble(row["X coordinate"]);
-                    sphericAzimuth.Add(GeoUtils.CalculateAzimuth(x, y));
-                    sphericRange.Add(Math.Sqrt(Math.Pow(x,2) + Math.Pow(y, 2)));
-
-                    double EarthRadius = 
-                    sphericElevation.Add(Math.Asin((2 * earthRadius * (Altitude - (antennaHeight + Elevation)) + Altitude * Altitude - (antennaHeight + Elevation) * (antennaHeight + Elevation) - range * range) / (2 * range * (earthRadius + antennaHeight + Elevation))));
 
 
+                    double FL = Convert.ToDouble(row["Flight Level"]);
+                    double baroPressure = Convert.ToDouble(row["BaroSetting"]);
+                    double standPress = 1013.25;
+                    double Altitude = 0;
+
+                    if ((baroPressure == standPress) || baroPressure == 0)
+                    {
+                        if (FL <= 60) // NO SE SI ES MES PETIT O MES PETIT I IGUAL
+                        {
+                            baroPressure = baroPressureAnt;
+                            Altitude = FL * 100 + (baroPressure - standPress) * 30;
+                        }
+                        else if (FL > 60)
+                        {
+                            Altitude = FL * 100;
+                        }
+                    }
+                    else if ((baroPressure != standPress) || baroPressure != 0)
+                    {
+                        if (FL <= 60) // NO SE SI ES MES PETIT O MES PETIT I IGUAL
+                        {
+                            Altitude = FL * 100 + (baroPressure - standPress) * 30;
+                        }
+                        else if (FL > 60)
+                        {
+                            Altitude = FL * 100;
+                        }
+                    }
+
+                    // Save the previous value
+                    baroPressureAnt = Convert.ToDouble(row["BaroSetting"]);
+
+                    //Compute the corrected altitude
+                    Altitude = FL * 100 + (baroPressure - standPress) * 30;
+
+                    //Add it to the list
+                    Altitude_m.Add(Convert.ToString(Altitude * 0.3048));
                 }
-                
+                else
+                {
+                    Altitude_m.Add("N/A");
+                }
             }
 
+            dt.Columns.Add("Corrected Altitude", typeof(string));
 
-
-            return (double Lat, double Long);
-
-        }
-        public static double Corrected_Altitude(DataRow row)
-        {
-            double FL = Convert.ToDouble(row["Flight Level"]);
-            double baroPressure = Convert.ToDouble(row["BaroSetting"]);
-            double standPress = 1013.25;
-            double baroPressureBCN = 1018;
-            double Altitude = 0;
-
-            if ((baroPressure == standPress) || baroPressure == 0)
+            int index = 0;
+            foreach (string element in Altitude_m)
             {
-                if (FL <= 60) // NO SE SI ES MES PETIT O MES PETIT I IGUAL
-                {
-                    baroPressure = baroPressureBCN;
-                    //Altitude = FL * 100 + (baroPressure - standPress) * 30;
-                }
-                //else if (FL > 60)
-                //{ 
-                //Altitude = FL * 100 + (baroPressure - standPress) * 30;
-                //}
+                dt.Rows[index]["Corrected Altitude"] = element;
+                index++;
             }
-            //else if ((baroPressure != standPress) || baroPressure != 0)
-            //{
-            //        if (FL <= 60) // NO SE SI ES MES PETIT O MES PETIT I IGUAL
-            //        {
-            //            Altitude = FL * 100 + (baroPressure - standPress) * 30;
-            //        }
-            //        else if (FL > 60)
-            //        {
-            //            Altitude = FL * 100 + (baroPressure - standPress) * 30;
-            //        }
-            //}
 
-            Altitude = FL * 100 + (baroPressure - standPress) * 30;
-            double Altitude_m = Altitude * 0.3048;
-
-            return Altitude_m;
+            return dt;
 
         }
 

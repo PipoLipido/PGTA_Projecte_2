@@ -39,6 +39,10 @@ namespace Consola_projecte2
 
                 int indexSeleccionat = 0; 
                 dt = result[indexSeleccionat].dt;
+
+                // Afegim columnes extres
+                dt = I048_data_items.data_items.Corrected_Altitude(dt);
+
                 dataGridView1.DataSource = dt;
             }
         }

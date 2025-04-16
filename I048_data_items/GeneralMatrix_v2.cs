@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 using Accord.Math.Decompositions;
-using VisioForge.Shared.Accord.Math.Decompositions;
+//using VisioForge.Shared.Accord.Math.Decompositions;
 using SingularValueDecomposition = Accord.Math.Decompositions.SingularValueDecomposition;
 using LUDecomposition = Accord.Math.Decompositions.LuDecomposition;
 using QRDecomposition = Accord.Math.Decompositions.QrDecomposition;
