@@ -1,4 +1,6 @@
-﻿namespace Consola_projecte2
+﻿using System.Windows.Forms;
+
+namespace Consola_projecte2
 {
     partial class mapconsole
     {
@@ -46,6 +48,9 @@
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.splitContainer1.Dock = DockStyle.Fill;
+            this.splitContainer1.FixedPanel = FixedPanel.Panel1;
+            this.splitContainer1.SplitterDistance = 200;
             // 
             // splitContainer1.Panel1
             // 
@@ -86,6 +91,7 @@
             this.trackBar1.Size = new System.Drawing.Size(794, 45);
             this.trackBar1.TabIndex = 2;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.trackBar1.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
             // 
             // Reset
             // 
