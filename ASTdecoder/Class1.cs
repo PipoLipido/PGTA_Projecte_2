@@ -475,9 +475,9 @@ namespace ASTdecoder
             dt.Columns.Add("SAC", typeof(int));
             dt.Columns.Add("SIC", typeof(int));
             dt.Columns.Add("Time of day (seconds)", typeof(string));
-            dt.Columns.Add("latitud", typeof(double));
-            dt.Columns.Add("longitud", typeof(double));
-            dt.Columns.Add("hwgs84", typeof(double));
+            dt.Columns.Add("latitud", typeof(string));
+            dt.Columns.Add("longitud", typeof(string));
+            dt.Columns.Add("hwgs84", typeof(string));
             dt.Columns.Add("TYP", typeof(string));
             dt.Columns.Add("SIM", typeof(string));
             dt.Columns.Add("RDP", typeof(string));
@@ -497,8 +497,8 @@ namespace ASTdecoder
             //dt.Columns.Add("PAI_EP", typeof(string));
             //dt.Columns.Add("PAI_VAL", typeof(string));
 
-            dt.Columns.Add("Rho (Nautical Miles)", typeof(double));
-            dt.Columns.Add("Theta (degrees)", typeof(double));
+            dt.Columns.Add("Rho", typeof(double));
+            dt.Columns.Add("Theta", typeof(double));
             dt.Columns.Add("V", typeof(string));
             dt.Columns.Add("G", typeof(string));
             dt.Columns.Add("L", typeof(string));

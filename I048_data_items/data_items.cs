@@ -706,8 +706,8 @@ namespace I048_data_items
 
             DataTable dt = new DataTable();
 
-            dt.Columns.Add("Rho (Nautical Miles)", typeof(double));
-            dt.Columns.Add("Theta (degrees)", typeof(double));
+            dt.Columns.Add("Rho", typeof(double));
+            dt.Columns.Add("Theta", typeof(double));
             dt.Rows.Add(RHO, THETA);
 
             return dt;
@@ -1462,10 +1462,11 @@ namespace I048_data_items
             foreach (DataRow row in dt.Rows)
             {
 
-                if (row["X coordinate"] != DBNull.Value & row["Y coordinate"] != DBNull.Value)
+                if (row["Rho"] != DBNull.Value & row["Theta"] != DBNull.Value & row["Corrected Altitude"] != "N/A")
                 {
-                    double x = Convert.ToDouble(row["X coordinate"]);
-                    double y = Convert.ToDouble(row["X coordinate"]);
+                    //Convert to Cartesian
+                    double x = Convert.ToDouble(row["Rho"]) * Math.Sin(Convert.ToDouble(row["Theta"]) * Math.PI / 180.0) * 1852.0;
+                    double y = Convert.ToDouble(row["Rho"]) * Math.Cos(Convert.ToDouble(row["Theta"]) * Math.PI / 180.0) * 1852.0;
                     double Altitude = Convert.ToDouble(row["Corrected Altitude"]);
 
                     // Convert to radar spherical
@@ -1491,10 +1492,16 @@ namespace I048_data_items
                     geoAltitude.Add(Convert.ToString(LatLong.Height));
 
                 }
+                else
+                {
+                    Lat.Add("N/A");
+                    Long.Add("N/A");
+                    geoAltitude.Add("N/A");
+                }
 
             }
 
-            for (int index = 1; index < dt.Rows.Count; index++)
+            for (int index = 0; index < dt.Rows.Count; index++)
             {
                 dt.Rows[index]["latitud"] = Lat[index];
                 dt.Rows[index]["longitud"] = Long[index];
@@ -1518,29 +1525,29 @@ namespace I048_data_items
                     double FL = Convert.ToDouble(row["Flight Level"]);
                     double baroPressure = Convert.ToDouble(row["BaroSetting"]);
                     double standPress = 1013.25;
-                    double Altitude = 0;
+                    double Altitude = 0.0;
 
                     if ((baroPressure == standPress) || baroPressure == 0)
                     {
                         if (FL <= 60) // NO SE SI ES MES PETIT O MES PETIT I IGUAL
                         {
                             baroPressure = baroPressureAnt;
-                            Altitude = FL * 100 + (baroPressure - standPress) * 30;
+                            Altitude = FL * 100.0 + (baroPressure - standPress) * 30.0;
                         }
                         else if (FL > 60)
                         {
-                            Altitude = FL * 100;
+                            Altitude = FL * 100.0;
                         }
                     }
                     else if ((baroPressure != standPress) || baroPressure != 0)
                     {
                         if (FL <= 60) // NO SE SI ES MES PETIT O MES PETIT I IGUAL
                         {
-                            Altitude = FL * 100 + (baroPressure - standPress) * 30;
+                            Altitude = FL * 100.0 + (baroPressure - standPress) * 30.0;
                         }
                         else if (FL > 60)
                         {
-                            Altitude = FL * 100;
+                            Altitude = FL * 100.0;
                         }
                     }
 
