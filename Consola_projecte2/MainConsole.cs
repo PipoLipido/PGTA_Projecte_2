@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ASTdecoder;
 using System.IO;
+using System.Globalization;
 
 
 
@@ -114,5 +115,81 @@ namespace Consola_projecte2
                 dataGridView1.DataSource = PureTargetTable;
             }
         }
+
+        private void exportCSV_Click(object sender, EventArgs e)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                MessageBox.Show("No hi ha dades per exportar.", "Atenció", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string sep = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+
+            using (var dlg = new SaveFileDialog())
+            {
+                dlg.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+                dlg.DefaultExt = "csv";
+                dlg.FileName = "export.csv";
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        var sb = new StringBuilder();
+
+                        // 1) Capçalera
+                        for (int col = 0; col < dt.Columns.Count; col++)
+                        {
+                            sb.Append(Escape(dt.Columns[col].ColumnName));
+                            if (col < dt.Columns.Count - 1)
+                            {
+                                sb.Append(sep);
+                            }
+                        }
+                        sb.AppendLine();
+
+                        // 2) Files
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            for (int col = 0; col < dt.Columns.Count; col++)
+                            {
+                                sb.Append(Escape(row[col]?.ToString() ?? ""));
+                                if (col < dt.Columns.Count - 1)
+                                {
+                                    sb.Append(sep);
+                                }
+                            }
+                            sb.AppendLine();
+                        }
+
+                        // 3) Escriure a disc
+                        File.WriteAllText(dlg.FileName, sb.ToString(), Encoding.UTF8);
+
+                        MessageBox.Show($"Taula exportada correctament a:\n{dlg.FileName}",
+                                        "Exportació completada",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error exportant CSV:\n{ex.Message}",
+                                        "Error",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            
+        }
+        private static string Escape(string s)
+        {
+            if (s.Contains("\"") || s.Contains(",") || s.Contains("\n") || s.Contains("\r"))
+            {
+                s = s.Replace("\"", "\"\"");
+                return $"\"{s}\"";
+            }
+            return s;
+        }
+
     }
+    
 }

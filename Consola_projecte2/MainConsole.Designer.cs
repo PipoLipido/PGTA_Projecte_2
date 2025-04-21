@@ -38,6 +38,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.LLFilter = new System.Windows.Forms.Button();
+            this.exportCSV = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -137,11 +138,22 @@
             this.LLFilter.UseVisualStyleBackColor = true;
             this.LLFilter.Click += new System.EventHandler(this.LLFilter_Click);
             // 
+            // exportCSV
+            // 
+            this.exportCSV.Location = new System.Drawing.Point(1284, 515);
+            this.exportCSV.Name = "exportCSV";
+            this.exportCSV.Size = new System.Drawing.Size(92, 23);
+            this.exportCSV.TabIndex = 11;
+            this.exportCSV.Text = "Export to .CSV";
+            this.exportCSV.UseVisualStyleBackColor = true;
+            this.exportCSV.Click += new System.EventHandler(this.exportCSV_Click);
+            // 
             // MainConsole
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1451, 633);
+            this.Controls.Add(this.exportCSV);
             this.Controls.Add(this.LLFilter);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button2);
@@ -174,6 +186,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button LLFilter;
+        private System.Windows.Forms.Button exportCSV;
     }
 }
 
