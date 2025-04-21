@@ -345,6 +345,7 @@ namespace ASTdecoder
 
             // 1. Preprocessar: identificar els segments (missatges) al vector
             List<(int Order, int StartIndex, int Length)> segments = new List<(int, int, int)>();
+
             int indexByte = 0;
             int orderCounter = 0;
             while (indexByte < data.Length)
@@ -439,6 +440,7 @@ namespace ASTdecoder
 
             // Processar el doble bucle FSPEC per extreure les dades de cada component
             // NOTA: La seqüència és important perquè es suma l'ocupació en octets de cada data item (variable 'octetanalyzed')
+            var schemaColumnNames = new HashSet<string>(schema.Columns.Cast<DataColumn>().Select(c => c.ColumnName));
             for (int fspecAnalyzedByte = 0; fspecAnalyzedByte < fspecLength; fspecAnalyzedByte++)
             {
                 for (int fspecAnalyzedBit = 0; fspecAnalyzedBit < 7; fspecAnalyzedBit++)
@@ -447,6 +449,7 @@ namespace ASTdecoder
                     {
                         // Aquest mètode s'encarrega d'extreure l'item pertinent;
                         // se li passa la posició del bit, el byte de l'fspec, el vector de dades, la longitud del fspec i la posició actual.
+                        //var resultDataItem = I048_data_items.data_items.GetDataItem(fspecAnalyzedBit, fspecAnalyzedByte, data, fspecLength, octetanalyzed);
                         var resultDataItem = I048_data_items.data_items.GetDataItem(fspecAnalyzedBit, fspecAnalyzedByte, data, fspecLength, octetanalyzed);
                         // resultDataItem.Item3 conté la quantitat d'octets consumits per aquest item
                         octetanalyzed += resultDataItem.Item3;
@@ -456,7 +459,8 @@ namespace ASTdecoder
                         {
                             foreach (DataColumn col in resultDataItem.Item4.Columns)
                             {
-                                if (schema.Columns.Contains(col.ColumnName))
+                                //schema.Columns.Contains(col.ColumnName)
+                                if (schemaColumnNames.Contains(col.ColumnName))
                                 {
                                     rowData[col.ColumnName] = fila[col.ColumnName];
                                 }

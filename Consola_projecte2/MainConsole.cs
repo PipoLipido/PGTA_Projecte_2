@@ -139,10 +139,11 @@ namespace Consola_projecte2
                         var sb = new StringBuilder();
 
                         // 1) Capçalera
-                        for (int col = 0; col < dt.Columns.Count; col++)
+                        int colCount = dt.Columns.Count;
+                        for (int col = 0; col < colCount; col++)
                         {
                             sb.Append(Escape(dt.Columns[col].ColumnName));
-                            if (col < dt.Columns.Count - 1)
+                            if (col < colCount - 1)
                             {
                                 sb.Append(sep);
                             }
@@ -152,7 +153,7 @@ namespace Consola_projecte2
                         // 2) Files
                         foreach (DataRow row in dt.Rows)
                         {
-                            for (int col = 0; col < dt.Columns.Count; col++)
+                            for (int col = 0; col < colCount; col++)
                             {
                                 sb.Append(Escape(row[col]?.ToString() ?? ""));
                                 if (col < dt.Columns.Count - 1)
