@@ -1438,8 +1438,8 @@ namespace I048_data_items
 
             // Both positive as are in the N and E sector
 
-            string RadLat = (41.2972 + (18 / 60) + (2.5284 / 3600)).ToString();
-            string RadLong = (2.0833 + (6 / 60) + (7.4095 / 3600)).ToString();
+            string RadLat = (41 + (18.0 / 60.0) + (2.5284 / 3600.0)).ToString();
+            string RadLong = (2 + (6.0 / 60.0) + (7.4095 / 3600.0)).ToString();
 
             double Elevation = 2.007;
             double antennaHeight = 25.25;
@@ -1536,7 +1536,7 @@ namespace I048_data_items
                         }
                         else if (FL > 60)
                         {
-                            Altitude = FL * 100.0;
+                            Altitude = FL * 100.0; // NO POSAR >60
                         }
                     }
                     else if ((baroPressure != standPress) || baroPressure != 0)
@@ -1547,7 +1547,7 @@ namespace I048_data_items
                         }
                         else if (FL > 60)
                         {
-                            Altitude = FL * 100.0;
+                            Altitude = FL * 100.0; // NO POSAR >60 (per sota 6000 altitud per sobre posem FL)
                         }
                     }
 
