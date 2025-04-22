@@ -97,27 +97,123 @@ namespace Consola_projecte2
 
         private void LLFilter_Click(object sender, EventArgs e)
         {
-            if (dt != null)
-            {
-                DataTable PureTargetTable = dt;
-                List<DataRow> EliminatedRows = new List<DataRow>();
+            DataTable LatLongLimited = dt;
+            List<DataRow> EliminatedRows = new List<DataRow>();
 
-                foreach (DataRow row in PureTargetTable.Rows)
+            double maxLatitud = 360;
+            double minLatitud = 0;
+            double maxLongitud = 360;
+            double minLongitud = 0;
+
+            if (MaxLat.Text != "" && MinLat.Text != "")
+            {
+                maxLatitud = Convert.ToDouble(MaxLat.Text); // en graus
+                minLatitud = Convert.ToDouble(MinLat.Text); // en graus
+            }
+            else if ((MaxLong.Text != "" && MaxLong.Text != ""))
+            {
+                maxLongitud = Convert.ToDouble(MaxLong.Text); // en graus
+                minLongitud = Convert.ToDouble(MaxLong.Text); // en graus
+            }
+            else
+            {
+                MessageBox.Show("Debe introducir el intervalo deseado para el filtro");
+                return;
+            }
+
+            if ((minLatitud < maxLatitud) && (minLongitud < maxLongitud))
+            {
+                foreach (DataRow row in LatLongLimited.Rows)
                 {
-                    if (row["TYP"].ToString() != "Single Mode S All-Call" & row["TYP"].ToString() != "Single Mode S Roll-Call" & row["TYP"].ToString() != "Mode S All-Call + PSR" &
-                        row["TYP"].ToString() != "Mode S Roll-Call + PSR")
+                    if (Convert.ToDouble(row["latitud"]) <= minLatitud || Convert.ToDouble(row["latitud"]) >= maxLatitud || Convert.ToDouble(row["longitud"]) <= minLongitud || Convert.ToDouble(row["longitud"]) >= maxLongitud && (row["latitud"] == "N/A" && row["longitud"] == "N/A"))
                     {
                         EliminatedRows.Add(row);
                     }
                 }
 
-                foreach (DataRow row in EliminatedRows)
+            }
+            else
+            {
+                foreach (DataRow row in LatLongLimited.Rows)
                 {
-                    PureTargetTable.Rows.Remove(row);
+                    if (Convert.ToDouble(row["latitud"]) <= maxLatitud || Convert.ToDouble(row["latitud"]) >= minLatitud || Convert.ToDouble(row["longitud"]) <= maxLongitud || Convert.ToDouble(row["longitud"]) >= minLongitud && (row["latitud"] != "N/A" && row["longitud"] != "N/A"))
+                    {
+                        EliminatedRows.Add(row);
+                    }
                 }
+            }
 
-                dataGridView1.DataSource = PureTargetTable;
+
+
+            foreach (DataRow row in EliminatedRows)
+            {
+                LatLongLimited.Rows.Remove(row);
+            }
+
+            dataGridView1.DataSource = LatLongLimited;
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+        }
+
+        private void MinLat_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char decimalSeparator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
+            //Unicament permetem numeros, no lletres
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != '.' || e.KeyChar != ',') && MinLong.Text.Contains('.') && MinLong.Text.Contains(','))
+            {
+                e.Handled = true;
             }
         }
+
+        private void MaxLat_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char decimalSeparator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
+            //Unicament permetem numeros, no lletres
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != '.' || e.KeyChar != ',') && MinLong.Text.Contains('.') && MinLong.Text.Contains(','))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void MinLong_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char decimalSeparator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
+            //Unicament permetem numeros, no lletres
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != '.' || e.KeyChar != ',') && MinLong.Text.Contains('.') && MinLong.Text.Contains(','))
+            {
+                e.Handled = true;
+            }
+
+        }
+
+        private void MaxLong_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char decimalSeparator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
+            //Unicament permetem numeros, no lletres
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != '.' || e.KeyChar != ',') && MinLong.Text.Contains('.') && MinLong.Text.Contains(','))
+            {
+                e.Handled = true;
+            }
+        }
+
+
     }
 }

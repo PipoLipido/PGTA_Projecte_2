@@ -1515,7 +1515,7 @@ namespace I048_data_items
         public static DataTable Corrected_Altitude(DataTable dt)
         {
             List<string> Altitude_m = new List<string>();
-            double baroPressureAnt = Convert.ToDouble(dt.Rows[1]["BaroSetting"]); ;
+            double baroPressureAnt = Convert.ToDouble(dt.Rows[1]["BaroSetting"]); 
             foreach (DataRow row in dt.Rows)
             {
                 if ((row["Flight Level"] != DBNull.Value) & (row["BaroSetting"] != DBNull.Value))
@@ -1553,9 +1553,6 @@ namespace I048_data_items
 
                     // Save the previous value
                     baroPressureAnt = Convert.ToDouble(row["BaroSetting"]);
-
-                    //Compute the corrected altitude
-                    Altitude = FL * 100 + (baroPressure - standPress) * 30;
 
                     //Add it to the list
                     Altitude_m.Add(Convert.ToString(Altitude * 0.3048));
