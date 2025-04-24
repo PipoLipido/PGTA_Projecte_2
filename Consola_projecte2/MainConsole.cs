@@ -113,7 +113,7 @@ namespace Consola_projecte2
             else if ((MaxLong.Text != "" && MaxLong.Text != ""))
             {
                 maxLongitud = Convert.ToDouble(MaxLong.Text); // en graus
-                minLongitud = Convert.ToDouble(MaxLong.Text); // en graus
+                minLongitud = Convert.ToDouble(MinLong.Text); // en graus
             }
             else
             {
@@ -121,11 +121,20 @@ namespace Consola_projecte2
                 return;
             }
 
+
             if ((minLatitud < maxLatitud) && (minLongitud < maxLongitud))
             {
                 foreach (DataRow row in LatLongLimited.Rows)
                 {
-                    if (Convert.ToDouble(row["latitud"]) <= minLatitud || Convert.ToDouble(row["latitud"]) >= maxLatitud || Convert.ToDouble(row["longitud"]) <= minLongitud || Convert.ToDouble(row["longitud"]) >= maxLongitud && (row["latitud"] == "N/A" && row["longitud"] == "N/A"))
+                    string Lat = Convert.ToString(row["latitud"]).Replace(',', '.');
+                    string Lon = Convert.ToString(row["longitud"]).Replace(',', '.');
+
+                    if (Lat == "N/A" || Lon == "N/A")
+                    {
+                        EliminatedRows.Add(row);
+                    }
+
+                    else if (Convert.ToDouble(Lat) <= minLatitud || Convert.ToDouble(Lat) >= maxLatitud || Convert.ToDouble(Lon) <= minLongitud || Convert.ToDouble(Lon) >= maxLongitud)
                     {
                         EliminatedRows.Add(row);
                     }
@@ -136,7 +145,15 @@ namespace Consola_projecte2
             {
                 foreach (DataRow row in LatLongLimited.Rows)
                 {
-                    if (Convert.ToDouble(row["latitud"]) <= maxLatitud || Convert.ToDouble(row["latitud"]) >= minLatitud || Convert.ToDouble(row["longitud"]) <= maxLongitud || Convert.ToDouble(row["longitud"]) >= minLongitud && (row["latitud"] != "N/A" && row["longitud"] != "N/A"))
+                    string Lat = Convert.ToString(row["latitud"]).Replace(',', '.');
+                    string Lon = Convert.ToString(row["longitud"]).Replace(',', '.');
+
+                    if (Lat == "N/A" || Lon == "N/A")
+                    {
+                        EliminatedRows.Add(row);
+                    }
+
+                    else if (Convert.ToDouble(Lat) <= maxLatitud || Convert.ToDouble(Lat) >= minLatitud || Convert.ToDouble(Lon) <= maxLongitud || Convert.ToDouble(Lon) >= minLongitud)
                     {
                         EliminatedRows.Add(row);
                     }
