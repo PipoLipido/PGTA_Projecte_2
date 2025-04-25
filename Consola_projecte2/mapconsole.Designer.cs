@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Reflection.Emit;
+using System.Windows.Forms;
 
 namespace Consola_projecte2
 {
@@ -31,11 +32,15 @@ namespace Consola_projecte2
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.Play = new System.Windows.Forms.Button();
-            this.Stop = new System.Windows.Forms.Button();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.Reset = new System.Windows.Forms.Button();
+            this.temps = new System.Windows.Forms.Label();
             this.reverse = new System.Windows.Forms.Button();
+            this.Reset = new System.Windows.Forms.Button();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.Stop = new System.Windows.Forms.Button();
+            this.Play = new System.Windows.Forms.Button();
+            this.reduir = new System.Windows.Forms.Button();
+            this.accelerar = new System.Windows.Forms.Button();
+            this.velocitat = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -45,15 +50,17 @@ namespace Consola_projecte2
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            this.splitContainer1.Dock = DockStyle.Fill;
-            this.splitContainer1.FixedPanel = FixedPanel.Panel1;
-            this.splitContainer1.SplitterDistance = 200;
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.velocitat);
+            this.splitContainer1.Panel1.Controls.Add(this.accelerar);
+            this.splitContainer1.Panel1.Controls.Add(this.reduir);
+            this.splitContainer1.Panel1.Controls.Add(this.temps);
             this.splitContainer1.Panel1.Controls.Add(this.reverse);
             this.splitContainer1.Panel1.Controls.Add(this.Reset);
             this.splitContainer1.Panel1.Controls.Add(this.trackBar1);
@@ -64,38 +71,30 @@ namespace Consola_projecte2
             this.splitContainer1.SplitterDistance = 76;
             this.splitContainer1.TabIndex = 0;
             // 
-            // Play
+            // temps
             // 
-            this.Play.Location = new System.Drawing.Point(12, 12);
-            this.Play.Name = "Play";
-            this.Play.Size = new System.Drawing.Size(75, 23);
-            this.Play.TabIndex = 0;
-            this.Play.Text = "Play";
-            this.Play.UseVisualStyleBackColor = true;
-            this.Play.Click += new System.EventHandler(this.Play_Click);
+            this.temps.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.temps.Location = new System.Drawing.Point(3, 1);
+            this.temps.Name = "temps";
+            this.temps.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.temps.Size = new System.Drawing.Size(143, 37);
+            this.temps.TabIndex = 5;
+            this.temps.Text = "00:00:00";
+            this.temps.Click += new System.EventHandler(this.temps_Click);
             // 
-            // Stop
+            // reverse
             // 
-            this.Stop.Location = new System.Drawing.Point(93, 12);
-            this.Stop.Name = "Stop";
-            this.Stop.Size = new System.Drawing.Size(75, 23);
-            this.Stop.TabIndex = 1;
-            this.Stop.Text = "Stop";
-            this.Stop.UseVisualStyleBackColor = true;
-            this.Stop.Click += new System.EventHandler(this.Stop_Click);
-            // 
-            // trackBar1
-            // 
-            this.trackBar1.Location = new System.Drawing.Point(3, 41);
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(794, 45);
-            this.trackBar1.TabIndex = 2;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
-            this.trackBar1.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+            this.reverse.Location = new System.Drawing.Point(314, 9);
+            this.reverse.Name = "reverse";
+            this.reverse.Size = new System.Drawing.Size(75, 23);
+            this.reverse.TabIndex = 4;
+            this.reverse.Text = "Reverse";
+            this.reverse.UseVisualStyleBackColor = true;
+            this.reverse.Click += new System.EventHandler(this.reverse_Click);
             // 
             // Reset
             // 
-            this.Reset.Location = new System.Drawing.Point(255, 12);
+            this.Reset.Location = new System.Drawing.Point(395, 9);
             this.Reset.Name = "Reset";
             this.Reset.Size = new System.Drawing.Size(75, 23);
             this.Reset.TabIndex = 3;
@@ -103,15 +102,64 @@ namespace Consola_projecte2
             this.Reset.UseVisualStyleBackColor = true;
             this.Reset.Click += new System.EventHandler(this.Reset_Click);
             // 
-            // reverse
+            // trackBar1
             // 
-            this.reverse.Location = new System.Drawing.Point(174, 12);
-            this.reverse.Name = "reverse";
-            this.reverse.Size = new System.Drawing.Size(75, 23);
-            this.reverse.TabIndex = 4;
-            this.reverse.Text = "Reverse";
-            this.reverse.UseVisualStyleBackColor = true;
-            this.reverse.Click += new System.EventHandler(this.reverse_Click);
+            this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBar1.Location = new System.Drawing.Point(3, 41);
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(794, 45);
+            this.trackBar1.TabIndex = 2;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // Stop
+            // 
+            this.Stop.Location = new System.Drawing.Point(233, 9);
+            this.Stop.Name = "Stop";
+            this.Stop.Size = new System.Drawing.Size(75, 23);
+            this.Stop.TabIndex = 1;
+            this.Stop.Text = "Stop";
+            this.Stop.UseVisualStyleBackColor = true;
+            this.Stop.Click += new System.EventHandler(this.Stop_Click);
+            // 
+            // Play
+            // 
+            this.Play.Location = new System.Drawing.Point(152, 9);
+            this.Play.Name = "Play";
+            this.Play.Size = new System.Drawing.Size(75, 23);
+            this.Play.TabIndex = 0;
+            this.Play.Text = "Play";
+            this.Play.UseVisualStyleBackColor = true;
+            this.Play.Click += new System.EventHandler(this.Play_Click);
+            // 
+            // reduir
+            // 
+            this.reduir.Location = new System.Drawing.Point(563, 9);
+            this.reduir.Name = "reduir";
+            this.reduir.Size = new System.Drawing.Size(75, 23);
+            this.reduir.TabIndex = 6;
+            this.reduir.Text = "<<";
+            this.reduir.UseVisualStyleBackColor = true;
+            this.reduir.Click += new System.EventHandler(this.reduir_Click);
+            // 
+            // accelerar
+            // 
+            this.accelerar.Location = new System.Drawing.Point(668, 9);
+            this.accelerar.Name = "accelerar";
+            this.accelerar.Size = new System.Drawing.Size(75, 23);
+            this.accelerar.TabIndex = 7;
+            this.accelerar.Text = ">>";
+            this.accelerar.UseVisualStyleBackColor = true;
+            this.accelerar.Click += new System.EventHandler(this.accelerar_Click);
+            // 
+            // velocitat
+            // 
+            this.velocitat.AutoSize = true;
+            this.velocitat.Location = new System.Drawing.Point(644, 13);
+            this.velocitat.Name = "velocitat";
+            this.velocitat.Size = new System.Drawing.Size(18, 13);
+            this.velocitat.TabIndex = 8;
+            this.velocitat.Text = "x1";
             // 
             // mapconsole
             // 
@@ -139,5 +187,9 @@ namespace Consola_projecte2
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.Button Reset;
         private System.Windows.Forms.Button reverse;
+        private System.Windows.Forms.Label temps;
+        private System.Windows.Forms.Label velocitat;
+        private Button accelerar;
+        private Button reduir;
     }
 }

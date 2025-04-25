@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
+using System.Reflection.Emit;
 using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.MapProviders;
@@ -21,7 +23,8 @@ namespace Consola_projecte2
         private int simulationEndTime;      //Moment final 
         private int simulationStep = 1;      // +1 endavant, -1 enrere
         private int currentSimulationTime;  // Temps simulat actual, de tipus int
-        private int timerInterval = 200;      // Interval del timer en mil·lisegons (500 ms per exemple)
+        private int speedFactor = 1;
+        private int timerInterval = 1000;      // Interval del timer en mil·lisegons (500 ms per exemple)
         private Timer simulationTimer;
 
         private bool isPlaying = false;
@@ -38,6 +41,7 @@ namespace Consola_projecte2
             InitializeComponent();
             this.airplanesTable = dt;
             InitializeGMap();
+            this.splitContainer1.Dock = DockStyle.Fill;            
             //InitializeSimulationTimer();
         }
 
@@ -94,7 +98,11 @@ namespace Consola_projecte2
                 currentSimulationTime = simulationStartTime;
 
                 //nou
-                simulationTimer = new Timer();
+                //if (simulationTimer == null)
+                //{ 
+                    simulationTimer = new Timer(); 
+                //}
+                //simulationTimer = new Timer();
                 simulationTimer.Interval = timerInterval;
                 simulationTimer.Tick += SimulationTimer_Tick;
                 simulationTimer.Start();
@@ -120,12 +128,10 @@ namespace Consola_projecte2
             this.trackBar1.Minimum = simulationStartTime;
             this.trackBar1.Maximum = simulationEndTime;
 
-
-
-            simulationTimer = new Timer();
-            simulationTimer.Interval = timerInterval;
-            simulationTimer.Tick += SimulationTimer_Tick;
-            simulationTimer.Stop();
+            //simulationTimer = new Timer();
+            //simulationTimer.Interval = timerInterval;
+            ////simulationTimer.Tick += SimulationTimer_Tick;
+            //simulationTimer.Stop();
         }
 
         /// <summary>
@@ -157,6 +163,10 @@ namespace Consola_projecte2
             }
             // Incrementem el temps simulat
             currentSimulationTime += simulationStep;
+            TimeSpan t = TimeSpan.FromSeconds(currentSimulationTime);
+            string hhmmss = t.ToString(@"hh\:mm\:ss");
+            temps.Text = hhmmss;
+
 
             if (currentSimulationTime < simulationStartTime || currentSimulationTime > simulationEndTime)
             {
@@ -186,24 +196,24 @@ namespace Consola_projecte2
                             if (id != "")
                             {
 
-                                double lat = row["latitud"] != DBNull.Value ? Convert.ToDouble(row["latitud"]) : 0;
-                                double lng = row["longitud"] != DBNull.Value ? Convert.ToDouble(row["longitud"]) : 0;
+                                //double lat = row["latitud"] != DBNull.Value ? Convert.ToDouble(row["latitud"]) : 0;
+                                //double lng = row["longitud"] != DBNull.Value ? Convert.ToDouble(row["longitud"]) : 0;
 
-                                //// Aconseguim els valors polars
-                                //double rho = row["Rho (Nautical Miles)"] != DBNull.Value ? Convert.ToDouble(row["Rho (Nautical Miles)"]) : 0;
-                                //double theta = row["Theta (degrees)"] != DBNull.Value ? Convert.ToDouble(row["Theta (degrees)"]) : 0;
+                                // Aconseguim els valors polars
+                                double rho = row["Rho (Nautical Miles)"] != DBNull.Value ? Convert.ToDouble(row["Rho (Nautical Miles)"]) : 0;
+                                double theta = row["Theta (degrees)"] != DBNull.Value ? Convert.ToDouble(row["Theta (degrees)"]) : 0;
 
-                                //// Convertim l'angle de graus a radians.
-                                //double thetaRad = theta * Math.PI / 180.0;
+                                // Convertim l'angle de graus a radians.
+                                double thetaRad = theta * Math.PI / 180.0;
 
-                                //// Calcular la variació en latitud i longitud.
-                                //// 1 grau de latitud ≈ 60 milles nàutiques.
-                                //double deltaLat = (rho * Math.Cos(thetaRad)) / 60.0;
-                                //double deltaLon = (rho * Math.Sin(thetaRad)) / (60.0 * Math.Cos(radarLat * Math.PI / 180.0));
+                                // Calcular la variació en latitud i longitud.
+                                // 1 grau de latitud ≈ 60 milles nàutiques.
+                                double deltaLat = (rho * Math.Cos(thetaRad)) / 60.0;
+                                double deltaLon = (rho * Math.Sin(thetaRad)) / (60.0 * Math.Cos(radarLat * Math.PI / 180.0));
 
-                                //// La nova latitud i longitud
-                                //double lat = radarLat + deltaLat;
-                                //double lng = radarLon + deltaLon;
+                                // La nova latitud i longitud
+                                double lat = radarLat + deltaLat;
+                                double lng = radarLon + deltaLon;
 
                                 // Altres dades (velocitat i altitud)
                                 double speed = row["Mach"] != DBNull.Value ? Convert.ToDouble(row["Mach"]) : 0;
@@ -327,7 +337,7 @@ namespace Consola_projecte2
             {
                 //gmap.Refresh();
                 isPlaying = true;
-                simulationStep = +1;
+                simulationStep = 1;
                 simulationTimer.Start();
             }
             else
@@ -367,11 +377,13 @@ namespace Consola_projecte2
             trackBar1.Value = currentSimulationTime;
             markersOverlay.Markers.Clear();
             aircraftMarkers.Clear();
-            simulationStep = +1;
+            simulationStep = 1;
+            simulationTimer.Dispose();
+            simulationTimer = null;
             InitializeSimulationTimer();
             //UpdateMarkersForTime(currentSimulationTime);
             gmap.Refresh();
-            simulationTimer.Stop();
+            //simulationTimer.Stop();
 
 
             //if (isPlaying)
@@ -395,7 +407,42 @@ namespace Consola_projecte2
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
         {
+            
+        }
+
+        private void temps_Click(object sender, EventArgs e)
+        {
 
         }
+
+        private void accelerar_Click(object sender, EventArgs e)
+        {
+            if (speedFactor < 512)
+            {
+                speedFactor = speedFactor * 2;
+                simulationTimer.Interval = timerInterval / speedFactor;
+                string f = velocitat.Text;
+                string numPart = f.Substring(1);
+                int vel = int.Parse(numPart);
+                string speed = Convert.ToString(vel * 2);
+                velocitat.Text = $"x{speedFactor}";
+            }
+        }
+
+        private void reduir_Click(object sender, EventArgs e)
+        {
+            if (speedFactor > 1)
+            {
+                speedFactor = speedFactor / 2;
+                simulationTimer.Interval = timerInterval / speedFactor;
+                string s = velocitat.Text;
+                string numPart = s.Substring(1);
+                int vel = int.Parse(numPart);
+                string speed = Convert.ToString(vel / 2);
+                velocitat.Text = $"x{speedFactor}";
+            }
+        }
+
+
     }
 }

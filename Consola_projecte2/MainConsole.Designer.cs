@@ -39,6 +39,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.LLFilter = new System.Windows.Forms.Button();
             this.MinLat = new System.Windows.Forms.TextBox();
+            this.exportCSV = new System.Windows.Forms.Button();
             this.MinLong = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -150,140 +151,11 @@
             this.LLFilter.UseVisualStyleBackColor = true;
             this.LLFilter.Click += new System.EventHandler(this.LLFilter_Click);
             // 
-            // MinLat
-            // 
-            this.MinLat.Location = new System.Drawing.Point(1331, 215);
-            this.MinLat.Margin = new System.Windows.Forms.Padding(2);
-            this.MinLat.Name = "MinLat";
-            this.MinLat.Size = new System.Drawing.Size(36, 20);
-            this.MinLat.TabIndex = 11;
-            MinLat.KeyPress += MinLat_KeyPress;
-
-            // 
-            // MinLong
-            // 
-            this.MinLong.Location = new System.Drawing.Point(1331, 238);
-            this.MinLong.Margin = new System.Windows.Forms.Padding(2);
-            this.MinLong.Name = "MinLong";
-            this.MinLong.Size = new System.Drawing.Size(36, 20);
-            this.MinLong.TabIndex = 12;
-            MinLong.KeyPress += MinLong_KeyPress;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1272, 218);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(28, 13);
-            this.label4.TabIndex = 13;
-            this.label4.Text = "Lat :";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1263, 240);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(37, 13);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Long :";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // MaxLat
-            // 
-            this.MaxLat.Location = new System.Drawing.Point(1390, 215);
-            this.MaxLat.Margin = new System.Windows.Forms.Padding(2);
-            this.MaxLat.Name = "MaxLat";
-            this.MaxLat.Size = new System.Drawing.Size(34, 20);
-            this.MaxLat.TabIndex = 15;
-            MaxLat.KeyPress += MaxLat_KeyPress;
-
-            // 
-            // MaxLong
-            // 
-            this.MaxLong.Location = new System.Drawing.Point(1390, 238);
-            this.MaxLong.Margin = new System.Windows.Forms.Padding(2);
-            this.MaxLong.Name = "MaxLong";
-            this.MaxLong.Size = new System.Drawing.Size(34, 20);
-            this.MaxLong.TabIndex = 16;
-            MaxLong.KeyPress += MaxLong_KeyPress;
-
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1376, 190);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(27, 13);
-            this.label6.TabIndex = 17;
-            this.label6.Text = "Max";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(1301, 218);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(27, 13);
-            this.label7.TabIndex = 18;
-            this.label7.Text = "from";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(720, 316);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(0, 13);
-            this.label8.TabIndex = 19;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(1301, 240);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(27, 13);
-            this.label9.TabIndex = 20;
-            this.label9.Text = "from";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(1371, 240);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(16, 13);
-            this.label10.TabIndex = 21;
-            this.label10.Text = "to";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(1371, 218);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(16, 13);
-            this.label11.TabIndex = 22;
-            this.label11.Text = "to";
-            // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            // 
             // MainConsole
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1451, 633);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.MaxLong);
-            this.Controls.Add(this.MaxLat);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.MinLong);
-            this.Controls.Add(this.MinLat);
             this.Controls.Add(this.LLFilter);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button2);
@@ -316,19 +188,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button LLFilter;
-        private System.Windows.Forms.TextBox MinLat;
-        private System.Windows.Forms.TextBox MinLong;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox MaxLat;
-        private System.Windows.Forms.TextBox MaxLong;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ASTdecoder;
 using System.IO;
+using System.Globalization;
 
 
 
@@ -230,7 +231,5 @@ namespace Consola_projecte2
                 e.Handled = true;
             }
         }
-
-
     }
 }
