@@ -231,5 +231,7 @@ namespace Consola_projecte2
                 e.Handled = true;
             }
         }
+
+  
     }
 }
