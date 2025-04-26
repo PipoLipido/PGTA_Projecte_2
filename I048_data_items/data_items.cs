@@ -945,11 +945,11 @@ namespace I048_data_items
         {
 
             string SelectedAltitude_Status = "N/A";
-            int SelectedAltitude = 0;
+            int? SelectedAltitude = null;
             string FMSAltitude_Status = "N/A";
-            int FMSAltitude = 0;
+            int? FMSAltitude = null;
             string BaroSetting_Status = "N/A";
-            double BaroSetting = 0;
+            double? BaroSetting = null;
             string MCP_FCU_MODE_BITS_Status = "N/A";
             string VNAV = "N/A";
             string AltHoldMode = "N/A";
@@ -965,12 +965,12 @@ namespace I048_data_items
             string TrackAngleRate_Status = "N/A";
             string TAS_Status = "N/A";
             string LWingD = "N/A";
-            double RollAngle = 0;
-            double West = 0;
-            double TrueTrackAngle = 0;
-            double GS = 0;
-            double TrackAngleRate = 0;
-            double TAS = 0;
+            double? RollAngle = null;
+            double? West = null;
+            double? TrueTrackAngle = null;
+            double? GS = null;
+            double? TrackAngleRate = null;
+            double? TAS = null;
 
 
             string MagneticHeading_Status = "N/A";
@@ -978,12 +978,12 @@ namespace I048_data_items
             string Mach_Status = "N/A";
             string BaromAltRate_Status = "N/A";
             string InertialVertVel_Status = "N/A";
-            double MagneticHeading = 0;
-            double IndicatedAirspeed = 0;
-            double Mach = 0;
-            double BaromAltRate = 0;
+            double? MagneticHeading = null;
+            double? IndicatedAirspeed = null;
+            double? Mach = null;
+            double? BaromAltRate = null;
             string Below = "N/A";
-            double InertialVertVel = 0;
+            double? InertialVertVel = null;
 
             int index = 0;
             while (index < length_octets)
@@ -1075,11 +1075,11 @@ namespace I048_data_items
 
 
             dt.Columns.Add("SelectedAltitude_Status", typeof(string));
-            dt.Columns.Add("SelectedAltitude", typeof(int));
+            dt.Columns.Add("SelectedAltitude", typeof(int?));
             dt.Columns.Add("FMSAltitude_Status", typeof(string));
-            dt.Columns.Add("FMSAltitude", typeof(int));
+            dt.Columns.Add("FMSAltitude", typeof(int?));
             dt.Columns.Add("BaroSetting_Status", typeof(string));
-            dt.Columns.Add("BaroSetting", typeof(double));
+            dt.Columns.Add("BaroSetting", typeof(double?));
             dt.Columns.Add("MCP_FCU_MODE_BITS_Status", typeof(string));
             dt.Columns.Add("VNAV", typeof(string));
             dt.Columns.Add("AltHoldMode", typeof(string));
@@ -1089,27 +1089,27 @@ namespace I048_data_items
 
             dt.Columns.Add("LWingD", typeof(string));
             dt.Columns.Add("RollAngle_Status", typeof(string));
-            dt.Columns.Add("RollAngle", typeof(double));
+            dt.Columns.Add("RollAngle", typeof(double?));
             dt.Columns.Add("TrueTrackAngle_Status", typeof(string));
-            dt.Columns.Add("TrueTrackAngle", typeof(double));
+            dt.Columns.Add("TrueTrackAngle", typeof(double?));
             dt.Columns.Add("GS_Status", typeof(string));
-            dt.Columns.Add("GS", typeof(double));
+            dt.Columns.Add("GS", typeof(double?));
             dt.Columns.Add("TrackAngleRate_Status", typeof(string));
-            dt.Columns.Add("TrackAngleRate", typeof(double));
+            dt.Columns.Add("TrackAngleRate", typeof(double?));
             dt.Columns.Add("TAS_Status", typeof(string));
-            dt.Columns.Add("TAS", typeof(double));
+            dt.Columns.Add("TAS", typeof(double?));
 
             dt.Columns.Add("MagneticHeading_Status", typeof(string));
-            dt.Columns.Add("MagneticHeading", typeof(double));
+            dt.Columns.Add("MagneticHeading", typeof(double?));
             dt.Columns.Add("IndicatedAirspeed_Status", typeof(string));
-            dt.Columns.Add("IndicatedAirspeed", typeof(double));
+            dt.Columns.Add("IndicatedAirspeed", typeof(double?));
             dt.Columns.Add("Mach_Status", typeof(string));
-            dt.Columns.Add("Mach", typeof(double));
+            dt.Columns.Add("Mach", typeof(double?));
             dt.Columns.Add("BaromAltRate_Status", typeof(string));
-            dt.Columns.Add("BaromAltRate", typeof(double));
+            dt.Columns.Add("BaromAltRate", typeof(double?));
             dt.Columns.Add("Below", typeof(string));
             dt.Columns.Add("InertialVertVel_Status", typeof(string));
-            dt.Columns.Add("InertialVertVel", typeof(double));
+            dt.Columns.Add("InertialVertVel", typeof(double?));
 
             dt.Rows.Add(SelectedAltitude_Status, SelectedAltitude, FMSAltitude_Status, FMSAltitude, BaroSetting_Status, BaroSetting, MCP_FCU_MODE_BITS_Status, VNAV, AltHoldMode, ApprMode, TargetAltitudeSource_Status, TargetAltitudeSource, LWingD, RollAngle_Status, RollAngle, TrueTrackAngle_Status, TrueTrackAngle, GS_Status, GS, TrackAngleRate_Status, TrackAngleRate, TAS_Status, TAS, MagneticHeading_Status, MagneticHeading, IndicatedAirspeed_Status, IndicatedAirspeed, Mach_Status, Mach, BaromAltRate_Status, BaromAltRate, Below, InertialVertVel_Status, InertialVertVel);
 
