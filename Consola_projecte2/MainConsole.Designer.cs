@@ -307,6 +307,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button LLFilter;
+        private System.Windows.Forms.Button exportCSV;
     }
 }
 
