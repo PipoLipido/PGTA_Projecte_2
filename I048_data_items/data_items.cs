@@ -45,14 +45,12 @@ namespace I048_data_items
                 // While used to know the length of the data item
                 int length_octets = 1;
                 int byteIndex = 0;
-                string bit = "0";
                 while (byteIndex < 2)
                 {
-                    bit = ((Convert.ToString(data[octetanalyzed + byteIndex], 2).PadLeft(8, '0')).Substring(6, 1));
-
+                    int ultimBit = data[octetanalyzed + byteIndex] % 2;
                     // aqui no hauria de mirar el octet analyzed +0 y que byte index vagi de 0 a 2 maxim ???????????????????????????????????????????????
 
-                    if (bit == "1")
+                    if (ultimBit == 1)
                     {
                         length_octets = length_octets + 1;
                     }
@@ -201,7 +199,7 @@ namespace I048_data_items
                 string data_item_description = "Track Status";
 
                 int length_octets = 1;
-                int bit = (data[octetanalyzed + 1] >> 7) & 1;
+                int bit = data[octetanalyzed + 1] % 2;
 
 
                 if (bit == 1)
@@ -944,13 +942,13 @@ namespace I048_data_items
         public static DataTable ModeS(byte[] data, int octetanalyzed, int length_octets)
         {
 
-            string SelectedAltitude_Status = "0";
+            string SelectedAltitude_Status = "N/A";
             int SelectedAltitude = 0;
-            string FMSAltitude_Status = "0";
+            string FMSAltitude_Status = "N/A";
             int FMSAltitude = 0;
-            string BaroSetting_Status = "0";
+            string BaroSetting_Status = "N/A";
             double BaroSetting = 0;
-            string MCP_FCU_MODE_BITS_Status = "0";
+            string MCP_FCU_MODE_BITS_Status = "N/A";
             string VNAV = "N/A";
             string AltHoldMode = "N/A";
             string ApprMode = "N/A";
