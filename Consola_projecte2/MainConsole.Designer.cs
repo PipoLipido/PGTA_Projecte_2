@@ -2,21 +2,6 @@
 {
     partial class MainConsole
     {
-        private System.Windows.Forms.TextBox MinLat;
-        private System.Windows.Forms.TextBox MinLong;
-        private System.Windows.Forms.TextBox MaxLat;
-        private System.Windows.Forms.TextBox MaxLong;
-        private System.Windows.Forms.Button exportCSV;
-
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
 
 
         /// <summary>
@@ -55,20 +40,15 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.LLFilter = new System.Windows.Forms.Button();
-            this.MinLat = new System.Windows.Forms.TextBox();
             this.exportCSV = new System.Windows.Forms.Button();
-            this.MinLong = new System.Windows.Forms.TextBox();
+            this.MinLat = new System.Windows.Forms.TextBox();
+            this.MaxLat = new System.Windows.Forms.TextBox();
+            this.MinLon = new System.Windows.Forms.TextBox();
+            this.MaxLon = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.MaxLat = new System.Windows.Forms.TextBox();
-            this.MaxLong = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -178,102 +158,94 @@
             this.LLFilter.UseVisualStyleBackColor = true;
             this.LLFilter.Click += new System.EventHandler(this.LLFilter_Click);
             // 
-            // MinLat
-            // 
-            this.MinLat.Location = new System.Drawing.Point(0, 0);
-            this.MinLat.Name = "MinLat";
-            this.MinLat.Size = new System.Drawing.Size(100, 22);
-            this.MinLat.TabIndex = 0;
-            // 
             // exportCSV
             // 
-            this.exportCSV.Location = new System.Drawing.Point(0, 0);
+            this.exportCSV.Location = new System.Drawing.Point(1711, 226);
             this.exportCSV.Name = "exportCSV";
-            this.exportCSV.Size = new System.Drawing.Size(75, 23);
-            this.exportCSV.TabIndex = 0;
+            this.exportCSV.Size = new System.Drawing.Size(164, 23);
+            this.exportCSV.TabIndex = 11;
+            this.exportCSV.Text = "Export CSV";
+            this.exportCSV.UseVisualStyleBackColor = true;
+            this.exportCSV.Click += new System.EventHandler(this.exportCSV_Click_1);
             // 
-            // MinLong
+            // MinLat
             // 
-            this.MinLong.Location = new System.Drawing.Point(0, 0);
-            this.MinLong.Name = "MinLong";
-            this.MinLong.Size = new System.Drawing.Size(100, 22);
-            this.MinLong.TabIndex = 0;
-            // 
-            // label4
-            // 
-            this.label4.Location = new System.Drawing.Point(0, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(100, 23);
-            this.label4.TabIndex = 0;
-            // 
-            // label5
-            // 
-            this.label5.Location = new System.Drawing.Point(0, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(100, 23);
-            this.label5.TabIndex = 0;
+            this.MinLat.Location = new System.Drawing.Point(1746, 304);
+            this.MinLat.Name = "MinLat";
+            this.MinLat.Size = new System.Drawing.Size(66, 22);
+            this.MinLat.TabIndex = 12;
             // 
             // MaxLat
             // 
-            this.MaxLat.Location = new System.Drawing.Point(0, 0);
+            this.MaxLat.Location = new System.Drawing.Point(1849, 304);
             this.MaxLat.Name = "MaxLat";
-            this.MaxLat.Size = new System.Drawing.Size(100, 22);
-            this.MaxLat.TabIndex = 0;
+            this.MaxLat.Size = new System.Drawing.Size(52, 22);
+            this.MaxLat.TabIndex = 13;
             // 
-            // MaxLong
+            // MinLon
             // 
-            this.MaxLong.Location = new System.Drawing.Point(0, 0);
-            this.MaxLong.Name = "MaxLong";
-            this.MaxLong.Size = new System.Drawing.Size(100, 22);
-            this.MaxLong.TabIndex = 0;
+            this.MinLon.Location = new System.Drawing.Point(1746, 332);
+            this.MinLon.Name = "MinLon";
+            this.MinLon.Size = new System.Drawing.Size(66, 22);
+            this.MinLon.TabIndex = 14;
+            // 
+            // MaxLon
+            // 
+            this.MaxLon.Location = new System.Drawing.Point(1849, 332);
+            this.MaxLon.Name = "MaxLon";
+            this.MaxLon.Size = new System.Drawing.Size(52, 22);
+            this.MaxLon.TabIndex = 15;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(1758, 285);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(28, 16);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Min";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(1696, 335);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(29, 16);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "Lon";
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(0, 0);
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(1696, 304);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(100, 23);
-            this.label6.TabIndex = 0;
+            this.label6.Size = new System.Drawing.Size(25, 16);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "Lat";
             // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(0, 0);
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(1857, 285);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(100, 23);
-            this.label7.TabIndex = 0;
-            // 
-            // label8
-            // 
-            this.label8.Location = new System.Drawing.Point(0, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(100, 23);
-            this.label8.TabIndex = 0;
-            // 
-            // label9
-            // 
-            this.label9.Location = new System.Drawing.Point(0, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(100, 23);
-            this.label9.TabIndex = 0;
-            // 
-            // label10
-            // 
-            this.label10.Location = new System.Drawing.Point(0, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(100, 23);
-            this.label10.TabIndex = 0;
-            // 
-            // label11
-            // 
-            this.label11.Location = new System.Drawing.Point(0, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(100, 23);
-            this.label11.TabIndex = 0;
+            this.label7.Size = new System.Drawing.Size(32, 16);
+            this.label7.TabIndex = 19;
+            this.label7.Text = "Max";
             // 
             // MainConsole
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1935, 779);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.MaxLon);
+            this.Controls.Add(this.MinLon);
+            this.Controls.Add(this.MaxLat);
+            this.Controls.Add(this.MinLat);
+            this.Controls.Add(this.exportCSV);
             this.Controls.Add(this.LLFilter);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button2);
@@ -308,6 +280,15 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button LLFilter;
         private System.Windows.Forms.Button exportCSV;
+        private System.Windows.Forms.TextBox MinLat;
+        private System.Windows.Forms.TextBox MaxLat;
+        private System.Windows.Forms.TextBox MinLon;
+        private System.Windows.Forms.TextBox MaxLon;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        //private System.Windows.Forms.Button exportCSV;
     }
 }
 

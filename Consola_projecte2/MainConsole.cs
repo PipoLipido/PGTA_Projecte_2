@@ -111,10 +111,10 @@ namespace Consola_projecte2
                 maxLatitud = Convert.ToDouble(MaxLat.Text); // en graus
                 minLatitud = Convert.ToDouble(MinLat.Text); // en graus
             }
-            else if ((MaxLong.Text != "" && MaxLong.Text != ""))
+            else if ((MaxLon.Text != "" && MaxLon.Text != ""))
             {
-                maxLongitud = Convert.ToDouble(MaxLong.Text); // en graus
-                minLongitud = Convert.ToDouble(MinLong.Text); // en graus
+                maxLongitud = Convert.ToDouble(MaxLon.Text); // en graus
+                minLongitud = Convert.ToDouble(MinLon.Text); // en graus
             }
             else
             {
@@ -195,7 +195,7 @@ namespace Consola_projecte2
         {
             char decimalSeparator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
             //Unicament permetem numeros, no lletres
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != '.' || e.KeyChar != ',') && MinLong.Text.Contains('.') && MinLong.Text.Contains(','))
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != '.' || e.KeyChar != ',') && MinLon.Text.Contains('.') && MinLon.Text.Contains(','))
             {
                 e.Handled = true;
             }
@@ -205,7 +205,7 @@ namespace Consola_projecte2
         {
             char decimalSeparator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
             //Unicament permetem numeros, no lletres
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != '.' || e.KeyChar != ',') && MinLong.Text.Contains('.') && MinLong.Text.Contains(','))
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != '.' || e.KeyChar != ',') && MinLon.Text.Contains('.') && MinLon.Text.Contains(','))
             {
                 e.Handled = true;
             }
@@ -215,7 +215,7 @@ namespace Consola_projecte2
         {
             char decimalSeparator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
             //Unicament permetem numeros, no lletres
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != '.' || e.KeyChar != ',') && MinLong.Text.Contains('.') && MinLong.Text.Contains(','))
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != '.' || e.KeyChar != ',') && MinLon.Text.Contains('.') && MinLon.Text.Contains(','))
             {
                 e.Handled = true;
             }
@@ -226,7 +226,7 @@ namespace Consola_projecte2
         {
             char decimalSeparator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
             //Unicament permetem numeros, no lletres
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != '.' || e.KeyChar != ',') && MinLong.Text.Contains('.') && MinLong.Text.Contains(','))
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && (e.KeyChar != '.' || e.KeyChar != ',') && MinLon.Text.Contains('.') && MinLon.Text.Contains(','))
             {
                 e.Handled = true;
             }
@@ -307,6 +307,70 @@ namespace Consola_projecte2
             return s;
         }
 
+        private void exportCSV_Click_1(object sender, EventArgs e)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                MessageBox.Show("No hi ha dades per exportar.", "Atenció", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string sep = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+
+            using (var dlg = new SaveFileDialog())
+            {
+                dlg.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+                dlg.DefaultExt = "csv";
+                dlg.FileName = "export.csv";
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        var sb = new StringBuilder();
+
+                        // 1) Capçalera
+                        int colCount = dt.Columns.Count;
+                        for (int col = 0; col < colCount; col++)
+                        {
+                            sb.Append(Escape(dt.Columns[col].ColumnName));
+                            if (col < colCount - 1)
+                            {
+                                sb.Append(sep);
+                            }
+                        }
+                        sb.AppendLine();
+
+                        // 2) Files
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            for (int col = 0; col < colCount; col++)
+                            {
+                                sb.Append(Escape(row[col]?.ToString() ?? ""));
+                                if (col < dt.Columns.Count - 1)
+                                {
+                                    sb.Append(sep);
+                                }
+                            }
+                            sb.AppendLine();
+                        }
+
+                        // 3) Escriure a disc
+                        File.WriteAllText(dlg.FileName, sb.ToString(), Encoding.UTF8);
+
+                        MessageBox.Show($"Taula exportada correctament a:\n{dlg.FileName}",
+                                        "Exportació completada",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error exportant CSV:\n{ex.Message}",
+                                        "Error",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
     }
     
 }

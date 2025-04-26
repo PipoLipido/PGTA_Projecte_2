@@ -196,26 +196,26 @@ namespace Consola_projecte2
                             if (id != "")
                             {
 
-                                //double lat = row["latitud"] != DBNull.Value ? Convert.ToDouble(row["latitud"]) : 0;
-                                //double lng = row["longitud"] != DBNull.Value ? Convert.ToDouble(row["longitud"]) : 0;
+                                double lat = row["latitud"] != DBNull.Value ? Convert.ToDouble(row["latitud"]) : 0;
+                                double lng = row["longitud"] != DBNull.Value ? Convert.ToDouble(row["longitud"]) : 0;
 
                                 // Aconseguim els valors polars
-                                double rho = row["Rho (Nautical Miles)"] != DBNull.Value ? Convert.ToDouble(row["Rho (Nautical Miles)"]) : 0;
-                                double theta = row["Theta (degrees)"] != DBNull.Value ? Convert.ToDouble(row["Theta (degrees)"]) : 0;
+                                //double rho = row["Rho (Nautical Miles)"] != DBNull.Value ? Convert.ToDouble(row["Rho (Nautical Miles)"]) : 0;
+                                //double theta = row["Theta (degrees)"] != DBNull.Value ? Convert.ToDouble(row["Theta (degrees)"]) : 0;
 
-                                // Convertim l'angle de graus a radians.
-                                double thetaRad = theta * Math.PI / 180.0;
+                                //// Convertim l'angle de graus a radians.
+                                //double thetaRad = theta * Math.PI / 180.0;
 
-                                // Calcular la variació en latitud i longitud.
-                                // 1 grau de latitud ≈ 60 milles nàutiques.
-                                double deltaLat = (rho * Math.Cos(thetaRad)) / 60.0;
-                                double deltaLon = (rho * Math.Sin(thetaRad)) / (60.0 * Math.Cos(radarLat * Math.PI / 180.0));
+                                //// Calcular la variació en latitud i longitud.
+                                //// 1 grau de latitud ≈ 60 milles nàutiques.
+                                //double deltaLat = (rho * Math.Cos(thetaRad)) / 60.0;
+                                //double deltaLon = (rho * Math.Sin(thetaRad)) / (60.0 * Math.Cos(radarLat * Math.PI / 180.0));
 
-                                // La nova latitud i longitud
-                                double lat = radarLat + deltaLat;
-                                double lng = radarLon + deltaLon;
+                                //// La nova latitud i longitud
+                                //double lat = radarLat + deltaLat;
+                                //double lng = radarLon + deltaLon;
 
-                                // Altres dades (velocitat i altitud)
+                                //// Altres dades (velocitat i altitud)
                                 double speed = row["Mach"] != DBNull.Value ? Convert.ToDouble(row["Mach"]) : 0;
                                 double altitude = row["Flight Level"] != DBNull.Value ? Convert.ToDouble(row["Flight Level"]) : 0;
 
