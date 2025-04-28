@@ -108,22 +108,22 @@ namespace Consola_projecte2
 
             if (MaxLat.Text != "" && MinLat.Text != "")
             {
-                maxLatitud = Convert.ToDouble(MaxLat.Text); // en graus
-                minLatitud = Convert.ToDouble(MinLat.Text); // en graus
+                maxLatitud = Convert.ToDouble(MaxLat.Text, CultureInfo.InvariantCulture); // en graus
+                minLatitud = Convert.ToDouble(MinLat.Text, CultureInfo.InvariantCulture); // en graus
             }
-            else if ((MaxLon.Text != "" && MaxLon.Text != ""))
+            if ((MaxLon.Text != "" && MaxLon.Text != ""))
             {
-                maxLongitud = Convert.ToDouble(MaxLon.Text); // en graus
-                minLongitud = Convert.ToDouble(MinLon.Text); // en graus
+                maxLongitud = Convert.ToDouble(MaxLon.Text, CultureInfo.InvariantCulture); // en graus
+                minLongitud = Convert.ToDouble(MinLon.Text, CultureInfo.InvariantCulture); // en graus
             }
-            else
+            else if ((MaxLat.Text != "" && MinLat.Text != "") && (MaxLon.Text != "" && MaxLon.Text != ""))
             {
                 MessageBox.Show("Debe introducir el intervalo deseado para el filtro");
                 return;
             }
 
 
-            if ((minLatitud < maxLatitud) && (minLongitud < maxLongitud))
+            if ((minLatitud <= maxLatitud) && (minLongitud <= maxLongitud))
             {
                 foreach (DataRow row in LatLongLimited.Rows)
                 {
@@ -135,9 +135,15 @@ namespace Consola_projecte2
                         EliminatedRows.Add(row);
                     }
 
-                    else if (Convert.ToDouble(Lat) <= minLatitud || Convert.ToDouble(Lat) >= maxLatitud || Convert.ToDouble(Lon) <= minLongitud || Convert.ToDouble(Lon) >= maxLongitud)
+                    else 
                     {
-                        EliminatedRows.Add(row);
+                        double Latd = Convert.ToDouble(Lat, CultureInfo.InvariantCulture);
+                        double Lond = Convert.ToDouble(Lon, CultureInfo.InvariantCulture);
+
+                        if ((Latd <= minLatitud || Latd >= maxLatitud) || (Lond <= minLongitud || Lond >= maxLongitud))
+                        {
+                            EliminatedRows.Add(row);
+                        }
                     }
                 }
 
@@ -154,9 +160,15 @@ namespace Consola_projecte2
                         EliminatedRows.Add(row);
                     }
 
-                    else if (Convert.ToDouble(Lat) <= maxLatitud || Convert.ToDouble(Lat) >= minLatitud || Convert.ToDouble(Lon) <= maxLongitud || Convert.ToDouble(Lon) >= minLongitud)
+                    else
                     {
-                        EliminatedRows.Add(row);
+                        double Latd = Convert.ToDouble(Lat, CultureInfo.InvariantCulture);
+                        double Lond = Convert.ToDouble(Lon, CultureInfo.InvariantCulture);
+
+                        if ((Latd <= maxLatitud || Latd >= minLatitud) || (Lond <= maxLongitud || Lond >= minLongitud))
+                        {
+                            EliminatedRows.Add(row);
+                        }
                     }
                 }
             }
