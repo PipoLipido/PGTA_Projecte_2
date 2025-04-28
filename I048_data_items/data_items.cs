@@ -1459,7 +1459,7 @@ namespace I048_data_items
 
             foreach (DataRow row in dt.Rows)
             {
-                double Altitude = -10000000;
+                double Altitude = 0;
                 if (row["Corrected Altitude"] != "N/A")
                 {
                     Altitude = Convert.ToDouble(row["Corrected Altitude"]);
@@ -1468,7 +1468,7 @@ namespace I048_data_items
                 {
                     Altitude = Convert.ToDouble(row["Flight Level"]) * 100 * 0.3048;
                 }
-                if (row["Rho"] != DBNull.Value & row["Theta"] != DBNull.Value & Altitude != -10000000)
+                if (row["Rho"] != DBNull.Value & row["Theta"] != DBNull.Value)
                 {
                     //Convert to Cartesian
                     double x = Convert.ToDouble(row["Rho"]) * Math.Sin(Convert.ToDouble(row["Theta"]) * Math.PI / 180.0) * 1852.0;
