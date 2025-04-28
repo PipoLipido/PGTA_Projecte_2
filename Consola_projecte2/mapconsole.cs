@@ -75,6 +75,10 @@ namespace Consola_projecte2
 
             markersOverlay = new GMapOverlay("markers");
             gmap.Overlays.Add(markersOverlay);
+            gmap.OnMarkerClick += GmapControl1_OnMarkerClick;
+
+            GMapMarker marcador1 = null;
+            GMapMarker marcador2 = null;
         }
 
         /// <summary>
@@ -442,7 +446,50 @@ namespace Consola_projecte2
                 velocitat.Text = $"x{speedFactor}";
             }
         }
+        
+        private GMapMarker selectedMarker1 = null;
+        private GMapMarker selectedMarker2 = null;
+        private void GmapControl1_OnMarkerClick(GMapMarker item, MouseEventArgs e)
+        {
+            if (selectedMarker1 == null)
+            {
+                selectedMarker1 = item;
+                
 
+                MessageBox.Show("Primer marcador seleccionado: " + item.ToolTipText);
+            }
+            else if (selectedMarker2 == null)
+            {
+                selectedMarker2 = item;
+                MessageBox.Show("Segundo marcador seleccionado: " + item.ToolTipText);
 
+                // Una vez tenemos ambos, podemos operar
+                var punto1 = selectedMarker1.Position;
+                var punto2 = selectedMarker2.Position;
+
+                // Puedes usar el propio método Distance de GMap.NET
+                double distanciaKm = CalcularDistanciaEnKm(punto1,punto2);
+
+                MessageBox.Show($"Distancia entre los marcadores: {distanciaKm:F2} km");
+            }
+            else
+            {
+                // Si ya hay dos seleccionados, puedes resetear o preguntar si quieres cambiar
+                MessageBox.Show("Ya has seleccionado dos marcadores. Reiniciando selección.");
+                selectedMarker1 = null;
+                selectedMarker2 = null;
+            }
+        }
+        private double CalcularDistanciaEnKm(PointLatLng p1, PointLatLng p2)
+        {
+            var R = 6371; // Radio de la Tierra en kilómetros
+            var lat = (p2.Lat - p1.Lat) * Math.PI / 180;
+            var lng = (p2.Lng - p1.Lng) * Math.PI / 180;
+            var h1 = Math.Sin(lat / 2) * Math.Sin(lat / 2) +
+                     Math.Cos(p1.Lat * Math.PI / 180) * Math.Cos(p2.Lat * Math.PI / 180) *
+                     Math.Sin(lng / 2) * Math.Sin(lng / 2);
+            var h2 = 2 * Math.Atan2(Math.Sqrt(h1), Math.Sqrt(1 - h1));
+            return R * h2;
+        }
     }
 }
