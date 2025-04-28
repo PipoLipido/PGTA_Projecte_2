@@ -123,52 +123,40 @@ namespace Consola_projecte2
             }
 
 
-            if ((minLatitud <= maxLatitud) && (minLongitud <= maxLongitud))
+            if (minLatitud >= maxLatitud)
             {
-                foreach (DataRow row in LatLongLimited.Rows)
-                {
-                    string Lat = Convert.ToString(row["latitud"]).Replace(',', '.');
-                    string Lon = Convert.ToString(row["longitud"]).Replace(',', '.');
-
-                    if (Lat == "N/A" || Lon == "N/A")
-                    {
-                        EliminatedRows.Add(row);
-                    }
-
-                    else 
-                    {
-                        double Latd = Convert.ToDouble(Lat, CultureInfo.InvariantCulture);
-                        double Lond = Convert.ToDouble(Lon, CultureInfo.InvariantCulture);
-
-                        if ((Latd <= minLatitud || Latd >= maxLatitud) || (Lond <= minLongitud || Lond >= maxLongitud))
-                        {
-                            EliminatedRows.Add(row);
-                        }
-                    }
-                }
+                double old_minLatitud = minLatitud;
+                minLatitud = maxLatitud;
+                maxLatitud = old_minLatitud;
 
             }
-            else
-            {
-                foreach (DataRow row in LatLongLimited.Rows)
-                {
-                    string Lat = Convert.ToString(row["latitud"]).Replace(',', '.');
-                    string Lon = Convert.ToString(row["longitud"]).Replace(',', '.');
 
-                    if (Lat == "N/A" || Lon == "N/A")
+            if (minLongitud >= maxLongitud)
+            {
+                double old_minLongitud = minLongitud;
+                minLongitud = maxLongitud;
+                maxLongitud = old_minLongitud;
+            }
+
+
+            foreach (DataRow row in LatLongLimited.Rows)
+            {
+                string Lat = Convert.ToString(row["latitud"]).Replace(',', '.');
+                string Lon = Convert.ToString(row["longitud"]).Replace(',', '.');
+
+                if (Lat == "N/A" || Lon == "N/A")
+                {
+                    EliminatedRows.Add(row);
+                }
+
+                else 
+                {
+                    double Latd = Convert.ToDouble(Lat, CultureInfo.InvariantCulture);
+                    double Lond = Convert.ToDouble(Lon, CultureInfo.InvariantCulture);
+
+                    if ((Latd <= minLatitud || Latd >= maxLatitud) || (Lond <= minLongitud || Lond >= maxLongitud))
                     {
                         EliminatedRows.Add(row);
-                    }
-
-                    else
-                    {
-                        double Latd = Convert.ToDouble(Lat, CultureInfo.InvariantCulture);
-                        double Lond = Convert.ToDouble(Lon, CultureInfo.InvariantCulture);
-
-                        if ((Latd <= maxLatitud || Latd >= minLatitud) || (Lond <= maxLongitud || Lond >= minLongitud))
-                        {
-                            EliminatedRows.Add(row);
-                        }
                     }
                 }
             }
