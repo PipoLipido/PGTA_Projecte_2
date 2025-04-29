@@ -18,6 +18,7 @@ namespace Consola_projecte2
         // Control del mapa i overlay per als marcadors
         private GMapControl gmap;
         private GMapOverlay markersOverlay;
+        private GMapOverlay overlayRutas = new GMapOverlay("rutas");
         private DataTable airplanesTable;
 
         // Variables per la simulació temporal
@@ -253,24 +254,29 @@ namespace Consola_projecte2
                         }
                     }
                 }
+                //Calcul de distancies
+                if (selectedMarker1 != null & selectedMarker2 != null)
+                {
+                    var punto1 = selectedMarker1.Position;
+                    var punto2 = selectedMarker2.Position;
 
+                    double distanciaKm = CalcularDistanciaEnKm(punto1, punto2);
+
+                    label1.Text = $"Distancia entre los marcadores: {distanciaKm:F2} km";
+
+                    //linea
+                    overlayRutas.Routes.Clear();
+                    List<PointLatLng> puntos = new List<PointLatLng> { selectedMarker1.Position, selectedMarker2.Position };
+                    GMapRoute ruta = new GMapRoute(puntos, "LineaEntreMarcadores"){Stroke = new Pen(Color.Red, 2) };
+                    overlayRutas.Routes.Add(ruta);
+                    gmap.Overlays.Add(overlayRutas);
+                }
 
                 // Refresquem el mapa per veure els canvis.
                 gmap.Refresh();
                 trackBar1.Value = currentSimulationTime;
 
-                //Calcul de distancies
-                if(selectedMarker1 != null & selectedMarker2 != null)
-                {
-                    var punto1 = selectedMarker1.Position;
-                    var punto2 = selectedMarker2.Position;
-
-                    // Puedes usar el propio método Distance de GMap.NET
-                    double distanciaKm = CalcularDistanciaEnKm(punto1, punto2);
-
-                    label1.Text = $"Distancia entre los marcadores: {distanciaKm:F2} km";
-                    //MessageBox.Show($"Distancia entre los marcadores: {distanciaKm:F2} km");
-                }
+                
 
                 // Opcional: Comprovem si el temps simulat ha superat l'últim registre per aturar o reiniciar la simulació.
                 simulationEndTime = simulationStartTime;
@@ -502,6 +508,7 @@ namespace Consola_projecte2
                 markersOverlay.Markers.Remove(selectedMarker2);
                 selectedMarker1 = null;
                 selectedMarker2 = null;
+                overlayRutas.Routes.Clear();
             }
         }
         private double CalcularDistanciaEnKm(PointLatLng p1, PointLatLng p2)
