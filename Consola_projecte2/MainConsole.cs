@@ -38,7 +38,7 @@ namespace Consola_projecte2
                 byte[] fileData = File.ReadAllBytes(openFileDialog.FileName);
                 List<CAT> result = AsterixDecoder.ParseAsterixCat48(fileData);
 
-                int indexSeleccionat = 0; 
+                int indexSeleccionat = 0;
                 dt = result[indexSeleccionat].dt;
 
                 // Afegim columnes extres
@@ -61,7 +61,7 @@ namespace Consola_projecte2
 
         private void Map_Click(object sender, EventArgs e)
         {
-            
+
             mapconsole mapconsole = new mapconsole(dt);
             mapconsole.Show();
         }
@@ -149,7 +149,7 @@ namespace Consola_projecte2
                     EliminatedRows.Add(row);
                 }
 
-                else 
+                else
                 {
                     double Latd = Convert.ToDouble(Lat, CultureInfo.InvariantCulture);
                     double Lond = Convert.ToDouble(Lon, CultureInfo.InvariantCulture);
@@ -295,7 +295,7 @@ namespace Consola_projecte2
                     }
                 }
             }
-            
+
         }
         private static string Escape(string s)
         {
@@ -369,6 +369,54 @@ namespace Consola_projecte2
                                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+            }
+        }
+
+        private void FixedTransponder_Click(object sender, EventArgs e)
+        {
+            if (dt != null)
+            {
+                DataTable NonFixedTransponderTable = dt;
+                List<DataRow> EliminatedRows = new List<DataRow>();
+
+                foreach (DataRow row in NonFixedTransponderTable.Rows)
+                {
+                    if (row["Mode3A"].ToString() == "7777")
+                    {
+                        EliminatedRows.Add(row);
+                    }
+                }
+
+                foreach (DataRow row in EliminatedRows)
+                {
+                    NonFixedTransponderTable.Rows.Remove(row);
+                }
+
+                dataGridView1.DataSource = NonFixedTransponderTable;
+            }
+        }
+
+        private void ACOnGround_Click(object sender, EventArgs e)
+        {
+            if (dt != null)
+            {
+                DataTable PureTargetTable = dt;
+                List<DataRow> EliminatedRows = new List<DataRow>();
+
+                foreach (DataRow row in PureTargetTable.Rows)
+                {
+                    if (row["STAT"].ToString() == "No alert, no SPI, aircraft on ground" & row["STAT"].ToString() == "Alert, no SPI, aircraft on ground")
+                    {
+                        EliminatedRows.Add(row);
+                    }
+                }
+
+                foreach (DataRow row in EliminatedRows)
+                {
+                    PureTargetTable.Rows.Remove(row);
+                }
+
+                dataGridView1.DataSource = PureTargetTable;
             }
         }
     }
