@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Reflection.Emit;
 using System.Windows.Forms;
 using GMap.NET;
@@ -76,9 +78,6 @@ namespace Consola_projecte2
             markersOverlay = new GMapOverlay("markers");
             gmap.Overlays.Add(markersOverlay);
             gmap.OnMarkerClick += GmapControl1_OnMarkerClick;
-
-            GMapMarker marcador1 = null;
-            GMapMarker marcador2 = null;
         }
 
         /// <summary>
@@ -231,6 +230,15 @@ namespace Consola_projecte2
                                 {
                                     aircraftMarkers[id].Position = newPosition;
                                     aircraftMarkers[id].ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nAltitud: FL{altitude}";
+                                    if (id == idselectermarker1)
+                                    {
+                                        selectedMarker1.Position = newPosition;
+                                    }
+                                    if (id == idselectermarker2)
+                                    {
+                                        selectedMarker2.Position = newPosition;
+                                    }
+
 
                                 }
                                 else
@@ -250,6 +258,19 @@ namespace Consola_projecte2
                 // Refresquem el mapa per veure els canvis.
                 gmap.Refresh();
                 trackBar1.Value = currentSimulationTime;
+
+                //Calcul de distancies
+                if(selectedMarker1 != null & selectedMarker2 != null)
+                {
+                    var punto1 = selectedMarker1.Position;
+                    var punto2 = selectedMarker2.Position;
+
+                    // Puedes usar el propio método Distance de GMap.NET
+                    double distanciaKm = CalcularDistanciaEnKm(punto1, punto2);
+
+                    label1.Text = $"Distancia entre los marcadores: {distanciaKm:F2} km";
+                    //MessageBox.Show($"Distancia entre los marcadores: {distanciaKm:F2} km");
+                }
 
                 // Opcional: Comprovem si el temps simulat ha superat l'últim registre per aturar o reiniciar la simulació.
                 simulationEndTime = simulationStartTime;
@@ -446,36 +467,39 @@ namespace Consola_projecte2
                 velocitat.Text = $"x{speedFactor}";
             }
         }
-        
+
         private GMapMarker selectedMarker1 = null;
-        private GMapMarker selectedMarker2 = null;
+        private GMapMarker selectedMarker2 = null; 
+        private string idselectermarker1 = "";
+        private string idselectermarker2 = "";
         private void GmapControl1_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
             if (selectedMarker1 == null)
             {
-                selectedMarker1 = item;
-                
+                idselectermarker1 = aircraftMarkers.FirstOrDefault(kv => kv.Value == item).Key;
+                PointLatLng position = item.Position;
+                selectedMarker1 = new GMarkerGoogle(position, GMarkerGoogleType.red_dot);
+                markersOverlay.Markers.Add(selectedMarker1);
 
-                MessageBox.Show("Primer marcador seleccionado: " + item.ToolTipText);
+                //MessageBox.Show("Primer marcador seleccionado: " + item.ToolTipText);
             }
             else if (selectedMarker2 == null)
             {
-                selectedMarker2 = item;
-                MessageBox.Show("Segundo marcador seleccionado: " + item.ToolTipText);
+                idselectermarker2 = aircraftMarkers.FirstOrDefault(kv => kv.Value == item).Key;
+                PointLatLng position = item.Position;
+                selectedMarker2 = new GMarkerGoogle(position, GMarkerGoogleType.red_dot);
+                markersOverlay.Markers.Add(selectedMarker2);
 
-                // Una vez tenemos ambos, podemos operar
-                var punto1 = selectedMarker1.Position;
-                var punto2 = selectedMarker2.Position;
-
-                // Puedes usar el propio método Distance de GMap.NET
-                double distanciaKm = CalcularDistanciaEnKm(punto1,punto2);
-
-                MessageBox.Show($"Distancia entre los marcadores: {distanciaKm:F2} km");
+                //MessageBox.Show("Segundo marcador seleccionado: " + item.ToolTipText);
             }
             else
             {
                 // Si ya hay dos seleccionados, puedes resetear o preguntar si quieres cambiar
                 MessageBox.Show("Ya has seleccionado dos marcadores. Reiniciando selección.");
+                idselectermarker1 = "";
+                idselectermarker2 = "";
+                markersOverlay.Markers.Remove(selectedMarker1);
+                markersOverlay.Markers.Remove(selectedMarker2);
                 selectedMarker1 = null;
                 selectedMarker2 = null;
             }
