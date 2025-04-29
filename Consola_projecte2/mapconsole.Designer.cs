@@ -183,9 +183,9 @@ namespace Consola_projecte2
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 11);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(145, 16);
+            this.label1.Size = new System.Drawing.Size(118, 16);
             this.label1.TabIndex = 9;
-            this.label1.Text = "Distancia entre avions: ";
+            this.label1.Text = "Select two aircrafts";
             // 
             // mapconsole
             // 

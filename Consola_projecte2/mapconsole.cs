@@ -262,7 +262,7 @@ namespace Consola_projecte2
 
                     double distanciaKm = CalcularDistanciaEnKm(punto1, punto2);
 
-                    label1.Text = $"Distancia entre los marcadores: {distanciaKm:F2} km";
+                    label1.Text = $"Distance between aircrafts is: {distanciaKm:F2} km";
 
                     //linea
                     overlayRutas.Routes.Clear();
@@ -501,7 +501,7 @@ namespace Consola_projecte2
             else
             {
                 // Si ya hay dos seleccionados, puedes resetear o preguntar si quieres cambiar
-                MessageBox.Show("Ya has seleccionado dos marcadores. Reiniciando selección.");
+                MessageBox.Show("There are already two selected aircraft. Reseting selection.");
                 idselectermarker1 = "";
                 idselectermarker2 = "";
                 markersOverlay.Markers.Remove(selectedMarker1);
@@ -509,6 +509,7 @@ namespace Consola_projecte2
                 selectedMarker1 = null;
                 selectedMarker2 = null;
                 overlayRutas.Routes.Clear();
+                label1.Text = "Select two aircrafts";
             }
         }
         private double CalcularDistanciaEnKm(PointLatLng p1, PointLatLng p2)
