@@ -19,6 +19,7 @@ namespace Consola_projecte2
     public partial class MainConsole : Form
     {
         DataTable dt = new DataTable();
+        DataTable originalDt = new DataTable();
         public MainConsole()
         {
             InitializeComponent();
@@ -44,6 +45,8 @@ namespace Consola_projecte2
                 // Afegim columnes extres
                 dt = I048_data_items.data_items.Corrected_Altitude(dt);
                 dt = I048_data_items.data_items.LatLong(dt);
+
+                originalDt = dt.Copy();
 
                 dataGridView1.DataSource = dt;
             }
@@ -400,12 +403,12 @@ namespace Consola_projecte2
         {
             if (dt != null)
             {
-                DataTable PureTargetTable = dt;
+                DataTable ACOnGround = dt;
                 List<DataRow> EliminatedRows = new List<DataRow>();
 
-                foreach (DataRow row in PureTargetTable.Rows)
+                foreach (DataRow row in ACOnGround.Rows)
                 {
-                    if (row["STAT"].ToString() == "No alert, no SPI, aircraft on ground" & row["STAT"].ToString() == "Alert, no SPI, aircraft on ground")
+                    if (row["STAT"].ToString() == "No alert, no SPI, aircraft on ground" || row["STAT"].ToString() == "Alert, no SPI, aircraft on ground")
                     {
                         EliminatedRows.Add(row);
                     }
@@ -413,10 +416,18 @@ namespace Consola_projecte2
 
                 foreach (DataRow row in EliminatedRows)
                 {
-                    PureTargetTable.Rows.Remove(row);
+                    ACOnGround.Rows.Remove(row);
                 }
 
-                dataGridView1.DataSource = PureTargetTable;
+                dataGridView1.DataSource = ACOnGround;
+            }
+        }
+
+        private void Original_Click(object sender, EventArgs e)
+        {
+            if (dt != null)
+            { 
+                dataGridView1.DataSource = originalDt;
             }
         }
     }

@@ -51,14 +51,16 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.ACOnGround = new System.Windows.Forms.Button();
+            this.Original = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // show_data
             // 
-            this.show_data.Location = new System.Drawing.Point(1342, 57);
+            this.show_data.Location = new System.Drawing.Point(1789, 70);
+            this.show_data.Margin = new System.Windows.Forms.Padding(4);
             this.show_data.Name = "show_data";
-            this.show_data.Size = new System.Drawing.Size(75, 23);
+            this.show_data.Size = new System.Drawing.Size(100, 28);
             this.show_data.TabIndex = 0;
             this.show_data.Text = "Show data";
             this.show_data.UseVisualStyleBackColor = true;
@@ -67,9 +69,10 @@
             // label_test
             // 
             this.label_test.AutoSize = true;
-            this.label_test.Location = new System.Drawing.Point(49, 9);
+            this.label_test.Location = new System.Drawing.Point(65, 11);
+            this.label_test.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_test.Name = "label_test";
-            this.label_test.Size = new System.Drawing.Size(30, 13);
+            this.label_test.Size = new System.Drawing.Size(36, 16);
             this.label_test.TabIndex = 1;
             this.label_test.Text = "Data";
             this.label_test.Click += new System.EventHandler(this.label_test_Click);
@@ -77,17 +80,20 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(32, 41);
+            this.dataGridView1.Location = new System.Drawing.Point(43, 50);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1244, 638);
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.Size = new System.Drawing.Size(1623, 785);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Map
             // 
-            this.Map.Location = new System.Drawing.Point(1342, 432);
+            this.Map.Location = new System.Drawing.Point(1789, 532);
+            this.Map.Margin = new System.Windows.Forms.Padding(4);
             this.Map.Name = "Map";
-            this.Map.Size = new System.Drawing.Size(92, 24);
+            this.Map.Size = new System.Drawing.Size(123, 30);
             this.Map.TabIndex = 3;
             this.Map.Text = "Map";
             this.Map.UseVisualStyleBackColor = true;
@@ -95,9 +101,10 @@
             // 
             // PureTargetButton
             // 
-            this.PureTargetButton.Location = new System.Drawing.Point(1342, 154);
+            this.PureTargetButton.Location = new System.Drawing.Point(1691, 199);
+            this.PureTargetButton.Margin = new System.Windows.Forms.Padding(4);
             this.PureTargetButton.Name = "PureTargetButton";
-            this.PureTargetButton.Size = new System.Drawing.Size(122, 23);
+            this.PureTargetButton.Size = new System.Drawing.Size(163, 28);
             this.PureTargetButton.TabIndex = 4;
             this.PureTargetButton.Text = "Pure Target Filter";
             this.PureTargetButton.UseVisualStyleBackColor = true;
@@ -106,9 +113,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1339, 41);
+            this.label1.Location = new System.Drawing.Point(1785, 50);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 13);
+            this.label1.Size = new System.Drawing.Size(88, 16);
             this.label1.TabIndex = 5;
             this.label1.Text = "File Selection";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -116,17 +124,19 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1339, 138);
+            this.label2.Location = new System.Drawing.Point(1785, 170);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.Size = new System.Drawing.Size(43, 16);
             this.label2.TabIndex = 6;
             this.label2.Text = "Filters";
             // 
             // FixedTransponder
             // 
-            this.FixedTransponder.Location = new System.Drawing.Point(1334, 206);
+            this.FixedTransponder.Location = new System.Drawing.Point(1681, 263);
+            this.FixedTransponder.Margin = new System.Windows.Forms.Padding(4);
             this.FixedTransponder.Name = "FixedTransponder";
-            this.FixedTransponder.Size = new System.Drawing.Size(143, 23);
+            this.FixedTransponder.Size = new System.Drawing.Size(191, 28);
             this.FixedTransponder.TabIndex = 8;
             this.FixedTransponder.Text = "Fixed Transponder Filter";
             this.FixedTransponder.UseVisualStyleBackColor = true;
@@ -135,17 +145,19 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(1339, 405);
+            this.label3.Location = new System.Drawing.Point(1785, 498);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 13);
+            this.label3.Size = new System.Drawing.Size(69, 16);
             this.label3.TabIndex = 9;
             this.label3.Text = "Simulation";
             // 
             // LLFilter
             // 
-            this.LLFilter.Location = new System.Drawing.Point(1342, 235);
+            this.LLFilter.Location = new System.Drawing.Point(1691, 298);
+            this.LLFilter.Margin = new System.Windows.Forms.Padding(4);
             this.LLFilter.Name = "LLFilter";
-            this.LLFilter.Size = new System.Drawing.Size(122, 23);
+            this.LLFilter.Size = new System.Drawing.Size(163, 28);
             this.LLFilter.TabIndex = 10;
             this.LLFilter.Text = "Lat/Long Filter";
             this.LLFilter.UseVisualStyleBackColor = true;
@@ -153,10 +165,10 @@
             // 
             // exportCSV
             // 
-            this.exportCSV.Location = new System.Drawing.Point(1332, 509);
-            this.exportCSV.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.exportCSV.Location = new System.Drawing.Point(1776, 626);
+            this.exportCSV.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.exportCSV.Name = "exportCSV";
-            this.exportCSV.Size = new System.Drawing.Size(123, 19);
+            this.exportCSV.Size = new System.Drawing.Size(164, 23);
             this.exportCSV.TabIndex = 11;
             this.exportCSV.Text = "Export CSV";
             this.exportCSV.UseVisualStyleBackColor = true;
@@ -164,100 +176,110 @@
             // 
             // MinLat
             // 
-            this.MinLat.Location = new System.Drawing.Point(1367, 302);
-            this.MinLat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinLat.Location = new System.Drawing.Point(1779, 381);
+            this.MinLat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MinLat.Name = "MinLat";
-            this.MinLat.Size = new System.Drawing.Size(50, 20);
+            this.MinLat.Size = new System.Drawing.Size(65, 22);
             this.MinLat.TabIndex = 12;
             // 
             // MaxLat
             // 
-            this.MaxLat.Location = new System.Drawing.Point(1444, 302);
-            this.MaxLat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MaxLat.Location = new System.Drawing.Point(1925, 372);
+            this.MaxLat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaxLat.Name = "MaxLat";
-            this.MaxLat.Size = new System.Drawing.Size(40, 20);
+            this.MaxLat.Size = new System.Drawing.Size(52, 22);
             this.MaxLat.TabIndex = 13;
             // 
             // MinLon
             // 
-            this.MinLon.Location = new System.Drawing.Point(1367, 325);
-            this.MinLon.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinLon.Location = new System.Drawing.Point(1779, 409);
+            this.MinLon.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MinLon.Name = "MinLon";
-            this.MinLon.Size = new System.Drawing.Size(50, 20);
+            this.MinLon.Size = new System.Drawing.Size(65, 22);
             this.MinLon.TabIndex = 14;
             // 
             // MaxLon
             // 
-            this.MaxLon.Location = new System.Drawing.Point(1444, 325);
-            this.MaxLon.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MaxLon.Location = new System.Drawing.Point(1925, 400);
+            this.MaxLon.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaxLon.Name = "MaxLon";
-            this.MaxLon.Size = new System.Drawing.Size(40, 20);
+            this.MaxLon.Size = new System.Drawing.Size(52, 22);
             this.MaxLon.TabIndex = 15;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1375, 287);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Location = new System.Drawing.Point(1789, 362);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(24, 13);
+            this.label4.Size = new System.Drawing.Size(28, 16);
             this.label4.TabIndex = 16;
             this.label4.Text = "Min";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1329, 327);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Location = new System.Drawing.Point(1728, 411);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(25, 13);
+            this.label5.Size = new System.Drawing.Size(29, 16);
             this.label5.TabIndex = 17;
             this.label5.Text = "Lon";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1329, 302);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Location = new System.Drawing.Point(1728, 381);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(22, 13);
+            this.label6.Size = new System.Drawing.Size(25, 16);
             this.label6.TabIndex = 18;
             this.label6.Text = "Lat";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(1450, 287);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Location = new System.Drawing.Point(1933, 353);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(27, 13);
+            this.label7.Size = new System.Drawing.Size(32, 16);
             this.label7.TabIndex = 19;
             this.label7.Text = "Max";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(1339, 479);
+            this.label8.Location = new System.Drawing.Point(1785, 590);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(53, 13);
+            this.label8.Size = new System.Drawing.Size(65, 16);
             this.label8.TabIndex = 20;
             this.label8.Text = "Export To";
             // 
             // ACOnGround
             // 
-            this.ACOnGround.Location = new System.Drawing.Point(1332, 183);
+            this.ACOnGround.Location = new System.Drawing.Point(1678, 234);
+            this.ACOnGround.Margin = new System.Windows.Forms.Padding(4);
             this.ACOnGround.Name = "ACOnGround";
-            this.ACOnGround.Size = new System.Drawing.Size(143, 23);
+            this.ACOnGround.Size = new System.Drawing.Size(191, 28);
             this.ACOnGround.TabIndex = 21;
             this.ACOnGround.Text = "Delete Aircrafts on ground";
             this.ACOnGround.UseVisualStyleBackColor = true;
             this.ACOnGround.Click += new System.EventHandler(this.ACOnGround_Click);
             // 
+            // Original
+            // 
+            this.Original.Location = new System.Drawing.Point(1722, 138);
+            this.Original.Margin = new System.Windows.Forms.Padding(4);
+            this.Original.Name = "Original";
+            this.Original.Size = new System.Drawing.Size(163, 28);
+            this.Original.TabIndex = 22;
+            this.Original.Text = "Recover original";
+            this.Original.UseVisualStyleBackColor = true;
+            this.Original.Click += new System.EventHandler(this.Original_Click);
+            // 
             // MainConsole
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1522, 691);
+            this.ClientSize = new System.Drawing.Size(1924, 850);
+            this.Controls.Add(this.Original);
             this.Controls.Add(this.ACOnGround);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -279,6 +301,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label_test);
             this.Controls.Add(this.show_data);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainConsole";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -312,6 +335,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button ACOnGround;
+        private System.Windows.Forms.Button Original;
         //private System.Windows.Forms.Button exportCSV;
     }
 }
