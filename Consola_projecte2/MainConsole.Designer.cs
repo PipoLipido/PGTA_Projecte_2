@@ -31,7 +31,6 @@
         private void InitializeComponent()
         {
             this.show_data = new System.Windows.Forms.Button();
-            this.label_test = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Map = new System.Windows.Forms.Button();
             this.PureTargetButton = new System.Windows.Forms.Button();
@@ -49,74 +48,70 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.ACOnGround = new System.Windows.Forms.Button();
             this.Original = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label_test = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // show_data
             // 
-            this.show_data.Location = new System.Drawing.Point(1789, 70);
-            this.show_data.Margin = new System.Windows.Forms.Padding(4);
+            this.show_data.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.show_data.Location = new System.Drawing.Point(1351, 76);
             this.show_data.Name = "show_data";
-            this.show_data.Size = new System.Drawing.Size(100, 28);
+            this.show_data.Size = new System.Drawing.Size(75, 23);
             this.show_data.TabIndex = 0;
             this.show_data.Text = "Show data";
-            this.show_data.UseVisualStyleBackColor = true;
+            this.show_data.UseVisualStyleBackColor = false;
             this.show_data.Click += new System.EventHandler(this.show_data_Click);
-            // 
-            // label_test
-            // 
-            this.label_test.AutoSize = true;
-            this.label_test.Location = new System.Drawing.Point(65, 11);
-            this.label_test.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label_test.Name = "label_test";
-            this.label_test.Size = new System.Drawing.Size(36, 16);
-            this.label_test.TabIndex = 1;
-            this.label_test.Text = "Data";
-            this.label_test.Click += new System.EventHandler(this.label_test_Click);
             // 
             // dataGridView1
             // 
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(43, 50);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridView1.Location = new System.Drawing.Point(32, 41);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.Size = new System.Drawing.Size(1623, 785);
+            this.dataGridView1.Size = new System.Drawing.Size(1217, 638);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Map
             // 
-            this.Map.Location = new System.Drawing.Point(1789, 532);
-            this.Map.Margin = new System.Windows.Forms.Padding(4);
+            this.Map.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.Map.Location = new System.Drawing.Point(1345, 522);
             this.Map.Name = "Map";
-            this.Map.Size = new System.Drawing.Size(123, 30);
+            this.Map.Size = new System.Drawing.Size(92, 24);
             this.Map.TabIndex = 3;
             this.Map.Text = "Map";
-            this.Map.UseVisualStyleBackColor = true;
+            this.Map.UseVisualStyleBackColor = false;
             this.Map.Click += new System.EventHandler(this.Map_Click);
             // 
             // PureTargetButton
             // 
-            this.PureTargetButton.Location = new System.Drawing.Point(1691, 199);
-            this.PureTargetButton.Margin = new System.Windows.Forms.Padding(4);
+            this.PureTargetButton.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.PureTargetButton.Location = new System.Drawing.Point(1324, 185);
             this.PureTargetButton.Name = "PureTargetButton";
-            this.PureTargetButton.Size = new System.Drawing.Size(163, 28);
+            this.PureTargetButton.Size = new System.Drawing.Size(149, 23);
             this.PureTargetButton.TabIndex = 4;
             this.PureTargetButton.Text = "Pure Target Filter";
-            this.PureTargetButton.UseVisualStyleBackColor = true;
+            this.PureTargetButton.UseVisualStyleBackColor = false;
             this.PureTargetButton.Click += new System.EventHandler(this.PureTargetButton_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1785, 50);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(1265, 41);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(88, 16);
+            this.label1.Size = new System.Drawing.Size(106, 16);
             this.label1.TabIndex = 5;
             this.label1.Text = "File Selection:";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -124,176 +119,233 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1785, 170);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(1265, 138);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 16);
+            this.label2.Size = new System.Drawing.Size(54, 16);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Filters";
+            this.label2.Text = "Filters:";
             // 
             // FixedTransponder
             // 
-            this.FixedTransponder.Location = new System.Drawing.Point(1681, 263);
-            this.FixedTransponder.Margin = new System.Windows.Forms.Padding(4);
+            this.FixedTransponder.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.FixedTransponder.Location = new System.Drawing.Point(1324, 243);
             this.FixedTransponder.Name = "FixedTransponder";
-            this.FixedTransponder.Size = new System.Drawing.Size(191, 28);
+            this.FixedTransponder.Size = new System.Drawing.Size(149, 23);
             this.FixedTransponder.TabIndex = 8;
             this.FixedTransponder.Text = "Fixed Transponder Filter";
-            this.FixedTransponder.UseVisualStyleBackColor = true;
+            this.FixedTransponder.UseVisualStyleBackColor = false;
             this.FixedTransponder.Click += new System.EventHandler(this.FixedTransponder_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(1785, 498);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(1276, 493);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(69, 16);
+            this.label3.Size = new System.Drawing.Size(83, 16);
             this.label3.TabIndex = 9;
-            this.label3.Text = "Simulation";
+            this.label3.Text = "Simulation:";
             // 
             // LLFilter
             // 
-            this.LLFilter.Location = new System.Drawing.Point(1691, 298);
-            this.LLFilter.Margin = new System.Windows.Forms.Padding(4);
+            this.LLFilter.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.LLFilter.Location = new System.Drawing.Point(1325, 306);
             this.LLFilter.Name = "LLFilter";
-            this.LLFilter.Size = new System.Drawing.Size(163, 28);
+            this.LLFilter.Size = new System.Drawing.Size(148, 23);
             this.LLFilter.TabIndex = 10;
             this.LLFilter.Text = "Lat/Long Filter";
-            this.LLFilter.UseVisualStyleBackColor = true;
+            this.LLFilter.UseVisualStyleBackColor = false;
             this.LLFilter.Click += new System.EventHandler(this.LLFilter_Click);
             // 
             // exportCSV
             // 
-            this.exportCSV.Location = new System.Drawing.Point(1776, 626);
-            this.exportCSV.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.exportCSV.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.exportCSV.Location = new System.Drawing.Point(1358, 592);
+            this.exportCSV.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.exportCSV.Name = "exportCSV";
-            this.exportCSV.Size = new System.Drawing.Size(164, 23);
+            this.exportCSV.Size = new System.Drawing.Size(55, 25);
             this.exportCSV.TabIndex = 11;
-            this.exportCSV.Text = "Export CSV";
-            this.exportCSV.UseVisualStyleBackColor = true;
+            this.exportCSV.Text = "CSV";
+            this.exportCSV.UseVisualStyleBackColor = false;
             this.exportCSV.Click += new System.EventHandler(this.exportCSV_Click_1);
             // 
             // MinLat
             // 
-            this.MinLat.Location = new System.Drawing.Point(1779, 381);
-            this.MinLat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MinLat.Location = new System.Drawing.Point(1345, 374);
+            this.MinLat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MinLat.Name = "MinLat";
-            this.MinLat.Size = new System.Drawing.Size(65, 22);
+            this.MinLat.Size = new System.Drawing.Size(50, 20);
             this.MinLat.TabIndex = 12;
             // 
             // MaxLat
             // 
-            this.MaxLat.Location = new System.Drawing.Point(1925, 372);
-            this.MaxLat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MaxLat.Location = new System.Drawing.Point(1433, 373);
+            this.MaxLat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaxLat.Name = "MaxLat";
-            this.MaxLat.Size = new System.Drawing.Size(52, 22);
+            this.MaxLat.Size = new System.Drawing.Size(48, 20);
             this.MaxLat.TabIndex = 13;
             // 
             // MinLon
             // 
-            this.MinLon.Location = new System.Drawing.Point(1779, 409);
-            this.MinLon.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MinLon.Location = new System.Drawing.Point(1345, 396);
+            this.MinLon.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MinLon.Name = "MinLon";
-            this.MinLon.Size = new System.Drawing.Size(65, 22);
+            this.MinLon.Size = new System.Drawing.Size(50, 20);
             this.MinLon.TabIndex = 14;
             // 
             // MaxLon
             // 
-            this.MaxLon.Location = new System.Drawing.Point(1925, 400);
-            this.MaxLon.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MaxLon.Location = new System.Drawing.Point(1433, 396);
+            this.MaxLon.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaxLon.Name = "MaxLon";
-            this.MaxLon.Size = new System.Drawing.Size(52, 22);
+            this.MaxLon.Size = new System.Drawing.Size(48, 20);
             this.MaxLon.TabIndex = 15;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1789, 362);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Location = new System.Drawing.Point(1355, 351);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(28, 16);
+            this.label4.Size = new System.Drawing.Size(24, 13);
             this.label4.TabIndex = 16;
             this.label4.Text = "Min";
-            this.label5.Location = new System.Drawing.Point(1728, 411);
-            this.label5.Location = new System.Drawing.Point(1329, 327);
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(1276, 400);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Location = new System.Drawing.Point(1329, 327);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Location = new System.Drawing.Point(1329, 327);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Location = new System.Drawing.Point(1329, 327);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Location = new System.Drawing.Point(1728, 381);
-            this.label5.Size = new System.Drawing.Size(29, 16);
-            this.label6.Location = new System.Drawing.Point(1329, 302);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Text = "Lon";
-            this.label6.Location = new System.Drawing.Point(1329, 302);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(43, 13);
+            this.label5.TabIndex = 24;
+            this.label5.Text = "Lon:";
+            // 
             // label6
-            this.label6.Location = new System.Drawing.Point(1329, 302);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1329, 302);
+            this.label6.Location = new System.Drawing.Point(1276, 377);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(25, 16);
+            this.label6.Size = new System.Drawing.Size(25, 13);
             this.label6.TabIndex = 18;
-            this.label6.Text = "Lat";
+            this.label6.Text = "Lat:";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(1933, 353);
+            this.label7.Location = new System.Drawing.Point(1441, 351);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(32, 16);
+            this.label7.Size = new System.Drawing.Size(27, 13);
             this.label7.TabIndex = 19;
             this.label7.Text = "Max";
             // 
-            this.ACOnGround.Location = new System.Drawing.Point(1678, 234);
-            this.ACOnGround.Margin = new System.Windows.Forms.Padding(4);
+            // ACOnGround
             // 
-            this.label8.AutoSize = true;
-            this.ACOnGround.Location = new System.Drawing.Point(1332, 183);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label8.Name = "label8";
-            this.ACOnGround.Location = new System.Drawing.Point(1332, 183);
-            this.label8.TabIndex = 20;
+            this.ACOnGround.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ACOnGround.Location = new System.Drawing.Point(1324, 214);
+            this.ACOnGround.Name = "ACOnGround";
+            this.ACOnGround.Size = new System.Drawing.Size(148, 23);
+            this.ACOnGround.TabIndex = 23;
+            this.ACOnGround.Text = "Delete Aircrafts on ground";
+            this.ACOnGround.UseVisualStyleBackColor = false;
+            // 
             // Original
             // 
-            this.Original.Location = new System.Drawing.Point(1722, 138);
-            this.Original.Margin = new System.Windows.Forms.Padding(4);
+            this.Original.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.Original.Location = new System.Drawing.Point(1346, 433);
             this.Original.Name = "Original";
-            this.Original.Size = new System.Drawing.Size(163, 28);
+            this.Original.Size = new System.Drawing.Size(122, 23);
             this.Original.TabIndex = 22;
             this.Original.Text = "Recover original";
-            this.Original.UseVisualStyleBackColor = true;
+            this.Original.UseVisualStyleBackColor = false;
             this.Original.Click += new System.EventHandler(this.Original_Click);
             // 
-            this.label8.Text = "Export To";
-            this.ACOnGround.Location = new System.Drawing.Point(1332, 183);
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            // label9
             // 
-            this.ClientSize = new System.Drawing.Size(1924, 850);
-            this.Controls.Add(this.Original);
-            this.ACOnGround.Name = "ACOnGround";
-            this.ACOnGround.Size = new System.Drawing.Size(191, 28);
-            this.ClientSize = new System.Drawing.Size(1522, 691);
-            this.ACOnGround.Text = "Delete Aircrafts on ground";
-            this.ACOnGround.UseVisualStyleBackColor = true;
-            this.ClientSize = new System.Drawing.Size(1522, 691);
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(1277, 596);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(76, 16);
+            this.label9.TabIndex = 25;
+            this.label9.Text = "Export as:";
+            // 
+            // label_test
+            // 
+            this.label_test.AutoSize = true;
+            this.label_test.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_test.Location = new System.Drawing.Point(49, 9);
+            this.label_test.Name = "label_test";
+            this.label_test.Size = new System.Drawing.Size(40, 16);
+            this.label_test.TabIndex = 1;
+            this.label_test.Text = "Data";
+            this.label_test.Click += new System.EventHandler(this.label_test_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.pictureBox1.Location = new System.Drawing.Point(514, 243);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(240, 242);
+            this.pictureBox1.TabIndex = 27;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(1314, 378);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(27, 13);
+            this.label8.TabIndex = 28;
+            this.label8.Text = "from";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(1314, 400);
+            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(27, 13);
+            this.label10.TabIndex = 29;
+            this.label10.Text = "from";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(1407, 398);
+            this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(16, 13);
+            this.label12.TabIndex = 31;
+            this.label12.Text = "to";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(1407, 380);
+            this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(16, 13);
+            this.label11.TabIndex = 32;
+            this.label11.Text = "to";
             // 
             // MainConsole
-            this.ClientSize = new System.Drawing.Size(1522, 691);
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1522, 691);
-            this.Controls.Add(this.ACOnGround);
+            this.BackColor = System.Drawing.SystemColors.Window;
+            this.ClientSize = new System.Drawing.Size(1540, 710);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.label8);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.Original);
+            this.Controls.Add(this.ACOnGround);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -301,7 +353,6 @@
             this.Controls.Add(this.MaxLon);
             this.Controls.Add(this.MinLon);
             this.Controls.Add(this.MaxLat);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Controls.Add(this.MinLat);
             this.Controls.Add(this.exportCSV);
             this.Controls.Add(this.LLFilter);
@@ -318,6 +369,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -326,7 +378,6 @@
         #endregion
 
         private System.Windows.Forms.Button show_data;
-        private System.Windows.Forms.Label label_test;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button Map;
         private System.Windows.Forms.Button PureTargetButton;
@@ -346,8 +397,14 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button ACOnGround;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label_test;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
         //private System.Windows.Forms.Button exportCSV;
     }
 }

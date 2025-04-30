@@ -27,30 +27,41 @@ namespace Consola_projecte2
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            this.WindowState = FormWindowState.Maximized;
+            pictureBox1.Visible = false;
         }
 
-        private void show_data_Click(object sender, EventArgs e)
+        private async void show_data_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            label9.Text = "Loading file...";
             //openFileDialog.Filter = "Fitxers ASTERIX (*.bin)|*.bin";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+
                 byte[] fileData = File.ReadAllBytes(openFileDialog.FileName);
-                List<CAT> result = AsterixDecoder.ParseAsterixCat48(fileData);
 
-                int indexSeleccionat = 0;
-                dt = result[indexSeleccionat].dt;
+                pictureBox1.Image = Image.FromFile(@"Radar2.gif");
+                pictureBox1.Visible = true;
 
-                // Afegim columnes extres
-                dt = I048_data_items.data_items.Corrected_Altitude(dt);
-                dt = I048_data_items.data_items.LatLong(dt);
+                await Task.Run(() =>
+                {
+                    List<CAT> result = AsterixDecoder.ParseAsterixCat48(fileData);
+
+                    int indexSeleccionat = 0;
+                    dt = result[indexSeleccionat].dt;
+
+                    // Afegim columnes extres
+                    dt = I048_data_items.data_items.Corrected_Altitude(dt);
+                    dt = I048_data_items.data_items.LatLong(dt);
+                });
 
                 originalDt = dt.Copy();
 
                 dataGridView1.DataSource = dt;
-                label9.Text = "File loaded succesfully";
+                //dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+                pictureBox1.Visible = false;
+
             }
         }
 
