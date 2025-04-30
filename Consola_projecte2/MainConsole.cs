@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using ASTdecoder;
 using System.IO;
 using System.Globalization;
-
+using MultiCAT6.Utils;
 
 
 namespace Consola_projecte2
