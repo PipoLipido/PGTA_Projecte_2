@@ -32,6 +32,7 @@ namespace Consola_projecte2
         private void show_data_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            label9.Text = "Loading file...";
             //openFileDialog.Filter = "Fitxers ASTERIX (*.bin)|*.bin";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -46,6 +47,7 @@ namespace Consola_projecte2
                 dt = I048_data_items.data_items.LatLong(dt);
 
                 dataGridView1.DataSource = dt;
+                label9.Text = "File loaded succesfully";
             }
         }
 
