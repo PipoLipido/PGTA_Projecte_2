@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using ASTdecoder;
 using System.IO;
 using System.Globalization;
-
+using MultiCAT6.Utils;
 
 
 namespace Consola_projecte2
@@ -33,6 +33,7 @@ namespace Consola_projecte2
         private void show_data_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            label9.Text = "Loading file...";
             //openFileDialog.Filter = "Fitxers ASTERIX (*.bin)|*.bin";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -49,6 +50,7 @@ namespace Consola_projecte2
                 originalDt = dt.Copy();
 
                 dataGridView1.DataSource = dt;
+                label9.Text = "File loaded succesfully";
             }
         }
 

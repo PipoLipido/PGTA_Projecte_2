@@ -118,7 +118,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 16);
             this.label1.TabIndex = 5;
-            this.label1.Text = "File Selection";
+            this.label1.Text = "File Selection:";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
@@ -210,24 +210,36 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(1789, 362);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(28, 16);
             this.label4.TabIndex = 16;
             this.label4.Text = "Min";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(1728, 411);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 16);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "Lon";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(1329, 327);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Location = new System.Drawing.Point(1329, 327);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Location = new System.Drawing.Point(1329, 327);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Location = new System.Drawing.Point(1329, 327);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Location = new System.Drawing.Point(1728, 381);
+            this.label5.Size = new System.Drawing.Size(29, 16);
+            this.label6.Location = new System.Drawing.Point(1329, 302);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Text = "Lon";
+            this.label6.Location = new System.Drawing.Point(1329, 302);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            // label6
+            this.label6.Location = new System.Drawing.Point(1329, 302);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(1329, 302);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(25, 16);
             this.label6.TabIndex = 18;
@@ -242,27 +254,15 @@
             this.label7.TabIndex = 19;
             this.label7.Text = "Max";
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(1785, 590);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(65, 16);
-            this.label8.TabIndex = 20;
-            this.label8.Text = "Export To";
-            // 
-            // ACOnGround
-            // 
             this.ACOnGround.Location = new System.Drawing.Point(1678, 234);
             this.ACOnGround.Margin = new System.Windows.Forms.Padding(4);
-            this.ACOnGround.Name = "ACOnGround";
-            this.ACOnGround.Size = new System.Drawing.Size(191, 28);
-            this.ACOnGround.TabIndex = 21;
-            this.ACOnGround.Text = "Delete Aircrafts on ground";
-            this.ACOnGround.UseVisualStyleBackColor = true;
-            this.ACOnGround.Click += new System.EventHandler(this.ACOnGround_Click);
             // 
+            this.label8.AutoSize = true;
+            this.ACOnGround.Location = new System.Drawing.Point(1332, 183);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.ACOnGround.Location = new System.Drawing.Point(1332, 183);
+            this.label8.TabIndex = 20;
             // Original
             // 
             this.Original.Location = new System.Drawing.Point(1722, 138);
@@ -274,12 +274,24 @@
             this.Original.UseVisualStyleBackColor = true;
             this.Original.Click += new System.EventHandler(this.Original_Click);
             // 
-            // MainConsole
-            // 
+            this.label8.Text = "Export To";
+            this.ACOnGround.Location = new System.Drawing.Point(1332, 183);
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            // 
             this.ClientSize = new System.Drawing.Size(1924, 850);
             this.Controls.Add(this.Original);
+            this.ACOnGround.Name = "ACOnGround";
+            this.ACOnGround.Size = new System.Drawing.Size(191, 28);
+            this.ClientSize = new System.Drawing.Size(1522, 691);
+            this.ACOnGround.Text = "Delete Aircrafts on ground";
+            this.ACOnGround.UseVisualStyleBackColor = true;
+            this.ClientSize = new System.Drawing.Size(1522, 691);
+            // 
+            // MainConsole
+            this.ClientSize = new System.Drawing.Size(1522, 691);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1522, 691);
             this.Controls.Add(this.ACOnGround);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -289,6 +301,7 @@
             this.Controls.Add(this.MaxLon);
             this.Controls.Add(this.MinLon);
             this.Controls.Add(this.MaxLat);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Controls.Add(this.MinLat);
             this.Controls.Add(this.exportCSV);
             this.Controls.Add(this.LLFilter);
@@ -301,7 +314,6 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label_test);
             this.Controls.Add(this.show_data);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainConsole";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -323,6 +335,7 @@
         private System.Windows.Forms.Button LatLongFilter;
         private System.Windows.Forms.Button FixedTransponder;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button Original;
         private System.Windows.Forms.Button LLFilter;
         private System.Windows.Forms.Button exportCSV;
         private System.Windows.Forms.TextBox MinLat;
@@ -335,7 +348,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button ACOnGround;
-        private System.Windows.Forms.Button Original;
         //private System.Windows.Forms.Button exportCSV;
     }
 }

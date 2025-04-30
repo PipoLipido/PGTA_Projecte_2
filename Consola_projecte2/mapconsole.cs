@@ -10,6 +10,7 @@ using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
+using MultiCAT6.Utils;
 
 namespace Consola_projecte2
 {
@@ -44,7 +45,7 @@ namespace Consola_projecte2
             InitializeComponent();
             this.airplanesTable = dt;
             InitializeGMap();
-            this.splitContainer1.Dock = DockStyle.Fill;            
+            this.splitContainer1.Dock = DockStyle.Fill;
             //InitializeSimulationTimer();
         }
 
@@ -104,7 +105,7 @@ namespace Consola_projecte2
                 //nou
                 //if (simulationTimer == null)
                 //{ 
-                    simulationTimer = new Timer(); 
+                simulationTimer = new Timer();
                 //}
                 //simulationTimer = new Timer();
                 simulationTimer.Interval = timerInterval;
@@ -203,22 +204,6 @@ namespace Consola_projecte2
                                 double lat = row["latitud"] != DBNull.Value ? Convert.ToDouble(row["latitud"]) : 0;
                                 double lng = row["longitud"] != DBNull.Value ? Convert.ToDouble(row["longitud"]) : 0;
 
-                                // Aconseguim els valors polars
-                                //double rho = row["Rho (Nautical Miles)"] != DBNull.Value ? Convert.ToDouble(row["Rho (Nautical Miles)"]) : 0;
-                                //double theta = row["Theta (degrees)"] != DBNull.Value ? Convert.ToDouble(row["Theta (degrees)"]) : 0;
-
-                                //// Convertim l'angle de graus a radians.
-                                //double thetaRad = theta * Math.PI / 180.0;
-
-                                //// Calcular la variació en latitud i longitud.
-                                //// 1 grau de latitud ≈ 60 milles nàutiques.
-                                //double deltaLat = (rho * Math.Cos(thetaRad)) / 60.0;
-                                //double deltaLon = (rho * Math.Sin(thetaRad)) / (60.0 * Math.Cos(radarLat * Math.PI / 180.0));
-
-                                //// La nova latitud i longitud
-                                //double lat = radarLat + deltaLat;
-                                //double lng = radarLon + deltaLon;
-
                                 //// Altres dades (velocitat i altitud)
                                 double speed = row["Mach"] != DBNull.Value ? Convert.ToDouble(row["Mach"]) : 0;
                                 double altitude = row["Flight Level"] != DBNull.Value ? Convert.ToDouble(row["Flight Level"]) : 0;
@@ -234,10 +219,13 @@ namespace Consola_projecte2
                                     if (id == idselectermarker1)
                                     {
                                         selectedMarker1.Position = newPosition;
+                                        heightselectermarker1 = row["hwgs84"] != DBNull.Value ? Convert.ToDouble(row["hwgs84"]) : 0; 
+
                                     }
                                     if (id == idselectermarker2)
                                     {
                                         selectedMarker2.Position = newPosition;
+                                        heightselectermarker2 = row["hwgs84"] != DBNull.Value ? Convert.ToDouble(row["hwgs84"]) : 0;
                                     }
 
 
@@ -255,19 +243,23 @@ namespace Consola_projecte2
                     }
                 }
                 //Calcul de distancies
-                if (selectedMarker1 != null & selectedMarker2 != null)
+                if (selectedMarker1 != null & selectedMarker2 != null & heightselectermarker1 != -1000 & heightselectermarker2 != -1000)
                 {
-                    var punto1 = selectedMarker1.Position;
-                    var punto2 = selectedMarker2.Position;
+                    double lat1 = selectedMarker1.Position.Lat;
+                    double lon1 = selectedMarker1.Position.Lng;
+                    double lat2 = selectedMarker2.Position.Lat;
+                    double lon2 = selectedMarker2.Position.Lng;
+                    
+                    (double U1, double V1) = change_geodesic2stereographic(lat1, lon1, heightselectermarker1);
+                    (double U2, double V2) = change_geodesic2stereographic(lat2, lon2, heightselectermarker2);
 
-                    double distanciaKm = CalcularDistanciaEnKm(punto1, punto2);
-
-                    label1.Text = $"Distancia entre los marcadores: {distanciaKm:F2} km";
+                    double distancia = Math.Sqrt(Math.Pow(U2 - U1, 2) + Math.Pow(V2 - V1, 2))/ 1852;
+                    label1.Text = $"The stereographic distance between the aircrafts is: {distancia:F2} NM";
 
                     //linea
                     overlayRutas.Routes.Clear();
                     List<PointLatLng> puntos = new List<PointLatLng> { selectedMarker1.Position, selectedMarker2.Position };
-                    GMapRoute ruta = new GMapRoute(puntos, "LineaEntreMarcadores"){Stroke = new Pen(Color.Red, 2) };
+                    GMapRoute ruta = new GMapRoute(puntos, "LineaEntreMarcadores") { Stroke = new Pen(Color.Red, 2) };
                     overlayRutas.Routes.Add(ruta);
                     gmap.Overlays.Add(overlayRutas);
                 }
@@ -276,7 +268,7 @@ namespace Consola_projecte2
                 gmap.Refresh();
                 trackBar1.Value = currentSimulationTime;
 
-                
+
 
                 // Opcional: Comprovem si el temps simulat ha superat l'últim registre per aturar o reiniciar la simulació.
                 simulationEndTime = simulationStartTime;
@@ -416,15 +408,16 @@ namespace Consola_projecte2
             gmap.Refresh();
             //simulationTimer.Stop();
 
-
-            //if (isPlaying)
-            //{
-            //    simulationTimer.Start();
-            //}
-            //else
-            //{
-            //    simulationTimer.Stop();
-            //}
+            idselectermarker1 = "";
+            idselectermarker2 = "";
+            markersOverlay.Markers.Remove(selectedMarker1);
+            markersOverlay.Markers.Remove(selectedMarker2);
+            selectedMarker1 = null;
+            selectedMarker2 = null;
+            overlayRutas.Routes.Clear();
+            label1.Text = "Select two aircrafts";
+            heightselectermarker1 = -1000;
+            heightselectermarker2 = -1000;
 
         }
 
@@ -438,7 +431,7 @@ namespace Consola_projecte2
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
         {
-            
+
         }
 
         private void temps_Click(object sender, EventArgs e)
@@ -475,9 +468,12 @@ namespace Consola_projecte2
         }
 
         private GMapMarker selectedMarker1 = null;
-        private GMapMarker selectedMarker2 = null; 
+        private GMapMarker selectedMarker2 = null;
         private string idselectermarker1 = "";
         private string idselectermarker2 = "";
+        private double heightselectermarker1 = -1000;
+        private double heightselectermarker2 = -1000;
+
         private void GmapControl1_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
             if (selectedMarker1 == null)
@@ -501,7 +497,7 @@ namespace Consola_projecte2
             else
             {
                 // Si ya hay dos seleccionados, puedes resetear o preguntar si quieres cambiar
-                MessageBox.Show("Ya has seleccionado dos marcadores. Reiniciando selección.");
+                MessageBox.Show("There are already two selected aircraft. Reseting selection.");
                 idselectermarker1 = "";
                 idselectermarker2 = "";
                 markersOverlay.Markers.Remove(selectedMarker1);
@@ -509,18 +505,30 @@ namespace Consola_projecte2
                 selectedMarker1 = null;
                 selectedMarker2 = null;
                 overlayRutas.Routes.Clear();
+                label1.Text = "Select two aircrafts";
+                heightselectermarker1 = -1000;
+                heightselectermarker2 = -1000;
             }
         }
-        private double CalcularDistanciaEnKm(PointLatLng p1, PointLatLng p2)
+        public (double, double) change_geodesic2stereographic(double lat, double lon, double h)
         {
-            var R = 6371; // Radio de la Tierra en kilómetros
-            var lat = (p2.Lat - p1.Lat) * Math.PI / 180;
-            var lng = (p2.Lng - p1.Lng) * Math.PI / 180;
-            var h1 = Math.Sin(lat / 2) * Math.Sin(lat / 2) +
-                     Math.Cos(p1.Lat * Math.PI / 180) * Math.Cos(p2.Lat * Math.PI / 180) *
-                     Math.Sin(lng / 2) * Math.Sin(lng / 2);
-            var h2 = 2 * Math.Atan2(Math.Sqrt(h1), Math.Sqrt(1 - h1));
-            return R * h2;
+            lat = lat * Math.PI / 180;
+            lon = lon * Math.PI / 180;
+            GeoUtils utils = new GeoUtils();
+            CoordinatesWGS84 geode = new CoordinatesWGS84(lat, lon, h);
+            CoordinatesXYZ geocen = utils.change_geodesic2geocentric(geode);
+
+            double LatTMA = (41 + (06.0 / 60.0) + (56.560 / 3600.0)) * Math.PI / 180;
+            double LonTMA = (1 + (41.0 / 60.0) + (33.010 / 3600.0)) * Math.PI / 180;
+            double hTMA = 0;
+            CoordinatesWGS84 TMA = new CoordinatesWGS84(LatTMA, LonTMA, hTMA);
+            utils.setCenterProjection(TMA);
+
+            CoordinatesXYZ cartesian = utils.change_geocentric2system_cartesian(geocen);
+            CoordinatesUVH stereographic = utils.change_system_cartesian2stereographic(cartesian);
+            double U = stereographic.U;
+            double V = stereographic.V;
+            return (U, V);
         }
     }
 }
