@@ -45,7 +45,7 @@ namespace Consola_projecte2
             InitializeComponent();
             this.airplanesTable = dt;
             InitializeGMap();
-            this.splitContainer1.Dock = DockStyle.Fill;            
+            this.splitContainer1.Dock = DockStyle.Fill;
             //InitializeSimulationTimer();
         }
 
@@ -105,7 +105,7 @@ namespace Consola_projecte2
                 //nou
                 //if (simulationTimer == null)
                 //{ 
-                    simulationTimer = new Timer(); 
+                simulationTimer = new Timer();
                 //}
                 //simulationTimer = new Timer();
                 simulationTimer.Interval = timerInterval;
@@ -245,10 +245,10 @@ namespace Consola_projecte2
                 //Calcul de distancies
                 if (selectedMarker1 != null & selectedMarker2 != null & heightselectermarker1 != -1000 & heightselectermarker2 != -1000)
                 {
-                    //var punto1 = selectedMarker1.Position;
-                    //var punto2 = selectedMarker2.Position;
+                    var punto1 = selectedMarker1.Position;
+                    var punto2 = selectedMarker2.Position;
 
-                    //double distanciaKm = CalcularDistanciaEnKm(punto1, punto2);
+                    double distanciaKm = CalcularDistanciaEnKm(punto1, punto2);
 
                     double lat1 = selectedMarker1.Position.Lat;
                     double lon1 = selectedMarker1.Position.Lng;
@@ -257,13 +257,13 @@ namespace Consola_projecte2
                     (double U1, double V1) = change_geodesic2stereographic(lat1, lon1, heightselectermarker1);
                     (double U2, double V2) = change_geodesic2stereographic(lat2, lon2, heightselectermarker2);
 
-                    double distancia = Math.Sqrt(Math.Pow(U2 - U1, 2) + Math.Pow(V2 - V1, 2));
-                    label1.Text = $"{distancia:F2} km";
+                    double distancia = Math.Sqrt(Math.Pow(U2 - U1, 2) + Math.Pow(V2 - V1, 2))/1000;
+                    label1.Text = $"distancia 1 = {distanciaKm:F2} km y distancia 2 ={distancia:F2} km";
 
                     //linea
                     overlayRutas.Routes.Clear();
                     List<PointLatLng> puntos = new List<PointLatLng> { selectedMarker1.Position, selectedMarker2.Position };
-                    GMapRoute ruta = new GMapRoute(puntos, "LineaEntreMarcadores"){Stroke = new Pen(Color.Red, 2) };
+                    GMapRoute ruta = new GMapRoute(puntos, "LineaEntreMarcadores") { Stroke = new Pen(Color.Red, 2) };
                     overlayRutas.Routes.Add(ruta);
                     gmap.Overlays.Add(overlayRutas);
                 }
@@ -272,7 +272,7 @@ namespace Consola_projecte2
                 gmap.Refresh();
                 trackBar1.Value = currentSimulationTime;
 
-                
+
 
                 // Opcional: Comprovem si el temps simulat ha superat l'últim registre per aturar o reiniciar la simulació.
                 simulationEndTime = simulationStartTime;
@@ -434,7 +434,7 @@ namespace Consola_projecte2
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
         {
-            
+
         }
 
         private void temps_Click(object sender, EventArgs e)
@@ -550,7 +550,7 @@ namespace Consola_projecte2
                 {-Math.Sin(LatTMA)*Math.Cos(LonTMA), -Math.Sin(LatTMA)*Math.Sin(LonTMA), Math.Cos(LatTMA)},
                 {Math.Cos(LatTMA)*Math.Cos(LonTMA), Math.Cos(LatTMA)*Math.Sin(LonTMA), Math.Sin(LatTMA)}
             };
-            
+
             (double X0, double Y0, double Z0) = change_geodesic2geocentric(LatTMA, LonTMA, hTMA);
 
             double Xs = R1[0, 0] * (X - X0) + R1[0, 1] * (Y - Y0) + R1[0, 2] * (Z - Z0);
@@ -579,7 +579,7 @@ namespace Consola_projecte2
         {
             (double X, double Y, double Z) = change_geodesic2geocentric(lat, lon, h);
             (double Xs, double Ys, double Zs) = change_geocentric2cartesian(X, Y, Z);
-            (double U, double V) = change_cartesian2stereographic(Xs, Ys, Zs)
+            (double U, double V) = change_cartesian2stereographic(Xs, Ys, Zs);
             return (U, V);
         }
     }
