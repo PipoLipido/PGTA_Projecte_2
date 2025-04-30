@@ -162,7 +162,7 @@
             // 
             this.exportCSV.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.exportCSV.Location = new System.Drawing.Point(1358, 592);
-            this.exportCSV.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.exportCSV.Margin = new System.Windows.Forms.Padding(2);
             this.exportCSV.Name = "exportCSV";
             this.exportCSV.Size = new System.Drawing.Size(55, 25);
             this.exportCSV.TabIndex = 11;
@@ -173,7 +173,7 @@
             // MinLat
             // 
             this.MinLat.Location = new System.Drawing.Point(1345, 374);
-            this.MinLat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinLat.Margin = new System.Windows.Forms.Padding(2);
             this.MinLat.Name = "MinLat";
             this.MinLat.Size = new System.Drawing.Size(50, 20);
             this.MinLat.TabIndex = 12;
@@ -181,7 +181,7 @@
             // MaxLat
             // 
             this.MaxLat.Location = new System.Drawing.Point(1433, 373);
-            this.MaxLat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MaxLat.Margin = new System.Windows.Forms.Padding(2);
             this.MaxLat.Name = "MaxLat";
             this.MaxLat.Size = new System.Drawing.Size(48, 20);
             this.MaxLat.TabIndex = 13;
@@ -189,7 +189,7 @@
             // MinLon
             // 
             this.MinLon.Location = new System.Drawing.Point(1345, 396);
-            this.MinLon.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinLon.Margin = new System.Windows.Forms.Padding(2);
             this.MinLon.Name = "MinLon";
             this.MinLon.Size = new System.Drawing.Size(50, 20);
             this.MinLon.TabIndex = 14;
@@ -197,7 +197,7 @@
             // MaxLon
             // 
             this.MaxLon.Location = new System.Drawing.Point(1433, 396);
-            this.MaxLon.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MaxLon.Margin = new System.Windows.Forms.Padding(2);
             this.MaxLon.Name = "MaxLon";
             this.MaxLon.Size = new System.Drawing.Size(48, 20);
             this.MaxLon.TabIndex = 15;

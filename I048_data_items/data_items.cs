@@ -1280,16 +1280,16 @@ namespace I048_data_items
             string B1A = "N/A";
             if (bit12 == 0)
             {
-                B1A = "N/A";
+                B1A = "0";
             }
             else if (bit12 == 1)
             {
-                B1A = "N/A";
+                B1A = "1";
             }
 
             //bits 13-16
             int bit13to16 = Convert.ToInt32(bits.Substring(12, 3), 2);
-            string B1B = "N/A";
+            string B1B = bits.Substring(12, 4).PadLeft(4, '0');
 
 
             DataTable dt = new DataTable();

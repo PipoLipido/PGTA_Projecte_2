@@ -27,7 +27,35 @@ namespace Consola_projecte2
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Maximized;
+            //this.WindowState = FormWindowState.Maximized;
+            dataGridView1.Anchor = AnchorStyles.Top
+                                 | AnchorStyles.Bottom
+                                 | AnchorStyles.Left
+                                 | AnchorStyles.Right;
+            label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            show_data.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            PureTargetButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ACOnGround.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            FixedTransponder.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            LLFilter.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label7.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label6.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label8.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            MinLat.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            MaxLat.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label11.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label10.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            MinLon.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            MaxLon.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label12.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            Original.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            Map.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label9.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            exportCSV.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBox1.Visible = false;
         }
 
