@@ -181,7 +181,7 @@ namespace Consola_projecte2
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 11);
+            this.label1.Location = new System.Drawing.Point(3, 448);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(118, 16);
             this.label1.TabIndex = 9;

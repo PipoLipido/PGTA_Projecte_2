@@ -10,6 +10,7 @@ using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
+using MultiCAT6.Utils;
 
 namespace Consola_projecte2
 {
@@ -203,22 +204,6 @@ namespace Consola_projecte2
                                 double lat = row["latitud"] != DBNull.Value ? Convert.ToDouble(row["latitud"]) : 0;
                                 double lng = row["longitud"] != DBNull.Value ? Convert.ToDouble(row["longitud"]) : 0;
 
-                                // Aconseguim els valors polars
-                                //double rho = row["Rho (Nautical Miles)"] != DBNull.Value ? Convert.ToDouble(row["Rho (Nautical Miles)"]) : 0;
-                                //double theta = row["Theta (degrees)"] != DBNull.Value ? Convert.ToDouble(row["Theta (degrees)"]) : 0;
-
-                                //// Convertim l'angle de graus a radians.
-                                //double thetaRad = theta * Math.PI / 180.0;
-
-                                //// Calcular la variació en latitud i longitud.
-                                //// 1 grau de latitud ≈ 60 milles nàutiques.
-                                //double deltaLat = (rho * Math.Cos(thetaRad)) / 60.0;
-                                //double deltaLon = (rho * Math.Sin(thetaRad)) / (60.0 * Math.Cos(radarLat * Math.PI / 180.0));
-
-                                //// La nova latitud i longitud
-                                //double lat = radarLat + deltaLat;
-                                //double lng = radarLon + deltaLon;
-
                                 //// Altres dades (velocitat i altitud)
                                 double speed = row["Mach"] != DBNull.Value ? Convert.ToDouble(row["Mach"]) : 0;
                                 double altitude = row["Flight Level"] != DBNull.Value ? Convert.ToDouble(row["Flight Level"]) : 0;
@@ -234,10 +219,13 @@ namespace Consola_projecte2
                                     if (id == idselectermarker1)
                                     {
                                         selectedMarker1.Position = newPosition;
+                                        heightselectermarker1 = altitude;
+
                                     }
                                     if (id == idselectermarker2)
                                     {
                                         selectedMarker2.Position = newPosition;
+                                        heightselectermarker2 = altitude;
                                     }
 
 
@@ -255,14 +243,22 @@ namespace Consola_projecte2
                     }
                 }
                 //Calcul de distancies
-                if (selectedMarker1 != null & selectedMarker2 != null)
+                if (selectedMarker1 != null & selectedMarker2 != null & heightselectermarker1 != -1000 & heightselectermarker2 != -1000)
                 {
-                    var punto1 = selectedMarker1.Position;
-                    var punto2 = selectedMarker2.Position;
+                    //var punto1 = selectedMarker1.Position;
+                    //var punto2 = selectedMarker2.Position;
 
-                    double distanciaKm = CalcularDistanciaEnKm(punto1, punto2);
+                    //double distanciaKm = CalcularDistanciaEnKm(punto1, punto2);
 
-                    label1.Text = $"Distance between aircrafts is: {distanciaKm:F2} km";
+                    double lat1 = selectedMarker1.Position.Lat;
+                    double lon1 = selectedMarker1.Position.Lng;
+                    double lat2 = selectedMarker2.Position.Lat;
+                    double lon2 = selectedMarker2.Position.Lng;
+                    (double U1, double V1) = change_geodesic2stereographic(lat1, lon1, heightselectermarker1);
+                    (double U2, double V2) = change_geodesic2stereographic(lat2, lon2, heightselectermarker2);
+
+                    double distancia = Math.Sqrt(Math.Pow(U2 - U1, 2) + Math.Pow(V2 - V1, 2));
+                    label1.Text = $"{distancia:F2} km";
 
                     //linea
                     overlayRutas.Routes.Clear();
@@ -475,9 +471,12 @@ namespace Consola_projecte2
         }
 
         private GMapMarker selectedMarker1 = null;
-        private GMapMarker selectedMarker2 = null; 
+        private GMapMarker selectedMarker2 = null;
         private string idselectermarker1 = "";
         private string idselectermarker2 = "";
+        private double heightselectermarker1 = -1000;
+        private double heightselectermarker2 = -1000;
+
         private void GmapControl1_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
             if (selectedMarker1 == null)
@@ -510,6 +509,8 @@ namespace Consola_projecte2
                 selectedMarker2 = null;
                 overlayRutas.Routes.Clear();
                 label1.Text = "Select two aircrafts";
+                heightselectermarker1 = -1000;
+                heightselectermarker2 = -1000;
             }
         }
         private double CalcularDistanciaEnKm(PointLatLng p1, PointLatLng p2)
@@ -522,6 +523,64 @@ namespace Consola_projecte2
                      Math.Sin(lng / 2) * Math.Sin(lng / 2);
             var h2 = 2 * Math.Atan2(Math.Sqrt(h1), Math.Sqrt(1 - h1));
             return R * h2;
+        }
+
+        public double A = 6378137.0;
+        public double B = 6356752.3142;
+        public double E2 = 0.00669437999013;
+        public (double, double, double) change_geodesic2geocentric(double lat, double lon, double h)
+        {
+            double nu = A / Math.Sqrt(1 - E2 * Math.Pow(Math.Sin(lat), 2.0));
+            double X = (nu + h) * Math.Cos(lat) * Math.Cos(lon);
+            double Y = (nu + h) * Math.Cos(lat) * Math.Sin(lon);
+            double Z = (nu * (1 - E2) + h) * Math.Sin(lat);
+            return (X, Y, Z);
+        }
+
+        public (double, double, double) change_geocentric2cartesian(double X, double Y, double Z)
+        {
+            //coordenades TMA:
+            double LatTMA = (41 + (06.0 / 60.0) + (56.560 / 3600.0));
+            double LonTMA = (1 + (41.0 / 60.0) + (33.010 / 3600.0));
+            double hTMA = 0;
+
+            double[,] R1 = new double[3, 3]
+            {
+                {-Math.Sin(LonTMA), Math.Cos(LonTMA), 0},
+                {-Math.Sin(LatTMA)*Math.Cos(LonTMA), -Math.Sin(LatTMA)*Math.Sin(LonTMA), Math.Cos(LatTMA)},
+                {Math.Cos(LatTMA)*Math.Cos(LonTMA), Math.Cos(LatTMA)*Math.Sin(LonTMA), Math.Sin(LatTMA)}
+            };
+            
+            (double X0, double Y0, double Z0) = change_geodesic2geocentric(LatTMA, LonTMA, hTMA);
+
+            double Xs = R1[0, 0] * (X - X0) + R1[0, 1] * (Y - Y0) + R1[0, 2] * (Z - Z0);
+            double Ys = R1[1, 0] * (X - X0) + R1[1, 1] * (Y - Y0) + R1[1, 2] * (Z - Z0);
+            double Zs = R1[2, 0] * (X - X0) + R1[2, 1] * (Y - Y0) + R1[2, 2] * (Z - Z0);
+
+            return (Xs, Ys, Zs);
+        }
+        public (double, double) change_cartesian2stereographic(double X, double Y, double Z)
+        {
+            //coordenades TMA:
+            double RTo = 6368942.808;
+            double Huv = 0; //Altitude of System Stereographic Referential
+            double Hxy = 0; //Altitude of System Cartesian Referential
+            double Dxy = Math.Sqrt(X * X + Y * Y); //Distance in the Geocentric System Referential
+
+            double H = Math.Sqrt(Dxy * Dxy + Math.Pow(Z + Hxy + RTo, 2)) - RTo;
+            double k = (2 * RTo + Huv) / (2 * RTo + Hxy + Z + H);
+            double U = k * X;
+            double V = k * Y;
+
+
+            return (U, V);
+        }
+        public (double, double) change_geodesic2stereographic(double lat, double lon, double h)
+        {
+            (double X, double Y, double Z) = change_geodesic2geocentric(lat, lon, h);
+            (double Xs, double Ys, double Zs) = change_geocentric2cartesian(X, Y, Z);
+            (double U, double V) = change_cartesian2stereographic(Xs, Ys, Zs)
+            return (U, V);
         }
     }
 }
