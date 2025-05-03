@@ -32,7 +32,8 @@ namespace Consola_projecte2
                                  | AnchorStyles.Bottom
                                  | AnchorStyles.Left
                                  | AnchorStyles.Right;
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label1.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
             show_data.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             PureTargetButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;

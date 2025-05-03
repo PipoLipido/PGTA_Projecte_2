@@ -206,7 +206,8 @@ namespace Consola_projecte2
 
                                 //// Altres dades (velocitat i altitud)
                                 double speed = row["Mach"] != DBNull.Value ? Convert.ToDouble(row["Mach"]) : 0;
-                                double altitude = row["Flight Level"] != DBNull.Value ? Convert.ToDouble(row["Flight Level"]) : 0;
+                                double FL = row["Flight Level"] != DBNull.Value ? Convert.ToDouble(row["Flight Level"]) : 0;
+                                double altitude = Convert.ToString(row["Corrected Altitude"]) != "N/A" ? Convert.ToDouble(row["Corrected Altitude"]) : 0;
 
                                 // La nova posició calculada
                                 PointLatLng newPosition = new PointLatLng(lat, lng);
@@ -215,7 +216,15 @@ namespace Consola_projecte2
                                 if (aircraftMarkers.ContainsKey(id))
                                 {
                                     aircraftMarkers[id].Position = newPosition;
-                                    aircraftMarkers[id].ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nAltitud: FL{altitude}";
+                                    if (FL<60)
+                                    {
+                                        aircraftMarkers[id].ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nFlight level: FL{FL}\nAltitud: {altitude}m";
+                                    }
+                                    else
+                                    {
+                                        aircraftMarkers[id].ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nFlight level: FL{FL}";
+                                    }
+                                    //aircraftMarkers[id].ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nFlight level: FL{FL}\nAltitud: {altitude}ft";
                                     if (id == idselectermarker1)
                                     {
                                         selectedMarker1.Position = newPosition;
@@ -233,7 +242,15 @@ namespace Consola_projecte2
                                 else
                                 {
                                     GMarkerGoogle marker = new GMarkerGoogle(newPosition, GMarkerGoogleType.blue_dot);
-                                    marker.ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nAltitud: FL{altitude}";
+                                    if (FL < 60)
+                                    {
+                                        marker.ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nFlight level: FL{FL}\nAltitud: {altitude}m";
+                                    }
+                                    else
+                                    {
+                                        marker.ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nFlight level: FL{FL}";
+                                    }
+                                    //marker.ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nFlight level: FL{FL}\nAltitude: {altitude}ft";
                                     marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
                                     aircraftMarkers.Add(id, marker);
                                     markersOverlay.Markers.Add(marker);
@@ -323,8 +340,11 @@ namespace Consola_projecte2
                     double speed = row.Table.Columns.Contains("Mach") && row["Mach"] != DBNull.Value
                         ? Convert.ToDouble(row["Mach"])
                         : 0;
-                    double altitude = row.Table.Columns.Contains("Flight Level") && row["Flight Level"] != DBNull.Value
+                    double FL = row.Table.Columns.Contains("Flight Level") && row["Flight Level"] != DBNull.Value
                         ? Convert.ToDouble(row["Flight Level"])
+                        : 0;
+                    double altitude = row.Table.Columns.Contains("Corrected Altitude") && Convert.ToString(row["Corrected Altitude"]) != "N/A"
+                        ? Convert.ToDouble(row["Corrected Altitude"])
                         : 0;
 
                     var newPosition = new PointLatLng(lat, lng);
@@ -333,17 +353,35 @@ namespace Consola_projecte2
                     {
                         // Si ja existia, només actualitzem la posició i text
                         existingMarker.Position = newPosition;
-                        existingMarker.ToolTipText =
-                            $"Avió ID: {id}\nVelocitat: M{speed}\nAltitud: FL{altitude}";
+                        if (FL < 60)
+                        {
+                            existingMarker.ToolTipText =
+                            $"Avió ID: {id}\nVelocitat: M{speed}\nFlight level: FL{FL}\nAltitud: {altitude}m";
+                        }
+                        else
+                        {
+                            existingMarker.ToolTipText =
+                            $"Avió ID: {id}\nVelocitat: M{speed}\nFlight level: FL{FL}";
+                        }
+                        //existingMarker.ToolTipText =
+                        //    $"Avió ID: {id}\nVelocitat: M{speed}\nAltitud: FL{FL}\nAltitud: {altitude}ft";
                     }
                     else
                     {
                         // Si no existia, creem un nou marcador
-                        var marker = new GMarkerGoogle(newPosition, GMarkerGoogleType.blue_dot)
+                        var marker = new GMarkerGoogle(newPosition, GMarkerGoogleType.blue_dot);
+
+                        if (FL < 60)
                         {
-                            ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nAltitud: FL{altitude}",
-                            ToolTipMode = MarkerTooltipMode.OnMouseOver
-                        };
+                            marker.ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nAltitud: FL{FL}\nAltitud: {altitude}m";
+                        }
+                        else
+                        {
+                            marker.ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nAltitud: FL{FL}";
+                        }
+                        //marker.ToolTipText = $"Avió ID: {id}\nVelocitat: M{speed}\nAltitud: FL{FL}\nAltitud: {altitude}m";
+                        marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
+                        
                         aircraftMarkers[id] = marker;
                         markersOverlay.Markers.Add(marker);
                     }
@@ -372,8 +410,11 @@ namespace Consola_projecte2
 
         private void Stop_Click(object sender, EventArgs e)
         {
-            isPlaying = false;
-            simulationTimer.Stop();
+            if (airplanesTable.Rows.Count != 0)
+            {
+                isPlaying = false;
+                simulationTimer.Stop();
+            }
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e) //no funciona al 100 per 1000
@@ -396,37 +437,43 @@ namespace Consola_projecte2
 
         private void Reset_Click(object sender, EventArgs e)
         {
-            currentSimulationTime = simulationStartTime;
-            trackBar1.Value = currentSimulationTime;
-            markersOverlay.Markers.Clear();
-            aircraftMarkers.Clear();
-            simulationStep = 1;
-            simulationTimer.Dispose();
-            simulationTimer = null;
-            InitializeSimulationTimer();
-            //UpdateMarkersForTime(currentSimulationTime);
-            gmap.Refresh();
-            //simulationTimer.Stop();
+            if (airplanesTable.Rows.Count != 0)
+            {
+                currentSimulationTime = simulationStartTime;
+                trackBar1.Value = currentSimulationTime;
+                markersOverlay.Markers.Clear();
+                aircraftMarkers.Clear();
+                simulationStep = 1;
+                simulationTimer.Dispose();
+                simulationTimer = null;
+                InitializeSimulationTimer();
+                //UpdateMarkersForTime(currentSimulationTime);
+                gmap.Refresh();
+                //simulationTimer.Stop();
 
-            idselectermarker1 = "";
-            idselectermarker2 = "";
-            markersOverlay.Markers.Remove(selectedMarker1);
-            markersOverlay.Markers.Remove(selectedMarker2);
-            selectedMarker1 = null;
-            selectedMarker2 = null;
-            overlayRutas.Routes.Clear();
-            label1.Text = "Select two aircrafts";
-            heightselectermarker1 = -1000;
-            heightselectermarker2 = -1000;
+                idselectermarker1 = "";
+                idselectermarker2 = "";
+                markersOverlay.Markers.Remove(selectedMarker1);
+                markersOverlay.Markers.Remove(selectedMarker2);
+                selectedMarker1 = null;
+                selectedMarker2 = null;
+                overlayRutas.Routes.Clear();
+                label1.Text = "Select two aircrafts";
+                heightselectermarker1 = -1000;
+                heightselectermarker2 = -1000;
+            }
 
         }
 
         private void reverse_Click(object sender, EventArgs e)
         {
-            //gmap.Refresh();
-            isPlaying = true;
-            simulationStep = -1;
-            simulationTimer.Start();
+            if (airplanesTable.Rows.Count != 0)
+            {
+                //gmap.Refresh();
+                isPlaying = true;
+                simulationStep = -1;
+                simulationTimer.Start();
+            }
         }
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
@@ -441,29 +488,35 @@ namespace Consola_projecte2
 
         private void accelerar_Click(object sender, EventArgs e)
         {
-            if (speedFactor < 512)
+            if (airplanesTable.Rows.Count != 0)
             {
-                speedFactor = speedFactor * 2;
-                simulationTimer.Interval = timerInterval / speedFactor;
-                string f = velocitat.Text;
-                string numPart = f.Substring(1);
-                int vel = int.Parse(numPart);
-                string speed = Convert.ToString(vel * 2);
-                velocitat.Text = $"x{speedFactor}";
+                if (speedFactor < 512)
+                {
+                    speedFactor = speedFactor * 2;
+                    simulationTimer.Interval = timerInterval / speedFactor;
+                    string f = velocitat.Text;
+                    string numPart = f.Substring(1);
+                    int vel = int.Parse(numPart);
+                    string speed = Convert.ToString(vel * 2);
+                    velocitat.Text = $"x{speedFactor}";
+                }
             }
         }
 
         private void reduir_Click(object sender, EventArgs e)
         {
-            if (speedFactor > 1)
+            if (airplanesTable.Rows.Count != 0)
             {
-                speedFactor = speedFactor / 2;
-                simulationTimer.Interval = timerInterval / speedFactor;
-                string s = velocitat.Text;
-                string numPart = s.Substring(1);
-                int vel = int.Parse(numPart);
-                string speed = Convert.ToString(vel / 2);
-                velocitat.Text = $"x{speedFactor}";
+                if (speedFactor > 1)
+                {
+                    speedFactor = speedFactor / 2;
+                    simulationTimer.Interval = timerInterval / speedFactor;
+                    string s = velocitat.Text;
+                    string numPart = s.Substring(1);
+                    int vel = int.Parse(numPart);
+                    string speed = Convert.ToString(vel / 2);
+                    velocitat.Text = $"x{speedFactor}";
+                }
             }
         }
 
