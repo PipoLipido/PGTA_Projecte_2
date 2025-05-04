@@ -68,6 +68,11 @@ namespace Consola_projecte2
             label9.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             exportCSV.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBox1.Visible = false;
+
+            MaxLat.Text = "90";
+            MinLat.Text = "-90";
+            MaxLon.Text = "180";
+            MinLon.Text = "-180";
         }
 
         private async void show_data_Click(object sender, EventArgs e)
@@ -161,8 +166,6 @@ namespace Consola_projecte2
         {
             DataTable LatLongLimited = dt;
 
-
-            // Validación: asegurar que todos los campos tienen valores
             if (string.IsNullOrWhiteSpace(MaxLat.Text) || string.IsNullOrWhiteSpace(MinLat.Text) ||
                 string.IsNullOrWhiteSpace(MaxLon.Text) || string.IsNullOrWhiteSpace(MinLon.Text))
             {
@@ -170,13 +173,11 @@ namespace Consola_projecte2
                 return;
             }
 
-            // Convertir los valores
             double maxLatitud = Convert.ToDouble(MaxLat.Text, CultureInfo.InvariantCulture);
             double minLatitud = Convert.ToDouble(MinLat.Text, CultureInfo.InvariantCulture);
             double maxLongitud = Convert.ToDouble(MaxLon.Text, CultureInfo.InvariantCulture);
             double minLongitud = Convert.ToDouble(MinLon.Text, CultureInfo.InvariantCulture);
 
-            // Intercambiar si están al revés
             if (minLatitud > maxLatitud)
             {
                 double temp = minLatitud;
@@ -191,7 +192,6 @@ namespace Consola_projecte2
                 maxLongitud = temp;
             }
 
-            // Eliminar las filas fuera del rango
             for (int i = LatLongLimited.Rows.Count - 1; i >= 0; i--)
             {
                 DataRow row = LatLongLimited.Rows[i];
@@ -214,7 +214,6 @@ namespace Consola_projecte2
                 }
             }
 
-            // Mostrar resultado
             dataGridView1.DataSource = LatLongLimited;
             ContadorFilas();
 

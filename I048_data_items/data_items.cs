@@ -1552,7 +1552,7 @@ namespace I048_data_items
                         }
                         else if (FL > 60)
                         {
-                            Altitude = FL * 100.0; // NO POSAR >60 (per sota 6000 altitud per sobre posem FL)
+                            Altitude = FL * 100.0; 
                         }
                     }
 

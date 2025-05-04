@@ -273,7 +273,7 @@
             // 
             // Original
             // 
-            this.Original.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.Original.BackColor = System.Drawing.Color.White;
             this.Original.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.Original.Location = new System.Drawing.Point(141, 501);
             this.Original.Margin = new System.Windows.Forms.Padding(4);
