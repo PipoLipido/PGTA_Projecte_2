@@ -16,7 +16,7 @@ namespace Consola_projecte2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainConsole());
+            Application.Run(new StartingForm());
         }
     }
 }

@@ -83,9 +83,11 @@ namespace Consola_projecte2
             {
 
                 byte[] fileData = File.ReadAllBytes(openFileDialog.FileName);
-
-                pictureBox1.Image = Image.FromFile(@"Radar2.gif");
-                pictureBox1.Visible = true;
+                //string gifPath = Path.Combine(Application.StartupPath, "Radar2.gif");
+                //pictureBox1.Image = Image.FromFile(gifPath);
+                //pictureBox1.Image = Image.FromFile(@"Resources\Radar2.gif");
+                //pictureBox1.Image = Properties.Resources.Radar2;
+                //pictureBox1.Visible = true;
 
                 await Task.Run(() =>
                 {
@@ -486,6 +488,31 @@ namespace Consola_projecte2
             : dataGridView1.Rows.Count;
 
             label13.Text = $"Number of Messages: {totalFilas}";
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
 
         }
     }
