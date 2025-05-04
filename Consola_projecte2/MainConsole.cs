@@ -95,8 +95,6 @@ namespace Consola_projecte2
                     dt = result[indexSeleccionat].dt;
 
                     // Afegim columnes extres
-                    dt = I048_data_items.data_items.Corrected_Altitude(dt);
-                    dt = I048_data_items.data_items.LatLong(dt);
                 });
 
                 originalDt = dt.Copy();

@@ -826,10 +826,10 @@ namespace I048_data_items
             double SRL = 0;
             int SRR = 0;
             double SAM = 0;
-            double PRL = 0;
-            double PAM = 0;
-            double RPD = 0;
-            double APD = 0;
+            double? PRL = null;
+            double? PAM = null;
+            double? RPD = null;
+            double? APD = null;
 
             for (int index = 0; index < subfields.Count; index++)
             {
@@ -858,7 +858,7 @@ namespace I048_data_items
                 }
                 else if (subfields[index] == "5") // (Difference in Range)
                 {
-                    RPD = Convert.ToInt32(Byte, 2) / 256;
+                    RPD = Convert.ToInt32(Byte, 2) * 0.00390625;
                 }
                 else if (subfields[index] == "6") // (Difference in Azimuth)
                 {
@@ -1128,7 +1128,7 @@ namespace I048_data_items
 
             DataTable dt = new DataTable();
 
-            dt.Columns.Add("Velocity", typeof(double));
+            dt.Columns.Add("Ground Speed", typeof(double));
             dt.Columns.Add("Heading", typeof(double));
             dt.Rows.Add(GroundSpeed, Heading);
 
@@ -1530,11 +1530,14 @@ namespace I048_data_items
                     double FL = Convert.ToDouble(row["Flight Level"]);
                     double baroPressure = Convert.ToDouble(row["BaroSetting"]);
                     double standPress = 1013.25;
+                    double standPressMin = 1013;
+                    double standPressMax = 1013.3;
+
                     double Altitude = 0.0;
 
-                    if ((baroPressure == standPress) || baroPressure == 0)
+                    if (((baroPressure <= standPressMax) && (baroPressure >= standPressMin)) || baroPressure == 0)
                     {
-                        if (FL <= 60) // NO SE SI ES MES PETIT O MES PETIT I IGUAL
+                        if (FL <= 60) 
                         {
                             baroPressure = baroPressureAnt;
                             Altitude = FL * 100.0 + (baroPressure - standPress) * 30.0;
@@ -1544,9 +1547,9 @@ namespace I048_data_items
                             Altitude = FL * 100.0; // NO POSAR >60
                         }
                     }
-                    else if ((baroPressure != standPress) || baroPressure != 0)
+                    else if (((baroPressure > standPressMax) || (baroPressure < standPressMin)) || baroPressure != 0)
                     {
-                        if (FL <= 60) // NO SE SI ES MES PETIT O MES PETIT I IGUAL
+                        if (FL <= 60) 
                         {
                             Altitude = FL * 100.0 + (baroPressure - standPress) * 30.0;
                         }
@@ -1567,8 +1570,6 @@ namespace I048_data_items
                     Altitude_m.Add("N/A");
                 }
             }
-
-            dt.Columns.Add("Corrected Altitude", typeof(string));
 
             int index = 0;
             foreach (string element in Altitude_m)
