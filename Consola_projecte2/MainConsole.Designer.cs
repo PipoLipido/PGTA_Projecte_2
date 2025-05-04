@@ -58,6 +58,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -69,7 +70,7 @@
             this.show_data.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.show_data.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.show_data.Location = new System.Drawing.Point(144, 53);
-            this.show_data.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.show_data.Margin = new System.Windows.Forms.Padding(4);
             this.show_data.Name = "show_data";
             this.show_data.Size = new System.Drawing.Size(191, 52);
             this.show_data.TabIndex = 0;
@@ -82,7 +83,7 @@
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(-3, -2);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.Size = new System.Drawing.Size(1629, 878);
@@ -94,7 +95,7 @@
             this.Map.BackColor = System.Drawing.Color.White;
             this.Map.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.Map.Location = new System.Drawing.Point(141, 633);
-            this.Map.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Map.Margin = new System.Windows.Forms.Padding(4);
             this.Map.Name = "Map";
             this.Map.Size = new System.Drawing.Size(200, 46);
             this.Map.TabIndex = 3;
@@ -108,7 +109,7 @@
             this.PureTargetButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.PureTargetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PureTargetButton.Location = new System.Drawing.Point(143, 169);
-            this.PureTargetButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PureTargetButton.Margin = new System.Windows.Forms.Padding(4);
             this.PureTargetButton.Name = "PureTargetButton";
             this.PureTargetButton.Size = new System.Drawing.Size(199, 47);
             this.PureTargetButton.TabIndex = 4;
@@ -144,7 +145,7 @@
             this.FixedTransponder.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.FixedTransponder.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.FixedTransponder.Location = new System.Drawing.Point(141, 276);
-            this.FixedTransponder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.FixedTransponder.Margin = new System.Windows.Forms.Padding(4);
             this.FixedTransponder.Name = "FixedTransponder";
             this.FixedTransponder.Size = new System.Drawing.Size(200, 47);
             this.FixedTransponder.TabIndex = 8;
@@ -168,7 +169,7 @@
             this.LLFilter.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.LLFilter.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.LLFilter.Location = new System.Drawing.Point(141, 330);
-            this.LLFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LLFilter.Margin = new System.Windows.Forms.Padding(4);
             this.LLFilter.Name = "LLFilter";
             this.LLFilter.Size = new System.Drawing.Size(200, 46);
             this.LLFilter.TabIndex = 10;
@@ -180,7 +181,7 @@
             // 
             this.exportCSV.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.exportCSV.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.exportCSV.Location = new System.Drawing.Point(143, 810);
+            this.exportCSV.Location = new System.Drawing.Point(143, 724);
             this.exportCSV.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.exportCSV.Name = "exportCSV";
             this.exportCSV.Size = new System.Drawing.Size(199, 46);
@@ -262,7 +263,7 @@
             this.ACOnGround.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.ACOnGround.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ACOnGround.Location = new System.Drawing.Point(144, 223);
-            this.ACOnGround.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ACOnGround.Margin = new System.Windows.Forms.Padding(4);
             this.ACOnGround.Name = "ACOnGround";
             this.ACOnGround.Size = new System.Drawing.Size(197, 46);
             this.ACOnGround.TabIndex = 23;
@@ -275,7 +276,7 @@
             this.Original.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.Original.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.Original.Location = new System.Drawing.Point(141, 501);
-            this.Original.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Original.Margin = new System.Windows.Forms.Padding(4);
             this.Original.Name = "Original";
             this.Original.Size = new System.Drawing.Size(203, 46);
             this.Original.TabIndex = 22;
@@ -287,7 +288,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(39, 822);
+            this.label9.Location = new System.Drawing.Point(39, 736);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(76, 16);
@@ -310,7 +311,7 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.White;
             this.pictureBox1.Location = new System.Drawing.Point(685, 299);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(320, 298);
             this.pictureBox1.TabIndex = 27;
@@ -355,6 +356,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.label11);
             this.panel1.Controls.Add(this.label12);
             this.panel1.Controls.Add(this.label10);
@@ -380,10 +382,19 @@
             this.panel1.Controls.Add(this.Map);
             this.panel1.Controls.Add(this.show_data);
             this.panel1.Location = new System.Drawing.Point(1623, -2);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(431, 4923);
             this.panel1.TabIndex = 33;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(3, 851);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(149, 16);
+            this.label13.TabIndex = 33;
+            this.label13.Text = "number of messages : 0";
             // 
             // MainConsole
             // 
@@ -395,7 +406,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label_test);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainConsole";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -439,6 +450,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label13;
         //private System.Windows.Forms.Button exportCSV;
     }
 }

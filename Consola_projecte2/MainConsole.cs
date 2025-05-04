@@ -54,6 +54,7 @@ namespace Consola_projecte2
             label12.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             Original.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label13.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             Map.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label9.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             exportCSV.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -88,6 +89,7 @@ namespace Consola_projecte2
 
                 dataGridView1.DataSource = dt;
                 //dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                ContadorFilas();
 
                 pictureBox1.Visible = false;
 
@@ -116,14 +118,16 @@ namespace Consola_projecte2
 
         }
 
-        private void PureTargetButton_Click(object sender, EventArgs e)
+        private async void PureTargetButton_Click(object sender, EventArgs e)
         {
             if (dt != null)
             {
                 DataTable PureTargetTable = dt;
                 List<DataRow> EliminatedRows = new List<DataRow>();
+                await Task.Run(() =>
+                {
 
-                foreach (DataRow row in PureTargetTable.Rows)
+                    foreach (DataRow row in PureTargetTable.Rows)
                 {
                     if (row["TYP"].ToString() != "Single Mode S All-Call" & row["TYP"].ToString() != "Single Mode S Roll-Call" & row["TYP"].ToString() != "Mode S All-Call + PSR" &
                         row["TYP"].ToString() != "Mode S Roll-Call + PSR")
@@ -137,83 +141,74 @@ namespace Consola_projecte2
                     PureTargetTable.Rows.Remove(row);
                 }
 
+                });
+
                 dataGridView1.DataSource = PureTargetTable;
+                ContadorFilas();
             }
         }
 
         private void LLFilter_Click(object sender, EventArgs e)
         {
             DataTable LatLongLimited = dt;
-            List<DataRow> EliminatedRows = new List<DataRow>();
 
-            double maxLatitud = 360;
-            double minLatitud = 0;
-            double maxLongitud = 360;
-            double minLongitud = 0;
 
-            if (MaxLat.Text != "" && MinLat.Text != "")
+            // Validación: asegurar que todos los campos tienen valores
+            if (string.IsNullOrWhiteSpace(MaxLat.Text) || string.IsNullOrWhiteSpace(MinLat.Text) ||
+                string.IsNullOrWhiteSpace(MaxLon.Text) || string.IsNullOrWhiteSpace(MinLon.Text))
             {
-                maxLatitud = Convert.ToDouble(MaxLat.Text, CultureInfo.InvariantCulture); // en graus
-                minLatitud = Convert.ToDouble(MinLat.Text, CultureInfo.InvariantCulture); // en graus
-            }
-            if ((MaxLon.Text != "" && MaxLon.Text != ""))
-            {
-                maxLongitud = Convert.ToDouble(MaxLon.Text, CultureInfo.InvariantCulture); // en graus
-                minLongitud = Convert.ToDouble(MinLon.Text, CultureInfo.InvariantCulture); // en graus
-            }
-            else if ((MaxLat.Text != "" && MinLat.Text != "") && (MaxLon.Text != "" && MaxLon.Text != ""))
-            {
-                MessageBox.Show("Debe introducir el intervalo deseado para el filtro");
+                MessageBox.Show("Please, write both desired intervals");
                 return;
             }
 
+            // Convertir los valores
+            double maxLatitud = Convert.ToDouble(MaxLat.Text, CultureInfo.InvariantCulture);
+            double minLatitud = Convert.ToDouble(MinLat.Text, CultureInfo.InvariantCulture);
+            double maxLongitud = Convert.ToDouble(MaxLon.Text, CultureInfo.InvariantCulture);
+            double minLongitud = Convert.ToDouble(MinLon.Text, CultureInfo.InvariantCulture);
 
-            if (minLatitud >= maxLatitud)
+            // Intercambiar si están al revés
+            if (minLatitud > maxLatitud)
             {
-                double old_minLatitud = minLatitud;
+                double temp = minLatitud;
                 minLatitud = maxLatitud;
-                maxLatitud = old_minLatitud;
-
+                maxLatitud = temp;
             }
 
-            if (minLongitud >= maxLongitud)
+            if (minLongitud > maxLongitud)
             {
-                double old_minLongitud = minLongitud;
+                double temp = minLongitud;
                 minLongitud = maxLongitud;
-                maxLongitud = old_minLongitud;
+                maxLongitud = temp;
             }
 
-
-            foreach (DataRow row in LatLongLimited.Rows)
+            // Eliminar las filas fuera del rango
+            for (int i = LatLongLimited.Rows.Count - 1; i >= 0; i--)
             {
-                string Lat = Convert.ToString(row["latitud"]).Replace(',', '.');
-                string Lon = Convert.ToString(row["longitud"]).Replace(',', '.');
+                DataRow row = LatLongLimited.Rows[i];
 
-                if (Lat == "N/A" || Lon == "N/A")
+                string latStr = row["latitud"].ToString().Replace(',', '.');
+                string lonStr = row["longitud"].ToString().Replace(',', '.');
+
+                if (latStr == "N/A" || lonStr == "N/A")
                 {
-                    EliminatedRows.Add(row);
+                    LatLongLimited.Rows.RemoveAt(i);
+                    continue;
                 }
 
-                else
-                {
-                    double Latd = Convert.ToDouble(Lat, CultureInfo.InvariantCulture);
-                    double Lond = Convert.ToDouble(Lon, CultureInfo.InvariantCulture);
+                double lat = Convert.ToDouble(latStr, CultureInfo.InvariantCulture);
+                double lon = Convert.ToDouble(lonStr, CultureInfo.InvariantCulture);
 
-                    if ((Latd <= minLatitud || Latd >= maxLatitud) || (Lond <= minLongitud || Lond >= maxLongitud))
-                    {
-                        EliminatedRows.Add(row);
-                    }
+                if (lat < minLatitud || lat > maxLatitud || lon < minLongitud || lon > maxLongitud)
+                {
+                    LatLongLimited.Rows.RemoveAt(i);
                 }
             }
 
-
-
-            foreach (DataRow row in EliminatedRows)
-            {
-                LatLongLimited.Rows.Remove(row);
-            }
-
+            // Mostrar resultado
             dataGridView1.DataSource = LatLongLimited;
+            ContadorFilas();
+
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -438,6 +433,7 @@ namespace Consola_projecte2
                 }
 
                 dataGridView1.DataSource = NonFixedTransponderTable;
+                ContadorFilas();
             }
         }
 
@@ -447,6 +443,8 @@ namespace Consola_projecte2
             if (dt != null)
             { 
                 dataGridView1.DataSource = originalDt;
+                dt = originalDt.Copy();
+                ContadorFilas();
             }
         }
 
@@ -471,7 +469,18 @@ namespace Consola_projecte2
                 }
 
                 dataGridView1.DataSource = ACOnGround;
+                ContadorFilas();
             }
+        }
+
+        private void ContadorFilas()
+        {
+            int totalFilas = dataGridView1.AllowUserToAddRows
+            ? dataGridView1.Rows.Count - 1
+            : dataGridView1.Rows.Count;
+
+            label13.Text = $"Number of Messages: {totalFilas}";
+
         }
     }
     
