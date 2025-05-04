@@ -25,15 +25,15 @@ namespace Consola_projecte2
         {
             InitializeComponent();
         }
-        public MainConsole(DataTable dtable) : this()
-        {
-            dt = dtable;
-            dataGridView1.DataSource = dt;
-        }
-        public void SetData(DataTable dt)
-        {
-            dataGridView1.DataSource = dt;
-        }
+        //public MainConsole(DataTable dtable) : this()
+        //{
+        //    dt = dtable;
+        //    dataGridView1.DataSource = dt;
+        //}
+        //public void SetData(DataTable dt)
+        //{
+        //    dataGridView1.DataSource = dt;
+        //}
         private void Form1_Load(object sender, EventArgs e)
         {
             //this.WindowState = FormWindowState.Maximized;

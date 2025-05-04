@@ -28,11 +28,11 @@ namespace startingForm
 
         private async void startSoftware_Click(object sender, EventArgs e)
         {
-            var mainConsole = new Consola_projecte2.MainConsole(_loadedTable);
+            var mainConsole = new Consola_projecte2.MainConsole();
             mainConsole.Show();
-            DataTable result = await _analysisTask;
+            //DataTable result = await _analysisTask;
 
-            mainConsole.SetData(result);
+            //mainConsole.SetData(result);
         }
 
         
