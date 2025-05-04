@@ -31,12 +31,12 @@
             this.startSoftware = new System.Windows.Forms.Button();
             this.ReadMe = new System.Windows.Forms.Button();
             this.DownloadAsterix = new System.Windows.Forms.Button();
-            this.UploadAsterix = new System.Windows.Forms.Button();
+            this.DownloadAsteriSample4h = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // startSoftware
             // 
-            this.startSoftware.Location = new System.Drawing.Point(385, 92);
+            this.startSoftware.Location = new System.Drawing.Point(87, 58);
             this.startSoftware.Name = "startSoftware";
             this.startSoftware.Size = new System.Drawing.Size(180, 36);
             this.startSoftware.TabIndex = 0;
@@ -46,7 +46,7 @@
             // 
             // ReadMe
             // 
-            this.ReadMe.Location = new System.Drawing.Point(386, 162);
+            this.ReadMe.Location = new System.Drawing.Point(519, 38);
             this.ReadMe.Name = "ReadMe";
             this.ReadMe.Size = new System.Drawing.Size(243, 77);
             this.ReadMe.TabIndex = 1;
@@ -55,29 +55,30 @@
             // 
             // DownloadAsterix
             // 
-            this.DownloadAsterix.Location = new System.Drawing.Point(383, 277);
+            this.DownloadAsterix.Location = new System.Drawing.Point(529, 182);
             this.DownloadAsterix.Name = "DownloadAsterix";
-            this.DownloadAsterix.Size = new System.Drawing.Size(275, 93);
+            this.DownloadAsterix.Size = new System.Drawing.Size(233, 40);
             this.DownloadAsterix.TabIndex = 2;
-            this.DownloadAsterix.Text = "Download Asterix sample";
+            this.DownloadAsterix.Text = "Download Asterix sample 1h";
             this.DownloadAsterix.UseVisualStyleBackColor = true;
+            this.DownloadAsterix.Click += new System.EventHandler(this.DownloadAsterix_Click);
             // 
-            // UploadAsterix
+            // DownloadAsteriSample4h
             // 
-            this.UploadAsterix.Location = new System.Drawing.Point(246, 162);
-            this.UploadAsterix.Name = "UploadAsterix";
-            this.UploadAsterix.Size = new System.Drawing.Size(69, 50);
-            this.UploadAsterix.TabIndex = 3;
-            this.UploadAsterix.Text = "Upload Asterix File";
-            this.UploadAsterix.UseVisualStyleBackColor = true;
-            this.UploadAsterix.Click += new System.EventHandler(this.UploadAsterix_Click);
+            this.DownloadAsteriSample4h.Location = new System.Drawing.Point(529, 239);
+            this.DownloadAsteriSample4h.Name = "DownloadAsteriSample4h";
+            this.DownloadAsteriSample4h.Size = new System.Drawing.Size(232, 50);
+            this.DownloadAsteriSample4h.TabIndex = 3;
+            this.DownloadAsteriSample4h.Text = "Download Asterix sample 4h ";
+            this.DownloadAsteriSample4h.UseVisualStyleBackColor = true;
+            this.DownloadAsteriSample4h.Click += new System.EventHandler(this.DownloadAsteriSample4h_Click);
             // 
             // StartingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.UploadAsterix);
+            this.Controls.Add(this.DownloadAsteriSample4h);
             this.Controls.Add(this.DownloadAsterix);
             this.Controls.Add(this.ReadMe);
             this.Controls.Add(this.startSoftware);
@@ -92,7 +93,7 @@
         private System.Windows.Forms.Button startSoftware;
         private System.Windows.Forms.Button ReadMe;
         private System.Windows.Forms.Button DownloadAsterix;
-        private System.Windows.Forms.Button UploadAsterix;
+        private System.Windows.Forms.Button DownloadAsteriSample4h;
     }
 }
 

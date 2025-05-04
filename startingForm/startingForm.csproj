@@ -80,9 +80,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ASTdecoder\ASTdecoder.csproj">
+      <Project>{26729536-0cf5-4f3b-8cfe-06e2c786478f}</Project>
+      <Name>ASTdecoder</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Consola_projecte2\Consola_projecte2.csproj">
       <Project>{a699c997-78d3-4dc5-9fa0-bab9758926f3}</Project>
       <Name>Consola_projecte2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\I048_data_items\I048_data_items.csproj">
+      <Project>{ef59db10-9186-462a-bdbc-20bc4aa89b51}</Project>
+      <Name>I048_data_items</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
