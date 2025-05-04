@@ -290,12 +290,7 @@ namespace ASTdecoder
             dt.Columns.Add("MI", typeof(string));
             dt.Columns.Add("FOE_FRI", typeof(string));
 
-            //dt.Columns.Add("ADSB_EP", typeof(string));
-            //dt.Columns.Add("ADSB_VAL", typeof(string));
-            //dt.Columns.Add("SCN_EP", typeof(string));
-            //dt.Columns.Add("SCN_VAL", typeof(string));
-            //dt.Columns.Add("PAI_EP", typeof(string));
-            //dt.Columns.Add("PAI_VAL", typeof(string));
+           
 
             dt.Columns.Add("Rho", typeof(double));
             dt.Columns.Add("Theta", typeof(double));

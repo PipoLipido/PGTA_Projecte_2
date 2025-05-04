@@ -34,7 +34,7 @@ namespace I048_data_items
                 string data_item = "I048/140";
                 string data_item_description = "Time-of-Day";
                 int length_octets = 3;
-                DataTable Time_of_Day = TimeofDay(data[octetanalyzed], data[octetanalyzed + 1], data[octetanalyzed + 2]); //crec que no estan be els bytes agafats
+                DataTable Time_of_Day = TimeofDay(data[octetanalyzed], data[octetanalyzed + 1], data[octetanalyzed + 2]); 
                 return (data_item, data_item_description, length_octets, Time_of_Day);
             }
 
@@ -44,13 +44,13 @@ namespace I048_data_items
                 string data_item = "I048/020";
                 string data_item_description = "Target Report Descriptor";
 
-                // While used to know the length of the data item
+                
                 int length_octets = 1;
                 int byteIndex = 0;
                 while (byteIndex < 2)
                 {
                     int ultimBit = data[octetanalyzed + byteIndex] % 2;
-                    // aqui no hauria de mirar el octet analyzed +0 y que byte index vagi de 0 a 2 maxim ???????????????????????????????????????????????
+                    
 
                     if (ultimBit == 1)
                     {
@@ -120,7 +120,7 @@ namespace I048_data_items
                             length_octets++;
                             subfields.Add(Convert.ToString(i));
                         }
-                        else // NO ACABO D'ENTENDRE QUE S'HA DE FER
+                        else 
                         {
                             length_octets++;
                         }
@@ -216,41 +216,7 @@ namespace I048_data_items
 
             //fi segon octet
 
-            //if (fspecanalyzed == 3 && fspecIndex == 1)
-            //{
-            //    string data_item = "I048/250";
-            //    string data_item_description = "Data Source Identifier";
-            //    int length_octets = 2;
-            //    return (data_item, data_item_description, length_octets);
-            //}
-            //return ("", "", 0);
-
-            //if (fspecanalyzed == 3 && fspecIndex == 2)
-            //{
-            //    string data_item = "I048/250";
-            //    string data_item_description = "Data Source Identifier";
-            //    int length_octets = 2;
-            //    return (data_item, data_item_description, length_octets);
-            //}
-            //return ("", "", 0);
-
-            //if (fspecanalyzed == 3 && fspecIndex == 3)
-            //{
-            //    string data_item = "I048/250";
-            //    string data_item_description = "Data Source Identifier";
-            //    int length_octets = 2;
-            //    return (data_item, data_item_description, length_octets);
-            //}
-            //return ("", "", 0);
-
-            //if (fspecanalyzed == 3 && fspecIndex == 4)
-            //{
-            //    string data_item = "I048/250";
-            //    string data_item_description = "Data Source Identifier";
-            //    int length_octets = 2;
-            //    return (data_item, data_item_description, length_octets);
-            //}
-            //return ("", "", 0);
+            
 
             //Height Measured by 3D Radar
             if (fspecAnalayzedByte == 2 && fspecAnalyzedBit == 4)
@@ -262,14 +228,7 @@ namespace I048_data_items
                 return (data_item, data_item_description, length_octets, height3DRadar);
             }
 
-            //if (fspecanalyzed == 3 && fspecIndex == 6)
-            //{
-            //    string data_item = "I048/250";
-            //    string data_item_description = "Data Source Identifier";
-            //    int length_octets = 2;
-            //    return (data_item, data_item_description, length_octets);
-            //}
-            //return ("", "", 0);
+            
 
             //Communications / ACAS Capability and Flight Status
             if (fspecAnalayzedByte == 2 && fspecAnalyzedBit == 6)
@@ -283,58 +242,14 @@ namespace I048_data_items
 
             //fi tercer octet
 
-            //if (fspecanalyzed == 3 && fspecIndex == 1)
-            //{
-            //    string data_item = "I048/250";
-            //    string data_item_description = "Data Source Identifier";
-            //    int length_octets = 2;
-            //    return (data_item, data_item_description, length_octets);
-            //}
-            //return ("", "", 0);
-
-            //if (fspecanalyzed == 3 && fspecIndex == 2)
-            //{
-            //    string data_item = "I048/250";
-            //    string data_item_description = "Data Source Identifier";
-            //    int length_octets = 2;
-            //    return (data_item, data_item_description, length_octets);
-            //}
-            //return ("", "", 0);
-
-            //if (fspecanalyzed == 3 && fspecIndex == 3)
-            //{
-            //    string data_item = "I048/250";
-            //    string data_item_description = "Data Source Identifier";
-            //    int length_octets = 2;
-            //    return (data_item, data_item_description, length_octets);
-            //}
-            //return ("", "", 0);
-
-            //if (fspecanalyzed == 3 && fspecIndex == 4)
-            //{
-            //    string data_item = "I048/250";
-            //    string data_item_description = "Data Source Identifier";
-            //    int length_octets = 2;
-            //    return (data_item, data_item_description, length_octets);
-            //}
-            //return ("", "", 0);
-
-            //if (fspecanalyzed == 3 && fspecIndex == 5)
-            //{
-            //    string data_item = "I048/110";
-            //    string data_item_description = "Height Measured by 3D Radar";
-            //    int length_octets = 2;
-            //    return (data_item, data_item_description, length_octets);
-            //}
-            //return ("", "", 0);
+            
 
             //Special Purpose Field
             if (fspecAnalayzedByte == 2 && fspecAnalyzedBit == 5)
             {
                 string data_item = "SP-Data Item";
                 string data_item_description = "Special Purpose Field";
-                //int length_octets = 1+1+;
-                //return (data_item, data_item_description, length_octets, dt);
+
             }
 
             //Reserved Expansion Field
@@ -342,8 +257,7 @@ namespace I048_data_items
             {
                 string data_item = "RE-Data Item";
                 string data_item_description = "Reserved Expansion Field";
-                //int length_octets = 1+1+;
-                //return (data_item, data_item_description, length_octets, dt);
+               
             }
             return ("", "", 0, dt);
         }
@@ -354,34 +268,10 @@ namespace I048_data_items
             string pathCSV = "SACdata.csv"; // Ruta del fitxer CSV
             int numeroDecimal = Convert.ToInt32(byte1);//passem byte a string
             string numDecimalString = Convert.ToString(numeroDecimal);
-            //var linies = File.ReadAllLines(pathCSV);//llegim el fitxer csv
 
             int SAC;
             int SIC;
-            //int rowNumber = 0;
-            //using (StreamReader reader = new StreamReader(pathCSV))
-            //{
-            //    while (!reader.EndOfStream)
-            //    {
-            //        rowNumber++;  // Comptador de files
-            //        string line = reader.ReadLine();
-            //        string[] columns = line.Split(';');  // Assumeix separació per comes
-
-            //        if (columns.Length >= 3)  // Assegurar que la columna 3 existeix
-            //        {
-            //            string binaryValue = columns[2].Trim();  // Eliminar espais innecessaris
-
-            //            if (binaryValue == numDecimalString)
-            //            {
-            //                SAC = columns[1];
-            //                break;  // Si només vols la primera coincidència, trenca el bucle
-            //            }
-            //        }
-            //    }                
-            //}
-
-
-            //SIC
+            
             SAC = byte1;
             SIC = byte2;
 
@@ -1229,16 +1119,7 @@ namespace I048_data_items
                 SI = "II-Code Capable";
             }
 
-            //bit 8
-            //int bit8 = Convert.ToInt32(bits.Substring(7, 1), 2);
-            //if (bit8 == 0)
-            //{
-
-            //}
-            //else if (bit8 == 1)
-            //{
-
-            //}
+            
 
             //bit 9
             int bit9 = Convert.ToInt32(bits.Substring(8, 1), 2);

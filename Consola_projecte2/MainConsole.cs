@@ -25,18 +25,9 @@ namespace Consola_projecte2
         {
             InitializeComponent();
         }
-        //public MainConsole(DataTable dtable) : this()
-        //{
-        //    dt = dtable;
-        //    dataGridView1.DataSource = dt;
-        //}
-        //public void SetData(DataTable dt)
-        //{
-        //    dataGridView1.DataSource = dt;
-        //}
+       
         private void Form1_Load(object sender, EventArgs e)
         {
-            //this.WindowState = FormWindowState.Maximized;
             dataGridView1.Anchor = AnchorStyles.Top
                                  | AnchorStyles.Bottom
                                  | AnchorStyles.Left
@@ -78,16 +69,13 @@ namespace Consola_projecte2
         private async void show_data_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            //openFileDialog.Filter = "Fitxers ASTERIX (*.bin)|*.bin";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
 
                 byte[] fileData = File.ReadAllBytes(openFileDialog.FileName);
-                //string gifPath = Path.Combine(Application.StartupPath, "Radar2.gif");
-                //pictureBox1.Image = Image.FromFile(gifPath);
-                //pictureBox1.Image = Image.FromFile(@"Resources\Radar2.gif");
-                //pictureBox1.Image = Properties.Resources.Radar2;
-                //pictureBox1.Visible = true;
+
+                pictureBox1.Image = Properties.Resources.Radar2;
+                pictureBox1.Visible = true;
 
                 await Task.Run(() =>
                 {
@@ -102,7 +90,6 @@ namespace Consola_projecte2
                 originalDt = dt.Copy();
 
                 dataGridView1.DataSource = dt;
-                //dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
                 ContadorFilas();
 
                 pictureBox1.Visible = false;

@@ -176,7 +176,7 @@
             this.exportCSV.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.exportCSV.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.exportCSV.Location = new System.Drawing.Point(49, 591);
-            this.exportCSV.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.exportCSV.Margin = new System.Windows.Forms.Padding(2);
             this.exportCSV.Name = "exportCSV";
             this.exportCSV.Size = new System.Drawing.Size(149, 37);
             this.exportCSV.TabIndex = 11;
@@ -187,7 +187,7 @@
             // MinLat
             // 
             this.MinLat.Location = new System.Drawing.Point(77, 346);
-            this.MinLat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinLat.Margin = new System.Windows.Forms.Padding(2);
             this.MinLat.Name = "MinLat";
             this.MinLat.Size = new System.Drawing.Size(50, 20);
             this.MinLat.TabIndex = 12;
@@ -195,7 +195,7 @@
             // MaxLat
             // 
             this.MaxLat.Location = new System.Drawing.Point(165, 345);
-            this.MaxLat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MaxLat.Margin = new System.Windows.Forms.Padding(2);
             this.MaxLat.Name = "MaxLat";
             this.MaxLat.Size = new System.Drawing.Size(48, 20);
             this.MaxLat.TabIndex = 13;
@@ -203,7 +203,7 @@
             // MinLon
             // 
             this.MinLon.Location = new System.Drawing.Point(77, 368);
-            this.MinLon.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinLon.Margin = new System.Windows.Forms.Padding(2);
             this.MinLon.Name = "MinLon";
             this.MinLon.Size = new System.Drawing.Size(50, 20);
             this.MinLon.TabIndex = 14;
@@ -211,7 +211,7 @@
             // MaxLon
             // 
             this.MaxLon.Location = new System.Drawing.Point(165, 368);
-            this.MaxLon.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MaxLon.Margin = new System.Windows.Forms.Padding(2);
             this.MaxLon.Name = "MaxLon";
             this.MaxLon.Size = new System.Drawing.Size(48, 20);
             this.MaxLon.TabIndex = 15;
@@ -276,7 +276,7 @@
             this.Original.Name = "Original";
             this.Original.Size = new System.Drawing.Size(152, 37);
             this.Original.TabIndex = 22;
-            this.Original.Text = "Recover original";
+            this.Original.Text = "Reset filters";
             this.Original.UseVisualStyleBackColor = false;
             this.Original.Click += new System.EventHandler(this.Original_Click);
             // 
