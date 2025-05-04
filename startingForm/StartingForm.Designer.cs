@@ -28,63 +28,78 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartingForm));
             this.startSoftware = new System.Windows.Forms.Button();
             this.ReadMe = new System.Windows.Forms.Button();
-            this.DownloadAsterix = new System.Windows.Forms.Button();
-            this.DownloadAsteriSample4h = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // startSoftware
             // 
-            this.startSoftware.Location = new System.Drawing.Point(87, 58);
+            this.startSoftware.AutoSize = true;
+            this.startSoftware.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startSoftware.Location = new System.Drawing.Point(13, 47);
+            this.startSoftware.Margin = new System.Windows.Forms.Padding(4);
             this.startSoftware.Name = "startSoftware";
-            this.startSoftware.Size = new System.Drawing.Size(180, 36);
+            this.startSoftware.Size = new System.Drawing.Size(280, 54);
             this.startSoftware.TabIndex = 0;
-            this.startSoftware.Text = "Start software";
+            this.startSoftware.Text = "Start Software";
             this.startSoftware.UseVisualStyleBackColor = true;
             this.startSoftware.Click += new System.EventHandler(this.startSoftware_Click);
             // 
             // ReadMe
             // 
-            this.ReadMe.Location = new System.Drawing.Point(519, 38);
+            this.ReadMe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ReadMe.AutoSize = true;
+            this.ReadMe.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ReadMe.Location = new System.Drawing.Point(925, 488);
+            this.ReadMe.Margin = new System.Windows.Forms.Padding(4);
             this.ReadMe.Name = "ReadMe";
-            this.ReadMe.Size = new System.Drawing.Size(243, 77);
+            this.ReadMe.Size = new System.Drawing.Size(129, 53);
             this.ReadMe.TabIndex = 1;
             this.ReadMe.Text = "ReadMe";
             this.ReadMe.UseVisualStyleBackColor = true;
             // 
-            // DownloadAsterix
+            // comboBox1
             // 
-            this.DownloadAsterix.Location = new System.Drawing.Point(529, 182);
-            this.DownloadAsterix.Name = "DownloadAsterix";
-            this.DownloadAsterix.Size = new System.Drawing.Size(233, 40);
-            this.DownloadAsterix.TabIndex = 2;
-            this.DownloadAsterix.Text = "Download Asterix sample 1h";
-            this.DownloadAsterix.UseVisualStyleBackColor = true;
-            this.DownloadAsterix.Click += new System.EventHandler(this.DownloadAsterix_Click);
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "1h",
+            "4h"});
+            this.comboBox1.Location = new System.Drawing.Point(208, 133);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(41, 24);
+            this.comboBox1.TabIndex = 4;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // DownloadAsteriSample4h
+            // label1
             // 
-            this.DownloadAsteriSample4h.Location = new System.Drawing.Point(529, 239);
-            this.DownloadAsteriSample4h.Name = "DownloadAsteriSample4h";
-            this.DownloadAsteriSample4h.Size = new System.Drawing.Size(232, 50);
-            this.DownloadAsteriSample4h.TabIndex = 3;
-            this.DownloadAsteriSample4h.Text = "Download Asterix sample 4h ";
-            this.DownloadAsteriSample4h.UseVisualStyleBackColor = true;
-            this.DownloadAsteriSample4h.Click += new System.EventHandler(this.DownloadAsteriSample4h_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 136);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(179, 16);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Download ASTERIX sample:";
             // 
             // StartingForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.DownloadAsteriSample4h);
-            this.Controls.Add(this.DownloadAsterix);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.ReadMe);
             this.Controls.Add(this.startSoftware);
+            this.DoubleBuffered = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "StartingForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -92,8 +107,8 @@
 
         private System.Windows.Forms.Button startSoftware;
         private System.Windows.Forms.Button ReadMe;
-        private System.Windows.Forms.Button DownloadAsterix;
-        private System.Windows.Forms.Button DownloadAsteriSample4h;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label1;
     }
 }
 
