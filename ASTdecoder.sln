@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consola_projecte2", "Consol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "I048_data_items", "I048_data_items\I048_data_items.csproj", "{EF59DB10-9186-462A-BDBC-20BC4AA89B51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "startingForm", "startingForm\startingForm.csproj", "{7BDD7062-9024-41A5-9C8D-19D8E8664B05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{EF59DB10-9186-462A-BDBC-20BC4AA89B51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF59DB10-9186-462A-BDBC-20BC4AA89B51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF59DB10-9186-462A-BDBC-20BC4AA89B51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BDD7062-9024-41A5-9C8D-19D8E8664B05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BDD7062-9024-41A5-9C8D-19D8E8664B05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BDD7062-9024-41A5-9C8D-19D8E8664B05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BDD7062-9024-41A5-9C8D-19D8E8664B05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
