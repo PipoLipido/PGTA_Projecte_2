@@ -441,7 +441,16 @@ namespace Consola_projecte2
             }
         }
 
-        private void ACOnGround_Click(object sender, EventArgs e)
+
+        private void Original_Click(object sender, EventArgs e)
+        {
+            if (dt != null)
+            { 
+                dataGridView1.DataSource = originalDt;
+            }
+        }
+
+        private void ACOnGround_Click_1(object sender, EventArgs e)
         {
             if (dt != null)
             {
@@ -462,14 +471,6 @@ namespace Consola_projecte2
                 }
 
                 dataGridView1.DataSource = ACOnGround;
-            }
-        }
-
-        private void Original_Click(object sender, EventArgs e)
-        {
-            if (dt != null)
-            { 
-                dataGridView1.DataSource = originalDt;
             }
         }
     }
